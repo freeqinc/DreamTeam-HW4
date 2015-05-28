@@ -26,12 +26,14 @@
     var fb = new Firebase('https://134b-dreamteam.firebaseio.com/');
     var usersRef = fb.child("users");
     var dataCalled = false;
+    var keys = [];
 
     usersRef.on("value", function(data) {
         for (var key in data.val()) {
             if (data.val().hasOwnProperty(key) && !dataCalled) {
-                string = "<div>" + data.val()[key]["name"] + "</div>"
+                string = "<div id=\""+key+"\">" + data.val()[key]["name"] + "</div>"
                 $("#list").append(string);
+                keys.push(key);
             }
         }
         dataCalled = true;
@@ -57,12 +59,14 @@
                 }
             });*/
             //usersRef.child("someone").update({});
-            usersRef.push({
+            var pushed = usersRef.push({
                 name: name
             });
-            string = "<div>" + name + "</div>"
+            keys.push(pushed.key());
+            string = "<div id=\""+pushed.key()+"\">" + name + "</div>"
             $("#list").append(string);
             $('#nameInput').val('');
+            //usersRef.child(keys[0]).remove();
         }
     });
     </script>
