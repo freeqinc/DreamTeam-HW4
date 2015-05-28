@@ -10,6 +10,7 @@
     <link rel="icon" href="favicon.ico" type="image/x-icon" />
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
     <script src='https://cdn.firebase.com/js/client/2.2.1/firebase.js'></script>
+    <script src="https://cdn.firebase.com/js/simple-login/1.6.1/firebase-simple-login.js"></script>
     <script src="./js/jquery-1.11.2.min.js"></script>
     <script src="./js/velocity.min.js"></script>
     <!--<script src="./js/main.js"></script>-->
@@ -18,14 +19,46 @@
 
 <body>
     <input type='text' id='nameInput' placeholder='Name'>
-    <input type='text' id='messageInput' placeholder='Message'>
+    <input type='password' id='messageInput' placeholder='Message'>
     <script>
     var fb = new Firebase('https://134b-dreamteam.firebaseio.com/');
+    /*var authData = fb.getAuth();
+    var authHandler = function(error, authData) {
+        if (error) {
+            console.log("Login Failed!", error);
+        } else {
+            console.log("Authenticated successfully with payload:", authData);
+        }
+    }
+
+    fb.authWithPassword({
+        email: 'brian.soe003@gmail.com',
+        password: 'swan3asian'
+    }, authHandler);
+
+    fb.authWithOAuthPopup("google", authHandler);*/
+    var authClient = new FirebaseSimpleLogin(fb, function(error, user) {
+        if (error) {
+            console.log("Login Failed!", error);
+        } else {
+            console.log("Authenticated successfully with payload:", user);
+        }
+    });
     $('#messageInput').keypress(function(e) {
         if (e.keyCode == 13) {
             var name = $('#nameInput').val();
             var text = $('#messageInput').val();
-            fb.push({name: name, text: text});
+            authClient.login('google', {
+                rememberMe: true,
+                scope: 'https://www.googleapis.com/auth/plus.login'
+            });
+            /*fb.authWithOAuthPopup("google", function(error, authData) {
+                if (error) {
+                    console.log("Login Failed!", error);
+                } else {
+                    console.log("Authenticated successfully with payload:", authData);
+                }
+            });*/
             $('#nameInput').val('');
             $('#messageInput').val('');
         }
