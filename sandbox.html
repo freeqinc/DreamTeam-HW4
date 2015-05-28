@@ -12,12 +12,25 @@
     <script src='https://cdn.firebase.com/js/client/2.2.1/firebase.js'></script>
     <script src="./js/jquery-1.11.2.min.js"></script>
     <script src="./js/velocity.min.js"></script>
-    <script src="./js/main.js"></script>
+    <!--<script src="./js/main.js"></script>-->
     <title>Sandbox</title>
 </head>
 
 <body>
-    
+    <input type='text' id='nameInput' placeholder='Name'>
+    <input type='text' id='messageInput' placeholder='Message'>
+    <script>
+    var fb = new Firebase('https://134b-dreamteam.firebaseio.com/');
+    $('#messageInput').keypress(function(e) {
+        if (e.keyCode == 13) {
+            var name = $('#nameInput').val();
+            var text = $('#messageInput').val();
+            fb.push({name: name, text: text});
+            $('#nameInput').val('');
+            $('#messageInput').val('');
+        }
+    });
+    </script>
 </body>
 
 </html>
