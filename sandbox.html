@@ -19,48 +19,50 @@
 
 <body>
     <input type='text' id='nameInput' placeholder='Name'>
-    <input type='password' id='messageInput' placeholder='Message'>
+    <a href="" id="login">Login</a>
+    <div id="list">
+    </div>
     <script>
     var fb = new Firebase('https://134b-dreamteam.firebaseio.com/');
-    /*var authData = fb.getAuth();
-    var authHandler = function(error, authData) {
-        if (error) {
-            console.log("Login Failed!", error);
-        } else {
-            console.log("Authenticated successfully with payload:", authData);
-        }
-    }
+    var usersRef = fb.child("users");
+    var dataCalled = false;
 
-    fb.authWithPassword({
-        email: 'brian.soe003@gmail.com',
-        password: 'swan3asian'
-    }, authHandler);
-
-    fb.authWithOAuthPopup("google", authHandler);*/
-    var authClient = new FirebaseSimpleLogin(fb, function(error, user) {
-        if (error) {
-            console.log("Login Failed!", error);
-        } else {
-            console.log("Authenticated successfully with payload:", user);
+    usersRef.on("value", function(data) {
+        for (var key in data.val()) {
+            if (data.val().hasOwnProperty(key) && !dataCalled) {
+                string = "<div>" + data.val()[key]["name"] + "</div>"
+                $("#list").append(string);
+            }
         }
+        dataCalled = true;
     });
-    $('#messageInput').keypress(function(e) {
+
+    $("#login").click(function() {
+        fb.authWithOAuthPopup("google", function(error, authData) {
+            if (error) {
+                console.log("Login Failed!", error);
+            } else {
+                console.log("Authenticated successfully with payload:", authData);
+            }
+        });
+    });
+
+    $('#nameInput').keypress(function(e) {
         if (e.keyCode == 13) {
             var name = $('#nameInput').val();
-            var text = $('#messageInput').val();
-            authClient.login('google', {
-                rememberMe: true,
-                scope: 'https://www.googleapis.com/auth/plus.login'
-            });
-            /*fb.authWithOAuthPopup("google", function(error, authData) {
-                if (error) {
-                    console.log("Login Failed!", error);
-                } else {
-                    console.log("Authenticated successfully with payload:", authData);
+            /*usersRef.set({
+                someone: {
+                    name: name,
+                    text: text
                 }
             });*/
+            //usersRef.child("someone").update({});
+            usersRef.push({
+                name: name
+            });
+            string = "<div>" + name + "</div>"
+            $("#list").append(string);
             $('#nameInput').val('');
-            $('#messageInput').val('');
         }
     });
     </script>
