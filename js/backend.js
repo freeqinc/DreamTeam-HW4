@@ -72,7 +72,7 @@ function sessionHandler(file_before_auth, file_after_auth) {
         return;
     }
     var currentPath = location.pathname;
-    var isHome = currentPath == "/" || currentPath.includes(file_before_auth);
+    var isHome = currentPath == "/" || currentPath.indexOf(file_before_auth) > -1;
     if (inSession && isHome) {
         location.href = file_after_auth;
     } else if (!inSession && !isHome) {
