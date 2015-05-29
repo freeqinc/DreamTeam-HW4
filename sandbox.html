@@ -19,19 +19,34 @@
 
 <body>
     <input type='text' id='nameInput' placeholder='Name'>
-    <a href="" id="login">Login</a>
+    <button href="" id="login"></button>
     <div id="list">
     </div>
     <script>
     var fb = new Firebase('https://134b-dreamteam.firebaseio.com/');
     var usersRef = fb.child("users");
+    var listRef = fb.child("list");
     var dataCalled = false;
+    var userFetched = false;
+    var userExists = false;
     var keys = [];
+    var users = [];
 
     usersRef.on("value", function(data) {
         for (var key in data.val()) {
+            if (data.val().hasOwnProperty(key) && !userFetched) {
+                //console.log(data.val()[key]);
+                users.push(data.val()[key]["auth"]["uid"]);
+            }
+        }
+        userFetched = true;
+        console.log(users);
+    });
+
+    listRef.on("value", function(data) {
+        for (var key in data.val()) {
             if (data.val().hasOwnProperty(key) && !dataCalled) {
-                string = "<div id=\""+key+"\">" + data.val()[key]["name"] + "</div>"
+                string = "<div id=\"" + key + "\">" + data.val()[key]["name"] + "</div>"
                 $("#list").append(string);
                 keys.push(key);
             }
@@ -40,13 +55,44 @@
     });
 
     $("#login").click(function() {
-        fb.authWithOAuthPopup("google", function(error, authData) {
-            if (error) {
-                console.log("Login Failed!", error);
-            } else {
-                console.log("Authenticated successfully with payload:", authData);
-            }
-        });
+        if ($(this).text() == "Login") {
+            fb.authWithOAuthPopup("google", function(error, authData) {
+                if (error) {
+                    console.log("Login Failed!", error);
+                } else {
+                    console.log("Authenticated successfully with payload:", authData);
+                    //uid = authData.uid
+                    for (var i = 0; i < users.length; i++) {
+                        if (users[i] == authData.uid) {
+                            userExists = true;
+                            console.log("user exists");
+                            break;
+                        }
+                    }
+                    if (!userExists) {
+                        usersRef.push(authData);
+                        users.push(authData.uid);
+                        console.log(users);
+                    }
+                }
+                userExists = false;
+            });
+        }
+        else if($(this).text() == "Logout") {
+            fb.unauth();
+        }
+    });
+
+    // check if user has been logged out or not.
+    fb.onAuth(function(authData) {
+        if (authData) {
+            console.log("User " + authData.uid + " is logged in with " + authData.provider);
+            $("#login").text("Logout");
+        } else {
+            console.log("User is logged out");
+            $("#login").text("Login");
+        }
+
     });
 
     $('#nameInput').keypress(function(e) {
@@ -59,11 +105,11 @@
                 }
             });*/
             //usersRef.child("someone").update({});
-            var pushed = usersRef.push({
+            var pushed = listRef.push({
                 name: name
             });
             keys.push(pushed.key());
-            string = "<div id=\""+pushed.key()+"\">" + name + "</div>"
+            string = "<div id=\"" + pushed.key() + "\">" + name + "</div>"
             $("#list").append(string);
             $('#nameInput').val('');
             //usersRef.child(keys[0]).remove();
