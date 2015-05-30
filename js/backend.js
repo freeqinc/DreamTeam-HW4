@@ -23,7 +23,7 @@ userRef.on("value", function(data) {
 // Check if user is logged in or not
 firebase.onAuth(function(authData) {
     inSession = Boolean(authData) ? true : false;
-    sessionHandler("/index.html", "/wire2.html");
+    sessionHandler("/index.html", "/home.html");
 });
 
 // function that handles login
@@ -76,7 +76,6 @@ function sessionHandler(file_before_auth, file_after_auth) {
         return;
     }
     var currentPath = location.pathname;
-    console.log(currentPath);
     var isHome = currentPath == "/" || currentPath.indexOf(file_before_auth) > -1;
     if (inSession && isHome) {
         location.href = currentPath.substring(0, currentPath.lastIndexOf("/")) + file_after_auth;

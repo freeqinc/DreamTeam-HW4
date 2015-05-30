@@ -30,7 +30,7 @@ $(window).load(function() {
         var pointHighlightFill = "#fff";
         var pointHighlightStroke = "#fff";
 
-        if (page == "wire2.html") {
+        if (page == "home.html") {
             var data = {
                 labels: ["January", "February", "March", "April", "May", "June", "July"],
                 datasets: [{
@@ -147,7 +147,7 @@ $(window).load(function() {
             var ctx = document.getElementById("total-chart").getContext("2d");
             var coinChart = new Chart(ctx).Line(data, options);
             coinChart.update();
-        } else if (page == "wire3.html") {
+        } else if (page == "gold.html") {
             var data = {
                 labels: ["January", "February", "March", "April", "May", "June", "July"],
                 datasets: [{
