@@ -32,6 +32,7 @@
     var userExists = false;
     var keys = [];
     var users = [];
+    var now = new Date();
 
     usersRef.on("value", function(data) {
         for (var key in data.val()) {

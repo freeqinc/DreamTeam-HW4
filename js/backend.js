@@ -3,6 +3,7 @@ var userRef = firebase.child("users");
 var userCollected = false;
 var inSession = false;
 var users = [];
+const MS_THRESHOLD = 2592000000;
 
 // Collect User ids
 userRef.on("value", function(data) {
@@ -47,7 +48,14 @@ function login(provider, oauthOption) {
             }
         }
         if (!userExists) {
-            userRef.push(authData);
+            //alert(authData);
+            var data = {
+                uid: authData
+            };
+            //alert(data[uid]);
+            //console.log(data);
+            userRef.child(uid).set(authData);
+            //userRef.push(data);
             users.push(uid);
         }
     };
@@ -78,4 +86,8 @@ function sessionHandler(file_before_auth, file_after_auth) {
     } else if (!inSession && !isHome) {
         location.href = file_before_auth;
     }
+}
+
+function past30Days() {
+    return new Date().getTime() - MS_THRESHOLD;
 }
