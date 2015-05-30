@@ -4,6 +4,7 @@ var userCollected = false;
 var inSession = false;
 var users = [];
 const MS_THRESHOLD = 2592000000;
+const API_URL = "https://www.quandl.com/api/v1/datasets/WSJ/";
 
 // Collect User ids
 userRef.on("value", function(data) {
@@ -81,6 +82,18 @@ function sessionHandler(file_before_auth, file_after_auth) {
         location.href = currentPath.substring(0, currentPath.lastIndexOf("/")) + file_after_auth;
     } else if (!inSession && !isHome) {
         location.href = currentPath.substring(0, currentPath.lastIndexOf("/")) + file_before_auth;
+    }
+}
+
+function getMetalURL(metal) {
+    var data_url = API_URL;
+    switch (metal) {
+        case 'silver':
+            return API_URL + "AG_EIB.json";
+        case 'platinum':
+            return API_URL + "PL_MKT.json";
+        default:
+            return API_URL + "AU_EIB.json";
     }
 }
 
