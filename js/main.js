@@ -24,7 +24,7 @@ $(window).load(function() {
      *        GRAPHING         *
      *                         *
      * * * * * * * * * * * * * */
-    // graph for wire2 page
+    // graph for gold page
     var drawGraph = function() {
         var pointStroke = "rgba(255,255,255,0.6)";
         var pointHighlightFill = "#fff";
@@ -243,7 +243,7 @@ $(window).load(function() {
         $('.graph-panel').removeClass('graph-panel-show');
         $('.market-status').fadeIn(0);
         $('.market-list').fadeIn(0);
-        if (page == "wire3.html")
+        if (page == "gold.html")
             $('.my_stack').fadeIn(0);
         $('.mtb-2').removeClass('mobile-toggle-selected');
         $('.mtb-1').addClass('mobile-toggle-selected');
@@ -253,7 +253,7 @@ $(window).load(function() {
     $('.mtb-2').click(function() {
         $('.market-status').fadeOut(0);
         $('.market-list').fadeOut(0);
-        if (page == "wire3.html")
+        if (page == "gold.html")
             $('.my_stack').fadeOut(0);
         $('.mtb-1').removeClass('mobile-toggle-selected');
         $('.mtb-2').addClass('mobile-toggle-selected');
@@ -269,7 +269,7 @@ $(window).load(function() {
             $('.graph-panel').removeClass('graph-panel-show');
             $('.market-status').fadeIn(0);
             $('.market-list').fadeIn(0);
-            if (page == "wire3.html")
+            if (page == "gold.html")
                 $('.my_stack').fadeIn(0);
             $('.mtb-2').removeClass('mobile-toggle-selected');
             $('.mtb-1').addClass('mobile-toggle-selected');
