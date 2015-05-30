@@ -85,9 +85,10 @@ function sessionHandler(file_before_auth, file_after_auth) {
     }
 }
 
+// grabs appropriate URL for metal
 function getMetalURL(metal) {
     var data_url = API_URL;
-    switch (metal) {
+    switch (metal.toLowerCase()) {
         case 'silver':
             return API_URL + "AG_EIB.json";
         case 'platinum':
@@ -95,6 +96,42 @@ function getMetalURL(metal) {
         default:
             return API_URL + "AU_EIB.json";
     }
+}
+
+// function to obtain requested JSON
+function getJSON(url, callback) {
+    var xhr = new XMLHttpRequest();
+    xhr.open("GET", url, true);
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState == 4 && xhr.status == 200) {
+            callback(JSON.parse(xhr.responseText));
+        }
+    };
+    xhr.send(null);
+}
+
+
+// user events needed for this application.
+function coinEvent(ref) {
+    if (ref.charAt(0) == ".") {
+        selector = document.getElementsByClassName(ref.substring(1));
+    } else if (ref.charAt(0) == "#") {
+        selector = [document.getElementById(ref.substring(1))];
+    } else {
+        selector = document.getElementsByTagName(ref);
+    }
+    var events = {
+        "click": function(callback) {
+            for (var i = 0; i < selector.length; i++) {
+                try {
+                    selector[i].addEventListener("click", callback);
+                } catch (err) {
+                    console.log("failed to add click listener");
+                }
+            }
+        }
+    };
+    return events;
 }
 
 function past30Days() {
