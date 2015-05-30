@@ -48,14 +48,10 @@ function login(provider, oauthOption) {
             }
         }
         if (!userExists) {
-            //alert(authData);
             var data = {
                 uid: authData
             };
-            //alert(data[uid]);
-            //console.log(data);
             userRef.child(uid).set(authData);
-            //userRef.push(data);
             users.push(uid);
         }
     };
@@ -80,11 +76,12 @@ function sessionHandler(file_before_auth, file_after_auth) {
         return;
     }
     var currentPath = location.pathname;
+    console.log(currentPath);
     var isHome = currentPath == "/" || currentPath.indexOf(file_before_auth) > -1;
     if (inSession && isHome) {
-        location.href = file_after_auth;
+        location.href = currentPath.substring(0, currentPath.lastIndexOf("/")) + file_after_auth;
     } else if (!inSession && !isHome) {
-        location.href = file_before_auth;
+        location.href = currentPath.substring(0, currentPath.lastIndexOf("/")) + file_before_auth;
     }
 }
 
