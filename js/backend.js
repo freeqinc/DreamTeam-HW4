@@ -263,7 +263,7 @@ StackManager.prototype.read = function() {
             // array of information to be inserted
             var data = ["<div class=\"coin_mini\"></div>",
                 "<a href=\"gold_detail.html?id=" + key + "\"></a>" + coin["type"],
-                coin["qty"], coin["weightunit_(g)"], coin["gold_%"], coin["total"]
+                coin["qty"], coin["total_weight_(ozt)"], coin["purchase_date"], coin["total"]
             ];
 
             // construct td's for this row

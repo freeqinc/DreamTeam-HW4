@@ -1023,7 +1023,7 @@ select {
     display: none;
     visibility: hidden; }
   .percent_compr:after {
-    content: "%"; }
+    content: "Date"; }
 
   .stack_ctrl {
     display: none;
