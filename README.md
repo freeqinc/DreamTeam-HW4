@@ -5,7 +5,7 @@ python -m SimpleHTTPServer
 
 Bugs:
 * Login won't work if running in Safari private mode
-* Login won't work if there is "file://" in URL
+* Login won't work if there is "file://" in URL. Try "python -m SimpleHTTPServer" to host local server
 * Firefox throws "The connection to wss://s-dal5-nss-28.firebaseio.com/.ws?v=5&ns=134b-dreamteam was interrupted while the page was loading." error
 * Security rules on Firebase can break our application
 
@@ -17,3 +17,8 @@ TODO:
 * Graph for gold/silver/platinum
 * Fetched-and-prepopulated data on add page
 * Calculation in add page
+
+TODO (EXTRA):
+* Custom login (with email and password)
+* Potentially other login from common provider (Facebook or Twitter)
+* All other profiling shit (keeping track of coin stack per user)
