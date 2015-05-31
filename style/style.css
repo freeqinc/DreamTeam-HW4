@@ -845,6 +845,11 @@ input {
 input:focus {
   outline: 2px solid #68CEDE; }
 
+.bad-input {
+  outline: 2px solid #E9434B !important;
+  color: #E9434B !important;
+  font-weight: 900 !important; }
+
 select {
   -webkit-appearance: none;
   -moz-appearance: none;
@@ -865,6 +870,7 @@ select {
   outline: 0; }
 
 #save {
+  display: block;
   background: #397C86;
   border: 1px solid #151515;
   cursor: pointer;

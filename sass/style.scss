@@ -944,6 +944,12 @@ input:focus {
     outline: 2px solid $main-accent;
 }
 
+.bad-input{
+    outline: 2px solid #E9434B !important;
+    color: #E9434B !important;
+    font-weight: 900 !important;
+}
+
 select {
     @include appearance(none);
     background: url("../assets/down_arrow.svg") no-repeat;
@@ -961,6 +967,7 @@ select {
 }
 
 #save {
+    display: block;
     background: #397C86;
     border: 1px solid #151515;
     cursor: pointer;

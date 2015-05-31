@@ -5,6 +5,9 @@ $(document).ready(function() {
     var gold1oz = [];
     var silver1oz = [];
     var plat1oz = [];
+    var goldtotal = [];
+    var silvertotal = [];
+    var plattotal = [];
     var xlabel = [];
     var waitFor = [];
     var graphsToDraw;
@@ -373,13 +376,35 @@ $(document).ready(function() {
     }
 
     if(page == "home.html"){
+    	var metal = 'gold';
+    	var stackRef = userRef.child(currentUser).child("coinStack");
+    	stackRef.child(metal).on("value", function(data) {
+    		if (!data) {
+    			console.log("No coins found in Firebase");
+    			return;
+    		}
+        	var list = data.val(); // JSON of all coins in designated metal
+
+	        // convert JSON of coins to table rows. Ignore the value of total
+	        for (var key in list) {
+	        	if (!list.hasOwnProperty(key) || key == "total") {
+	        		continue;
+	        	}
+	        	var coin = list[key];
+	        	alert(new Date('03-04-2015'));
+	        }
+	    });
+
+
     	graphsToDraw = "all";
     	waitFor = 3;
+    	getMetalPrice('gold', pastDate, currDate);
+    	getMetalPrice('silver', pastDate, currDate);
+    	getMetalPrice('platinum', pastDate, currDate);
     }
 
-    getMetalPrice('gold', pastDate, currDate);
-    getMetalPrice('silver', pastDate, currDate);
-    getMetalPrice('platinum', pastDate, currDate);
+
+
 
 
 });

@@ -15,7 +15,7 @@ $(window).load(function() {
         location.reload();
     });
 
-     $('tr').click(function() {
+     $("#coinStack").on("click", "tr", function() {
         $(this).find('a')[0].click();
     });
 
@@ -314,7 +314,7 @@ $(window).load(function() {
         },400);
     });
 
-    $('#icon-close').click(function(){
+     $('#icon-close').click(function(){
         editOpen = false;
         $('#coin_edit').velocity({
             top: $('#edit').offset().top- $(window).scrollTop(),
@@ -337,5 +337,42 @@ $(window).load(function() {
     });
 
 
+    /* * * * * * * * * * * * * *
+     *                         *
+     *    ADD HANDLING/DATE    *
+     *                         *
+     * * * * * * * * * * * * * */
+     var invalidDateInput = false;
+     var defaultDate = new Date();
+     var defaultDateInput = ('0'+(defaultDate.getMonth()+1)).slice(-2)+'-'+('0'+defaultDate.getDate()).slice(-2)+'-'+defaultDate.getFullYear();
+     document.getElementsByName('purchase_date')[0].value = defaultDateInput;
 
- });
+     function isValidDate(date)
+     {
+        var matches = /^(\d{2})[-\/](\d{2})[-\/](\d{4})$/.exec(date);
+        if (matches == null) return false;
+        var d = matches[2];
+        var m = matches[1] - 1;
+        var y = matches[3];
+        var composedDate = new Date(y, m, d);
+        return composedDate.getDate() == d &&
+        composedDate.getMonth() == m &&
+        composedDate.getFullYear() == y;
+    }
+
+    $('.purchase_date').focus(function(){
+        $(this).removeClass('bad-input');
+        invalidDateInput = false;
+    });
+
+    $('.purchase_date').blur(function(){
+        if(!isValidDate(document.getElementsByName('purchase_date')[0].value)){
+            $(this).addClass('bad-input');
+            $(this).val('MM-DD-YYYY');
+            invalidDateInput = true;
+        }
+    });
+
+
+
+});
