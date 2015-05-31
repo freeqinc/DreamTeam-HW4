@@ -719,7 +719,8 @@ a {
   -webkit-border-radius: 100%;
   -moz-border-radius: 100%;
   -ms-border-radius: 100%;
-  background-color: #5D5D5D; }
+  background-color: #5D5D5D;
+  line-height: 160px; }
 
 strong {
   font-family: "monster_r";
@@ -915,6 +916,13 @@ select {
   margin-top: 15px; }
   #cancel:hover {
     border: 1px solid #68CEDE; }
+
+#image_upload {
+  cursor: pointer; }
+
+#uploader {
+  display: none;
+  visibility: hidden; }
 
 /* * * * * * * * * * * * * * * *
  *                             *

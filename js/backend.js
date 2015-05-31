@@ -6,7 +6,6 @@ var currentUser = "";
 var users = [];
 const API_URL = "https://www.quandl.com/api/v1/datasets/WSJ/";
 
-
 // create string contains function
 String.prototype.contains = function(s) {
     return this.indexOf(s) > -1;
@@ -16,11 +15,11 @@ String.prototype.contains = function(s) {
 Node.prototype.getElements = function(s) {
     switch (s.charAt(0)) {
         case "#":
-        return this.getElementById(s.substring(1));
+            return this.getElementById(s.substring(1));
         case ".":
-        return this.getElementsByClassName(s.substring(1));
+            return this.getElementsByClassName(s.substring(1));
         default:
-        return this.getElementsByTagName(s);
+            return this.getElementsByTagName(s);
     }
 }
 
@@ -37,7 +36,6 @@ userRef.on("value", function(data) {
 }, function(error) {
     console.log(error);
 });
-
 
 // Check if user is logged in or not
 firebase.onAuth(function(authData) {
@@ -73,12 +71,10 @@ function providerLogin(provider, oauthOption) {
         if (!userExists) {
             alert("user doesn't exist")
             authData['today_prices'] = {
-                'gold' : 'loading...',
-                'silver' : 'loading...',
+                'gold': 'loading...',
+                'silver': 'loading...',
                 'platinum': 'loading...',
             };
-            console.log(authData);
-            alert("");
             userRef.child(uid).set(authData);
             users.push(uid);
             userRef.child(uid).push()
@@ -142,14 +138,13 @@ function getMetalURL(metal) {
     var data_url = API_URL;
     switch (metal.toLowerCase()) {
         case "silver":
-        return API_URL + "AG_EIB.json";
+            return API_URL + "AG_EIB.json";
         case "platinum":
-        return API_URL + "PL_MKT.json";
+            return API_URL + "PL_MKT.json";
         default:
-        return API_URL + "AU_EIB.json";
+            return API_URL + "AU_EIB.json";
     }
 }
-
 
 // StackManager is a group of functions to manage coin stacks
 var StackManager = function() {
@@ -183,10 +178,8 @@ StackManager.prototype.toString = function() {
     return this.metal;
 }
 
-
-
 // create a JSON from HTML table
-StackManager.prototype.construct = function(id) {
+StackManager.prototype.construct = function(id, img) {
     // tag named "tr" under addTable
     var tr = document.getElements(id).getElements("tr");
     var coinStack = {};
@@ -221,6 +214,7 @@ StackManager.prototype.construct = function(id) {
         property = property.replace(/[\.|#|\$|\/|\[|\]]*/g, "");
         coinStack[property] = value; // put key-value pair
     }
+    coinStack["image"] = Boolean(img) ? img : "";
     return coinStack;
 }
 
@@ -229,17 +223,17 @@ StackManager.prototype.addCoin = function(newStack) {
     // set reference to particular metal
     switch (newStack.metal) {
         case "Gold":
-        metalRef = this.stackRef.child("gold");
-        break;
+            metalRef = this.stackRef.child("gold");
+            break;
         case "Silver":
-        metalRef = this.stackRef.child("silver");
-        break;
+            metalRef = this.stackRef.child("silver");
+            break;
         case "Platinum":
-        metalRef = this.stackRef.child("platinum");
-        break;
+            metalRef = this.stackRef.child("platinum");
+            break;
         default:
-        metalRef = null
-        return;
+            metalRef = null
+            return;
     }
 
     metalRef.push(newStack); // put new coin information
@@ -268,8 +262,8 @@ StackManager.prototype.read = function() {
 
             // array of information to be inserted
             var data = ["<div class=\"coin_mini\"></div>",
-            "<a href=\"gold_detail.html?id=" + key + "\"></a>" + coin["type"],
-            coin["qty"], coin["weightunit_(g)"], coin["gold_%"], coin["total"]
+                "<a href=\"gold_detail.html?id=" + key + "\"></a>" + coin["type"],
+                coin["qty"], coin["weightunit_(g)"], coin["gold_%"], coin["total"]
             ];
 
             // construct td's for this row
@@ -282,8 +276,17 @@ StackManager.prototype.read = function() {
                 row.appendChild(td);
             }
 
+            console.log(list[key]);
+
             // row with unique id
             $("#coinStack").append("<tr id=\"" + key + "\">" + row.innerHTML + "</tr>");
+            $("#" + key + " > td > .coin_mini").css({
+                "background-color": "transparent",
+                "background-image": "url(\"" + list[key].image + "\")",
+                "background-size": "100% auto",
+                "background-repeat": "no-repeat",
+                "background-position": "center"
+            });
         }
     });
 }
@@ -294,17 +297,17 @@ StackManager.prototype.total = function() {
     //var metal = this.coinInfo.type;
     switch (this.metal) {
         case "gold":
-        reference = this.stackRef.child("gold");
-        break;
+            reference = this.stackRef.child("gold");
+            break;
         case "silver":
-        reference = this.stackRef.child("silver");
-        break;
+            reference = this.stackRef.child("silver");
+            break;
         case "platinum":
-        reference = this.stackRef.child("platinum");
-        break;
+            reference = this.stackRef.child("platinum");
+            break;
         default:
-        reference = null;
-        break;
+            reference = null;
+            break;
     }
 
     // check for reference and perform appropriat total calculation
@@ -395,11 +398,13 @@ StackManager.prototype.loadCoin = function(query) {
 
         // round 2: display data on edit form of coin
         tr = document.getElements("#editTable").getElements("tr");
+        console.log(data.val());
         for (var i = 0; i < tr.length; i++) {
             var td = tr[i].getElements("td")[1];
             if (td.innerHTML.contains("select")) {
                 td.getElements("select")[0].value = data.val()[properties[i]];
             } else if (td.innerHTML.contains("input")) {
+                console.log(td.getElements("input")[0]);
                 td.getElements("input")[0].value = data.val()[properties[i]];
             } else if (td.innerHTML.contains("strong")) {
                 td.getElements("strong")[0].innerHTML = data.val()[properties[i]];
@@ -407,6 +412,19 @@ StackManager.prototype.loadCoin = function(query) {
                 td.innerHTML = data.val()[properties[i]];
             }
         }
+        if (data.val().image) {
+            $($(".img_circle")[1]).css({
+                "display": "none",
+                "visibility": "hidden"
+            });
+            $(".img_circle").hide();
+        }
+        $(".img_box").css({
+            "background-image": "url(\"" + data.val().image + "\")",
+            "background-size": "100% auto",
+            "background-repeat": "no-repeat",
+            "background-position": "center"
+        });
     })
 }
 

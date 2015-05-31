@@ -800,6 +800,7 @@ a {
     -moz-border-radius: 100%;
     -ms-border-radius: 100%;
     background-color: #5D5D5D;
+    line-height: 160px;
 }
 
 strong {
@@ -1022,6 +1023,16 @@ select {
     line-height: 40px;
     margin-top: 15px;
 }
+
+#image_upload {
+    cursor: pointer;
+}
+
+#uploader {
+    display: none;
+    visibility: hidden;
+}
+
 /* * * * * * * * * * * * * * * *
  *                             *
  *     RESPONSIVE HANDLING     *

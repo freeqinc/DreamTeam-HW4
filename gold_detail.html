@@ -21,7 +21,7 @@
 
 <body>
     <!-- @concactus import: topnavpersist.html -->
-     <nav style="display: block; visibility: visible;">
+    <nav style="display: block; visibility: visible;">
         <svg class="icon-spinner2">
             <symbol id="icon-spinner2" viewBox="0 0 1024 1024">
                 <title>spinner2</title>
@@ -42,8 +42,6 @@
         <div id="logout">Logout</div>
     </div>
     <!-- @concactus end -->
-
-
     <input id="sidenav-selector" type="hidden" value="1" style="display: none">
     <!-- @concactus import: sidenav.html -->
     <aside>
@@ -57,23 +55,22 @@
                     </symbol>
                     <use xlink:href="#icon-home2"></use>
                 </svg>
-    
                 <figcaption>Home</figcaption>
-            </figure>    
-        </a>  
-        <a href="gold.html"> 
+            </figure>
+        </a>
+        <a href="gold.html">
             <figure>
                 Au
                 <figcaption>My Gold</figcaption>
-            </figure>      
-        </a> 
-        <a href="gold.html"> 
+            </figure>
+        </a>
+        <a href="gold.html">
             <figure>
                 Ag
                 <figcaption>My Silver</figcaption>
-            </figure> 
+            </figure>
         </a>
-        <a href="gold.html">       
+        <a href="gold.html">
             <figure>
                 Pt
                 <figcaption>My Platinum</figcaption>
@@ -85,7 +82,6 @@
     document.getElementsByTagName('aside')[0].getElementsByTagName('figure')[navSelection].className = 'nav-selected';
     </script>
     <!-- @concactus end -->
-
     <section class="main-section">
         <section class="coin_wrapper">
             <div class="mobile-nav">
@@ -115,7 +111,7 @@
                 </a>
                 <section class="coin_image">
                     <div class="img_box">
-                        <div class="img_circle"></div>
+                        <div class="img_circle">Click to Add Image</div>
                     </div>
                 </section>
                 <section class="coin_detail">
@@ -171,18 +167,18 @@
             </div>
         </section>
     </section>
-
     <div id="coin_edit">
         <svg version="1.1" id="icon-close" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="100px" height="100px" viewBox="0 0 100 100" enable-background="new 0 0 100 100" xml:space="preserve">
-            <line fill="#FFFFFF" stroke="#ababab" stroke-width="18" stroke-linecap="round" stroke-miterlimit="10" x1="19.5" y1="20" x2="80.167" y2="80.667"/>
-            <line fill="#FFFFFF" stroke="#ababab" stroke-width="18" stroke-linecap="round" stroke-miterlimit="10" x1="80.167" y1="20" x2="19.5" y2="80.667"/>
+            <line fill="#FFFFFF" stroke="#ababab" stroke-width="18" stroke-linecap="round" stroke-miterlimit="10" x1="19.5" y1="20" x2="80.167" y2="80.667" />
+            <line fill="#FFFFFF" stroke="#ababab" stroke-width="18" stroke-linecap="round" stroke-miterlimit="10" x1="80.167" y1="20" x2="19.5" y2="80.667" />
         </svg>
         <div id="coin_edit_wrapper">
             <section class="coin_wrapper">
                 <div class="coin_main">
-                    <section class="coin_image">
-                        <div class="img_box">
-                            <div class="img_circle"></div>
+                    <section id="image_upload" class="coin_image">
+                        <input type="file" id="uploader" />
+                        <div class="img_box" id="img_holder">
+                            <div class="img_circle">Click to Add Image</div>
                         </div>
                     </section>
                     <section class="coin_detail">
@@ -219,9 +215,8 @@
                                 </td>
                             </tr>
                             <tr>
-                            <td>Price per oz</td>
+                                <td>Price per oz</td>
                                 <td>
-                                    <!--<input name="quantity" value="47.00" />-->
                                     0.00
                                 </td>
                             </tr>
@@ -257,12 +252,10 @@
             </section>
         </div>
     </div>
-
-
     <!-- @concactus import: footer.html -->
     <footer>
         &copy; 2015 CoinFlip
-    </footer> 
+    </footer>
     <!-- @concactus end -->
 </body>
 
