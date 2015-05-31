@@ -149,13 +149,36 @@ $(document).ready(function() {
 					data: silver1oz
 				}, ]
 			};
-
-			var ctx = document.getElementById("total-chart").getContext("2d");
-			if(coinChart != null)
-				coinChart.destroy();
-			coinChart = new Chart(ctx).Line(data, options);
-			coinChart.update();
 		}
+		else if (metal == "gold"){
+			var data = {
+				labels: xlabel,
+				datasets: [{
+					label: "Gold Total",
+					fillColor: "rgba(104, 206, 222, 0.05)",
+					strokeColor: "#FF6D67",
+					pointColor: "#FF6D67",
+					pointStrokeColor: pointStroke,
+					pointHighlightFill: pointHighlightFill,
+					pointHighlightStroke: pointHighlightStroke,
+					data: goldtotal
+				}, {
+					label: "1oz Gold",
+					fillColor: "rgba(104, 206, 222, 0.05)",
+					strokeColor: "#9FFF98",
+					pointColor: "#9FFF98",
+					pointStrokeColor: pointStroke,
+					pointHighlightFill: pointHighlightFill,
+					pointHighlightStroke: pointHighlightStroke,
+					data: gold1oz
+				}, ]
+			};
+		}
+		var ctx = document.getElementById("total-chart").getContext("2d");
+		if(coinChart != null)
+			coinChart.destroy();
+		coinChart = new Chart(ctx).Line(data, options);
+		coinChart.update();
 	};
 
 
@@ -370,7 +393,7 @@ $(document).ready(function() {
 	// popMarketList()
 	// used in home.html 
 	// populates the bid/ask/change data for the market-item-stats
-	function popMarketList(){
+	function popMarketList(page){
 		$.ajax({
 			type: "GET",
 			dataType: 'text',
@@ -382,28 +405,51 @@ $(document).ready(function() {
 		})
 		.done(function( csvdata ) {
 			var jsonAB = eval(csvdata);
-			for (var i = 0; i < 3; i++) {
+			if (page =="home.html"){
+				for (var i = 0; i < 3; i++) {
+					var bid = jsonAB[i].bid;
+					var ask = jsonAB[i].ask;
+					var change = jsonAB[i].oneDayChange;
+					var header = document.getElementsByClassName("market-item-stats");
+					header[i].getElementsByTagName('td')[0].innerHTML = bid;
+					header[i].getElementsByTagName('td')[1].innerHTML = ask;
+					var elmtChange  = header[i].getElementsByTagName('td')[2];
+					elmtChange.innerHTML = change;
+					change >= 0 ? elmtChange.className = "pos-change" : elmtChange.className = "neg-change";
+
+				}
+			}
+			else {
+				var i;
+				if( page =="gold.html")
+					i = 0;
+				else if (page =="silver.html")
+					i = 1;
+				else if (page=="platinum.html")
+					i = 2;
+				else
+					return; // don't populate this stuff otherwise
+
 				var bid = jsonAB[i].bid;
 				var ask = jsonAB[i].ask;
 				var change = jsonAB[i].oneDayChange;
 				var header = document.getElementsByClassName("market-item-stats");
-				header[i].getElementsByTagName('td')[0].innerHTML = bid;
-				header[i].getElementsByTagName('td')[1].innerHTML = ask;
-				var elmtChange  = header[i].getElementsByTagName('td')[2];
+				header[0].getElementsByTagName('td')[0].innerHTML = bid;
+				header[0].getElementsByTagName('td')[1].innerHTML = ask;
+				var elmtChange  = header[0].getElementsByTagName('td')[2];
 				elmtChange.innerHTML = change;
 				change >= 0 ? elmtChange.className = "pos-change" : elmtChange.className = "neg-change";
-
-			};
+			}
 		})
-		.fail( function(xhr, textStatus, errorThrown) {
-			alert(xhr.responseText);
-			alert(textStatus);
-		});
-	};
+.fail( function(xhr, textStatus, errorThrown) {
+	alert(xhr.responseText);
+	alert(textStatus);
+});
+};
 
 
-	function getMetalPrice(metal,start,end)
-	{
+function getMetalPrice(metal,start,end)
+{
         var json_url = "https://www.quandl.com/api/v1/datasets/WSJ/"; // there is a daily limit of 50 connections for unregistered users. You can create an account and add your security token like: https://www.quandl.com/api/v1/datasets/WSJ/PL_MKT.csv?auth_token=933vrq6wUfABXEf_sgH7&trim_start=2015-05-01 However the security is updated daily. Also you can use your own, or third party proxy like http://websitescraper.herokuapp.com/?url=https://www.quandl.com/api/v1/datasets/WSJ/AU_EIB.csv for additional 50 connections. This proxy will accept any url and return you the data, also helping to deal with same origin policy
         switch (metal) {
         	case 'gold':
@@ -429,9 +475,8 @@ $(document).ready(function() {
 
 
     // populate the market list in home.html
-    if(page == "home.html"){
-    	popMarketList();
-    }
+    popMarketList(page);
+
 
 
     // populate the graph 
@@ -459,7 +504,12 @@ $(document).ready(function() {
     	getMetalPrice('gold', pastDate, currDate);
     	getMetalPrice('silver', pastDate, currDate);
     	getMetalPrice('platinum', pastDate, currDate);
-
+    }
+    else if(page == "gold.html"){
+    	graphsToDraw = "gold";
+    	waitFor = 1;
+    	waitForTotal = 1;
+    	getMetalPrice('gold', pastDate, currDate);
     }
 
 });
