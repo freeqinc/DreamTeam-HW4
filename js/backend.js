@@ -47,48 +47,39 @@ firebase.onAuth(function(authData) {
     sessionHandler("/index.html", "/home.html");
 });
 
-// inititate coinInfo object
+// StackManager is a group of functions to manage coin stacks
 var StackManager = function() {
-    var coinInfo = {};
-    var coins = [];
+    var metal = ""; // temporary metal
 
+    // get out if not online
     if (!inSession) {
-        this.coinInfo = coinInfo;
-        this.coinInfo.type = "";
+        this.metal = "";
         return;
     }
 
+    this.stackRef = userRef.child(currentUser).child("coinStack");
+
+    // pick appropriate metal and asssign it to coinInfo table
+    // assume url followed correct naming convention.
     if (location.href.contains("gold")) {
-        coinInfo.type = "gold";
+        metal = "gold";
     } else if (location.href.contains("silver")) {
-        coinInfo.type = "silver";
+        metal = "silver";
     } else if (location.href.contains("platinum")) {
-        coinInfo.type = "platinum";
+        metal = "platinum";
     } else {
-        this.coinInfo = coinInfo;
-        this.coinInfo.type = "";
-        return;
+        metal = "";
     }
 
-    var stackRef = userRef.child(currentUser).child("coinStack");
-    var metalRef = stackRef.child(coinInfo.type);
-
-    stackRef.on("value", function(data) {
-        coinInfo.overallTotal = data.val().overallTotal;
-    });
-
-    metalRef.on("value", function(data) {
-        coinInfo.total = data.val().total;
-    });
-
-    this.coinInfo = coinInfo;
+    this.metal = metal; // update temporary table to real table
 }
 
+// displays current metal type that StackManager is managing.
 StackManager.prototype.toString = function() {
-    return this.coinInfo.type;
+    return this.metal;
 }
 
-// create JSON from table
+// create a JSON from HTML table
 StackManager.prototype.construct = function(id) {
     // tag named "tr" under addTable
     var tr = document.getElements(id).getElements("tr");
@@ -127,52 +118,34 @@ StackManager.prototype.construct = function(id) {
     return coinStack;
 }
 
-// 
-StackManager.prototype.create = function(newStack) {
-    var stackRef = userRef.child(currentUser).child("coinStack");
-
+// given JSON, add the data to firebase and update total values
+StackManager.prototype.addCoin = function(newStack) {
     // set reference to particular metal
     var metalRef = null;
     switch (newStack.metal) {
         case "Gold":
-            metalRef = stackRef.child("gold");
+            metalRef = this.stackRef.child("gold");
             break;
         case "Silver":
-            metalRef = stackRef.child("silver");
+            metalRef = this.stackRef.child("silver");
             break;
         case "Platinum":
-            metalRef = stackRef.child("platinum");
+            metalRef = this.stackRef.child("platinum");
             break;
         default:
             return;
     }
 
-    try {
-        var metalTotal = parseFloat(this.coinInfo.total) + parseFloat(newStack.total);
-        var overallTotal = parseFloat(this.coinInfo.overallTotal) + parseFloat(newStack.total);
-    } catch (err) {
-        console.log("Unable to calculate total");
-    }
-
     metalRef.push(newStack); // put new coin information
-
-    metalRef.update({
-        "total": metalTotal.toFixed(2).toString()
-    });
-
-    stackRef.update({
-        "overallTotal": overallTotal.toFixed(2).toString()
-    });
 }
 
 // Display coins on appropriate page of metal
 StackManager.prototype.read = function() {
-    var stackRef = userRef.child(currentUser).child("coinStack");
-    var metal = this.coinInfo.type;
-    if (!metal) {
+    //var stackRef = userRef.child(currentUser).child("coinStack");
+    if (!this.metal) {
         return;
     }
-    stackRef.child(metal).on("value", function(data) {
+    this.stackRef.child(this.metal).on("value", function(data) {
         if (!data) {
             console.log("No coins found in Firebase");
             return;
@@ -209,68 +182,95 @@ StackManager.prototype.read = function() {
     });
 }
 
-/* 
- * The total of designated metal. 
- * If metal is not appropriate then return overall total.
- */
+// The total of designated metal. 
+// If metal is not appropriate then return overall total.
 StackManager.prototype.total = function() {
-    var stackRef = userRef.child(currentUser).child("coinStack");
-    var metal = this.coinInfo.type;
-    stackRef.on("value", function(data) {
-        if (!data) {
-            console.log("No coins found in Firebase");
-            return;
-        }
-        var stack = data.val();
+    //var metal = this.coinInfo.type;
+    switch (this.metal) {
+        case "gold":
+            reference = this.stackRef.child("gold");
+            break;
+        case "silver":
+            reference = this.stackRef.child("silver");
+            break;
+        case "platinum":
+            reference = this.stackRef.child("platinum");
+            break;
+        default:
+            reference = null;
+            break;
+    }
 
-        // choose appropriate total
-        switch (metal) {
-            case "gold":
-                total = stack.gold.total;
-                break;
-            case "silver":
-                total = stack.silver.total;
-                break;
-            case "platinum":
-                total = stack.platinum.total;
-                break;
-            default:
-                total = stack.overallTotal;
-                break;
-        }
-        total = total.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-        $(".total-dollars").text("$" + total);
-    });
+    if (reference != null) {
+        reference.on("value", function(data) {
+            var total = 0.00;
+            data.forEach(function(childSnapshot) {
+                total += parseFloat(childSnapshot.val().total);
+            });
+            total = total.toFixed(2).toString();
+            total = total.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            $(".total-dollars").text("$" + total);
+        });
+    } else {
+        this.stackRef.on("value", function(data) {
+            var total = 0.00;
+            data.forEach(function(childSnapshot) {
+                childSnapshot.forEach(function(grandchild) {
+                    total += parseFloat(grandchild.val().total);
+                });
+            });
+            total = total.toFixed(2).toString();
+            total = total.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            $(".total-dollars").text("$" + total);
+        });
+    }
 }
 
+// validate if URL query has valid key for firebase access
 StackManager.prototype.validate = function(query) {
-    var pair = query.split("=");
-    var metal = this.coinInfo.type;
-    var metalRef = userRef.child(currentUser).child("coinStack").child(metal);
-    metalRef.on("value", function(data) {
+    // check for access validity
+    var access = null;
+    try {
+        access = query.split("=")[1];
+    } catch (err) {
+        console.log(err);
+        return;
+    }
+
+    // find key that matches given access. redirect if failed.
+    this.stackRef.child(this.metal).on("value", function(data) {
         if (!data) {
             console.log("No coins found in Firebase");
             return;
         }
-        var coins = data.val();
         var valid = false;
-        for (var key in coins) {
-            if (coins.hasOwnProperty(key) && key != "total" && key == pair[1]) {
+        data.forEach(function(childSnapshot) {
+            var key = childSnapshot.key();
+            if (key != "total" && key == access) {
                 valid = true;
-                break;
+                return;
             }
-        }
+        });
         if (!valid) {
             location.href = "" + metal + ".html";
         }
     });
 }
 
+// display coin data of designated coin key (passed in as query)
 StackManager.prototype.loadCoin = function(query) {
-    var metal = this.coinInfo.type;
-    var metalRef = userRef.child(currentUser).child("coinStack").child(metal);
-    var coinRef = metalRef.child(query.split("=")[1]);
+    // check for validity of access on coin reference
+    var coinRef = null;
+    try {
+        coinRef = this.stackRef.child(this.metal).child(query.split("=")[1]);
+    } catch (err) {
+        console.log(err);
+        return;
+    }
+
+    // retrieve data from firebase and put them into HTML
     coinRef.on("value", function(data) {
+        // round 1: dispaly data on table.
         var tr = document.getElements("#viewTable").getElements("tr");
         var properties = [];
         for (var i = 0; i < tr.length; i++) {
@@ -282,8 +282,10 @@ StackManager.prototype.loadCoin = function(query) {
             property = property.toLowerCase().replace(/\s+/g, "_");
             property = property.replace(/[\.|#|\$|\/|\[|\]]*/g, "");
             td[1].innerHTML = data.val()[property];
-            properties.push(property);
+            properties.push(property); // used for round 2
         }
+
+        // round 2: display data on edit form of coin
         tr = document.getElements("#editTable").getElements("tr");
         for (var i = 0; i < tr.length; i++) {
             var td = tr[i].getElements("td")[1];
@@ -300,31 +302,34 @@ StackManager.prototype.loadCoin = function(query) {
     })
 }
 
+// update coin information when edited.
 StackManager.prototype.editCoin = function(query, oldStack) {
-    var metal = this.coinInfo.type;
-    var metalRef = userRef.child(currentUser).child("coinStack").child(metal);
-    var coinRef = metalRef.child(query.split("=")[1]);
-    coinRef.update(oldStack);
+    // check for validity of access on coin reference
+    var coinRef = null;
+    try {
+        coinRef = this.stackRef.child(this.metal).child(query.split("=")[1]);
+    } catch (err) {
+        console.log(err);
+        return;
+    }
+
+    coinRef.update(oldStack); // update to firebase
 }
 
+// delete designated coin given by query
 StackManager.prototype.deleteCoin = function(query) {
-    var metal = this.coinInfo.type;
-    var stackRef = userRef.child(currentUser).child("coinStack")
-    var metalRef = stackRef.child(metal);
-    var coinRef = metalRef.child(query.split("=")[1]);
-    var coinTotal = 0;
+    var metalRef = this.stackRef.child(this.metal);
 
-    console.log("attempting to delete")
-    coinRef.on("value", function(data) {
-        coinTotal = data.val()["total"];
-    });
+    // check for validity of access on coin reference
+    var coinRef = null;
+    try {
+        coinRef = metalRef.child(query.split("=")[1]);
+    } catch (err) {
+        console.log(err);
+        return;
+    }
 
-    stackRef.update({
-        "overallTotal": (parseFloat(this.coinInfo.overallTotal) - coinTotal).toFixed(2).toString()
-    });
-    metalRef.update({
-        "total": (parseFloat(this.coinInfo.total) - coinTotal).toFixed(2).toString()
-    });
+    // delete current coin's entry
     coinRef.remove(function(error) {
         if (error) {
             console.log("Remove Failed");
@@ -356,18 +361,6 @@ function providerLogin(provider, oauthOption) {
         }
         if (!userExists) {
             userRef.child(uid).set(authData);
-            userRef.child(uid).child("coinStack").set({
-                "gold": {
-                    "total": "0.00"
-                },
-                "silver": {
-                    "total": "0.00"
-                },
-                "platinum": {
-                    "total": "0.00"
-                },
-                "overallTotal": "0.00"
-            });
             users.push(uid);
         }
     };

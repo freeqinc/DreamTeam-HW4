@@ -13,7 +13,7 @@ $(document).ready(function() {
     });
 
     $("#save").click(function() {
-        stack.create(stack.construct("#addTable"));
+        stack.addCoin(stack.construct("#addTable"));
         if (invalidDateInput) {
             alert("BAD DATE");
         } else {
