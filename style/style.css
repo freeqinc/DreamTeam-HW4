@@ -742,6 +742,7 @@ select {
 #save {
   background: #397C86;
   border: 1px solid #151515;
+  cursor: pointer;
   color: white;
   text-decoration: none;
   width: 275px; }

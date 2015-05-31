@@ -818,6 +818,7 @@ select {
 #save {
     background: #397C86;
     border: 1px solid #151515;
+    cursor: pointer;
     &:hover {
         border: 1px solid $main-accent;
     }

@@ -170,7 +170,7 @@ function coinEvent(ref) {
             if (text) {
                 for (var i = 0; i < selector.length; i++) {
                     try {
-                        selector[i].value = text;
+                        selector[i].innerHTML = text;
                     } catch (err) {}
                 }
             } else {
@@ -178,9 +178,9 @@ function coinEvent(ref) {
                 for (var i = 0; i < selector.length; i++) {
                     try {
                         if (selector.length == 1) {
-                            return selector[i].value;
+                            return selector[i].innerHTML;
                         }
-                        selectorData.push(selector[i].value);
+                        selectorData.push(selector[i].innerHTML);
                     } catch (err) {
                         return;
                     }
@@ -231,14 +231,64 @@ function constructStack() {
 function addStack(newStack) {
     var stackRef = userRef.child(currentUser).child("coinStack");
     switch (newStack.metal) {
-        case "gold":
+        case "Gold":
             stackRef.child("gold").push(newStack);
             break;
-        case "silver":
+        case "Silver":
             stackRef.child("silver").push(newStack);
             break;
-        case "platinum":
+        case "Platinum":
             stackRef.child("platinum").push(newStack);
             break;
     }
+}
+
+function readStack(metal) {
+    var stackRef = userRef.child(currentUser).child("coinStack");
+    stackRef.child(metal).on("value", function(data) {
+        if (!data) {
+            console.log("No coins found in Firebase");
+            return;
+        }
+        var list = data.val();
+        for (var key in list) {
+            if (list.hasOwnProperty(key)) {
+                var coin = list[key];
+                var row = document.createElement("tr");
+                var data = ['<div class="coin_mini"></div>', coin["type"], coin["qty"], coin["weightunit_(g)"], coin["gold_%"], coin["total"]];
+                for (var i = 0; i < Object.keys(data).length; i++) {
+                    var td = document.createElement("td");
+                    if (i == 0) {
+                        td.className = "stack_img_col";
+                    }
+                    td.innerHTML = data[i];
+                    row.appendChild(td);
+                }
+                coinEvent("#coinStack").append("<tr>" + row.innerHTML + "</tr>");
+            }
+
+        }
+    });
+}
+
+function myTotal(metal) {
+    var stackRef = userRef.child(currentUser).child("coinStack");
+    var total = 0;
+    stackRef.on("value", function(data) {
+        if (!data) {
+            console.log("No coins found in Firebase");
+            return;
+        }
+        var stack = data.val();
+        for (var frame in stack) {
+            if (stack.hasOwnProperty(frame) && (metal == "all" || frame == metal)) {
+                for (var key in stack[frame]) {
+                    if (stack[frame].hasOwnProperty(key)) {
+                        total += parseFloat(stack[frame][key].total);
+                    }
+                }
+            }
+        }
+        coinEvent(".total-dollars").val("$" + (total.toFixed(2)));
+    });
 }
