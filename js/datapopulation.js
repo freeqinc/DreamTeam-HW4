@@ -98,7 +98,7 @@ $(document).ready(function() {
 					pointStrokeColor: pointStroke,
 					pointHighlightFill: pointHighlightFill,
 					pointHighlightStroke: pointHighlightStroke,
-					data: [700, 820, 700, 800, 730, 950, 900]
+					data: goldtotal
 				}, {
 					label: "Platinum Total",
 					fillColor: "rgba(104, 206, 222, 0.05)",
@@ -239,6 +239,34 @@ $(document).ready(function() {
     };
 
 
+    var getMyGold = function(){
+    	var stackRef = userRef.child(currentUser).child("coinStack");
+    	stackRef.child('gold').on("value", function(data) {
+    		if (!data) {
+    			console.log("No coins found in Firebase");
+    			return;
+    		}
+	    	var list = data.val(); // JSON of all coins in designated metal
+
+	        // convert JSON of coins to table rows. Ignore the value of total
+	        for (var key in list) {
+	        	if (!list.hasOwnProperty(key) || key == "total") {
+	        		continue;
+	        	}
+	        	var coin = list[key];
+	        	var coinPurch = coin['purchase_date'];
+	        	var coinOzt = coin['total_au_(ozt)'];
+	        	var coinPurchDate = new Date(coinPurch);
+	        	var currDate = new Date();
+	        	var distanceDate = Math.floor((currDate-coinPurchDate)/(24*60*60*1000));
+	        	for (i = 0; i < goldtotal.length || i < distanceDate; i ++){
+	        		console.log("hello " + coinOzt + " - " + gold1oz[i]);
+	        		goldtotal[i] += (coinOzt*gold1oz[i]);
+	        	}
+	        }
+	    });	
+    };
+
 
     function getMetalJSON(json_url, metal){
     	var csvArr = [];
@@ -257,25 +285,55 @@ $(document).ready(function() {
     		csvArray = csvArray.slice(1, csvArray.length-1);
     		csvArray.reverse();
 
+    		var preprocessedArray = [];
     		var processedArray = [];
-    		j = 0;
-    		for(i = 0; i < xlabel.length; i++){
-    			if(csvArray[j] == null || csvArray[j][0].slice(-4) != xlabel[i]){
-    				processedArray.push(null);
+
+
+    		// catch up with xlabel first date
+    		var xlabelfirst = xlabel[0];
+    		var lastPrice = csvArray[0][1];
+    		var csvarrayfirst = new Date(csvArray[0][0]);
+    		var csvIter = 0;
+    		while(xlabelfirst != ((csvarrayfirst.getMonth()+1)+'-'+('0'+csvarrayfirst.getDate()).slice(-2))){
+    			
+    			//console.log(csvarrayfirst + " @ " + xlabelfirst);
+    			//console.log(xlabelfirst + " @ " + ((csvarrayfirst.getMonth()+1)+'-'+('0'+csvarrayfirst.getDate()).slice(-2)));
+    			if(csvarrayfirst.valueOf() == new Date(csvArray[csvIter+1][0]).valueOf()){
+    				csvIter++;
+    				lastPrice = csvArray[csvIter][1];
     			}
-    			else{
-    				processedArray.push(csvArray[j][1]);
-    				j++;
+
+    			csvarrayfirst.setDate(csvarrayfirst.getDate()+1);
+    		}
+
+    		preprocessedArray.push([csvarrayfirst.getFullYear()+'-'+('0'+(csvarrayfirst.getMonth()+1)).slice(-2)+'-'+('0'+csvarrayfirst.getDate()).slice(-2), lastPrice]);
+    		//alert(processedArray[0]);
+
+
+    		for(i = 1; i < xlabel.length; i++){
+    			csvarrayfirst.setDate(csvarrayfirst.getDate()+1);
+    			preprocessedArray.push([csvarrayfirst.getFullYear()+'-'+('0'+(csvarrayfirst.getMonth()+1)).slice(-2)+'-'+('0'+csvarrayfirst.getDate()).slice(-2), lastPrice]);
+    			if((csvArray[csvIter+1] != null) && csvarrayfirst.valueOf() == new Date(csvArray[csvIter+1][0]).valueOf()){
+    				csvIter++;
+    				lastPrice = csvArray[csvIter][1];
     			}
     		}
 
-    		// alert(csvArray);
-    		// alert(xlabel);
-    		// alert(processedArray);
+    		//alert(csvArray);
+    		//alert(xlabel);
+    		//alert(processedArray);
+    		//console.log(csvArray);
+    		//console.log(processedArray);
+
+    		for(i = 0; i < preprocessedArray.length; i++){
+    			processedArray.push(preprocessedArray[i][1]);
+    		}
+
 
     		switch (metal){
     			case 'gold':
     			gold1oz = processedArray;
+    			getMyGold();
     			break;
     			case 'silver':
     			silver1oz = processedArray;
@@ -288,11 +346,11 @@ $(document).ready(function() {
     		if(waitFor == 0)
     			drawGraph(graphsToDraw);
     	})
-    	.fail( function(xhr, textStatus, errorThrown) {
-    		alert(xhr.responseText);
-    		alert(textStatus);
-    	});
-    };
+.fail( function(xhr, textStatus, errorThrown) {
+	alert(xhr.responseText);
+	alert(textStatus);
+});
+};
 
 
 	// popMarketList()
@@ -366,45 +424,33 @@ $(document).ready(function() {
     var daysBack = 31;
     var date = new Date();
     var currDate = date.getFullYear()+'-'+('0'+(date.getMonth()+1)).slice(-2)+'-'+('0'+date.getDate()).slice(-2);
-    date.setDate(date.getDate()-daysBack+1);
+    date.setDate(date.getDate()-daysBack-7);
     var pastDate = date.getFullYear()+'-'+('0'+(date.getMonth()+1)).slice(-2)+'-'+('0'+date.getDate()).slice(-2);
     var xlabeldate = new Date();
 
     for( i = 0; i < daysBack; i++){
     	xlabel[daysBack-i-1] = (xlabeldate.getMonth()+1)+'-'+('0'+xlabeldate.getDate()).slice(-2);
     	xlabeldate.setDate(xlabeldate.getDate()-1);
+    	goldtotal.push(0);
+    	silvertotal.push(0);
+    	plattotal.push(0);
     }
 
+
     if(page == "home.html"){
-    	var metal = 'gold';
-    	var stackRef = userRef.child(currentUser).child("coinStack");
-    	stackRef.child(metal).on("value", function(data) {
-    		if (!data) {
-    			console.log("No coins found in Firebase");
-    			return;
-    		}
-        	var list = data.val(); // JSON of all coins in designated metal
-
-	        // convert JSON of coins to table rows. Ignore the value of total
-	        for (var key in list) {
-	        	if (!list.hasOwnProperty(key) || key == "total") {
-	        		continue;
-	        	}
-	        	var coin = list[key];
-	        	alert(new Date('03-04-2015'));
-	        }
-	    });
-
 
     	graphsToDraw = "all";
     	waitFor = 3;
     	getMetalPrice('gold', pastDate, currDate);
     	getMetalPrice('silver', pastDate, currDate);
     	getMetalPrice('platinum', pastDate, currDate);
+
+
+
+
+
+
+
     }
-
-
-
-
 
 });
