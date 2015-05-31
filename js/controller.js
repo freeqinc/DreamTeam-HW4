@@ -37,7 +37,12 @@ $(document).ready(function() {
 
     //coinEvent("#coinStack").append('your');
 
+    $("#save").click(function() {
+    	addStack(constructStack());
+    });
+
     /*getJSON(getMetalURL("gold"), function(data) {
         //console.log(data);
     });*/
+
 });

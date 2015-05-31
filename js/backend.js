@@ -2,6 +2,7 @@ var firebase = new Firebase("https://134b-dreamteam.firebaseio.com/");
 var userRef = firebase.child("users");
 var userCollected = false;
 var inSession = false;
+var currentUser = "";
 var users = [];
 const MS_THRESHOLD = 2592000000;
 const API_URL = "https://www.quandl.com/api/v1/datasets/WSJ/";
@@ -24,6 +25,9 @@ userRef.on("value", function(data) {
 // Check if user is logged in or not
 firebase.onAuth(function(authData) {
     inSession = Boolean(authData) ? true : false;
+    if (inSession) {
+        currentUser = authData.uid;
+    }
     sessionHandler("/index.html", "/home.html");
 });
 
@@ -45,6 +49,7 @@ function providerLogin(provider, oauthOption) {
         for (var i = 0; i < users.length; i++) {
             if (users[i] == uid) {
                 userExists = true;
+                currentUser = i;
                 break;
             }
         }
@@ -54,6 +59,7 @@ function providerLogin(provider, oauthOption) {
             };
             userRef.child(uid).set(authData);
             users.push(uid);
+            currentUser = users.length - 1;
         }
     };
 
@@ -193,4 +199,46 @@ function coinEvent(ref) {
         }
     };
     return events;
+}
+
+function constructStack() {
+    var tr = document.getElementById("addTable").getElementsByTagName("tr");
+    var coinStack = {};
+    for (var i = 0; i < tr.length; i++) {
+        var property = tr[i].getElementsByTagName("td")[0];
+        var value = '';
+        var td = tr[i].getElementsByTagName("td")[1];
+        var tdValue = td.innerHTML.replace(/(^\s+|\s+$)/g, '');
+        if (property.innerHTML.indexOf("strong") > -1) {
+            property = property.getElementsByTagName("strong")[0];
+        }
+        if (tdValue.indexOf("select") > -1) {
+            value = td.getElementsByTagName("select")[0].value;
+        } else if (tdValue.indexOf("input") > -1) {
+            value = td.getElementsByTagName("input")[0].value;
+        } else if (tdValue.indexOf("strong") > -1) {
+            value = td.getElementsByTagName("strong")[0].innerHTML;
+        } else {
+            value = td.innerHTML;
+        }
+        property = property.innerHTML.toLowerCase().replace(/\s+/g, '_');
+        property = property.replace(/[\.|#|\$|\/|\[|\]]*/g, "");
+        coinStack[property] = value;
+    }
+    return coinStack;
+}
+
+function addStack(newStack) {
+    var stackRef = userRef.child(currentUser).child("coinStack");
+    switch (newStack.metal) {
+        case "gold":
+            stackRef.child("gold").push(newStack);
+            break;
+        case "silver":
+            stackRef.child("silver").push(newStack);
+            break;
+        case "platinum":
+            stackRef.child("platinum").push(newStack);
+            break;
+    }
 }

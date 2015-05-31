@@ -39,8 +39,6 @@
         </svg>
     </nav>
     <!-- @concactus end -->
-
-
     <input id="sidenav-selector" type="hidden" value="1" style="display: none">
     <!-- @concactus import: sidenav.html -->
     <aside>
@@ -54,23 +52,22 @@
                     </symbol>
                     <use xlink:href="#icon-home2"></use>
                 </svg>
-    
                 <figcaption>Home</figcaption>
-            </figure>    
-        </a>  
-        <a href="gold.html"> 
+            </figure>
+        </a>
+        <a href="gold.html">
             <figure>
                 Au
                 <figcaption>My Gold</figcaption>
-            </figure>      
-        </a> 
-        <a href="gold.html"> 
+            </figure>
+        </a>
+        <a href="gold.html">
             <figure>
                 Ag
                 <figcaption>My Silver</figcaption>
-            </figure> 
+            </figure>
         </a>
-        <a href="gold.html">       
+        <a href="gold.html">
             <figure>
                 Pt
                 <figcaption>My Platinum</figcaption>
@@ -82,7 +79,6 @@
     document.getElementsByTagName('aside')[0].getElementsByTagName('figure')[navSelection].className = 'nav-selected';
     </script>
     <!-- @concactus end -->
-
     <section class="main-section">
         <section class="coin_wrapper">
             <div class="mobile-nav">
@@ -116,7 +112,7 @@
                     </div>
                 </section>
                 <section class="coin_detail">
-                    <table>
+                    <table id="addTable">
                         <tr>
                             <td>Metal</td>
                             <td>
@@ -142,7 +138,7 @@
                             </td>
                         </tr>
                         <tr>
-                            <td>Qty.</td>
+                            <td>Qty</td>
                             <td>
                                 <input name="quantity" value="1" />
                             </td>
@@ -184,17 +180,18 @@
                             <td><strong>1199.10</strong></td>
                         </tr>
                     </table>
-                    <a href="gold.html"><span id="save">Save to My Stack</span></a>
+                    <!--<a href="gold.html">-->
+                    <span id="save">Save to My Stack</span>
+                    <!--</a>-->
                     <a href="gold.html"><span id="cancel">Cancel</span></a>
                 </section>
             </div>
         </section>
     </section>
-    
     <!-- @concactus import: footer.html -->
     <footer>
         &copy; 2015 CoinFlip
-    </footer> 
+    </footer>
     <!-- @concactus end -->
 </body>
 
