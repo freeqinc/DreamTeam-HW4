@@ -63,7 +63,8 @@
   margin: 0;
   padding: 0; }
 
-html, body {
+html,
+body {
   height: 100%;
   width: 100%;
   font-size: 14px; }
@@ -300,7 +301,8 @@ a {
 
 #sign-up-button {
   background: #1C3A3F;
-  border: 1px solid #151515; }
+  border: 1px solid #151515;
+  cursor: pointer; }
   #sign-up-button:hover {
     border: 1px solid #68CEDE; }
 
@@ -310,6 +312,14 @@ a {
   cursor: pointer; }
   #log-in-button:hover {
     border: 1px solid #68CEDE; }
+
+#sign-in-section {
+  margin-top: 30px; }
+  #sign-in-section input {
+    border-radius: 0;
+    width: 43.8%;
+    height: 35px;
+    font-size: 14px; }
 
 #w1-right {
   height: 450px; }
@@ -756,6 +766,9 @@ select {
  *                             *
  * * * * * * * * * * * * * * * */
 @media screen and (max-width: 1000px) {
+  #sign-in-section {
+    margin-top: 0px; }
+
   #w1-wrapper section {
     margin: 50px 0px; }
 

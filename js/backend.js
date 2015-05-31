@@ -28,7 +28,7 @@ firebase.onAuth(function(authData) {
 });
 
 // function that handles login
-function login(provider, oauthOption) {
+function providerLogin(provider, oauthOption) {
     if (!provider) {
         console.log("Please input provider: facebook, github, google, or twitter");
         return;
@@ -63,6 +63,26 @@ function login(provider, oauthOption) {
     } else {
         firebase.authWithOAuthPopup(provider, oauthCallback);
     }
+}
+
+function customLogin(email, password) {
+    console.log(email);
+    console.log(password);
+    userRef.createUser({
+        email: email,
+        password: password
+    }, function() {
+        userRef.authWithPassword({
+            email: email,
+            password: password
+        }, function(error, authData) {
+            if (error) {
+                console.log("Login Failed!", error);
+            } else {
+                console.log("Authenticated successfully with payload:", authData);
+            }
+        });
+    });
 }
 
 // function that handles logout
@@ -113,12 +133,22 @@ function getJSON(url, callback) {
 
 // user events needed for this application.
 function coinEvent(ref) {
-    if (ref.charAt(0) == ".") {
-        selector = document.getElementsByClassName(ref.substring(1));
-    } else if (ref.charAt(0) == "#") {
-        selector = [document.getElementById(ref.substring(1))];
-    } else {
-        selector = document.getElementsByTagName(ref);
+    if (typeof ref == "object") {
+        if (ref.id) {
+            selector = [document.getElementById(ref.id)];
+        } else if (ref.className) {
+            selector = document.getElementsByClassName(ref.className);
+        } else {
+            selector = document.getElementsByTagName(ref.tagName);
+        }
+    } else if (typeof ref == "string") {
+        if (ref.charAt(0) == ".") {
+            selector = document.getElementsByClassName(ref.substring(1));
+        } else if (ref.charAt(0) == "#") {
+            selector = [document.getElementById(ref.substring(1))];
+        } else {
+            selector = document.getElementsByTagName(ref);
+        }
     }
     var events = {
         "click": function(callback) {
@@ -126,14 +156,47 @@ function coinEvent(ref) {
                 try {
                     selector[i].addEventListener("click", callback);
                 } catch (err) {
-                    console.log("failed to add click listener");
+                    return;
+                }
+            }
+        },
+        "val": function(text) {
+            if (text) {
+                for (var i = 0; i < selector.length; i++) {
+                    try {
+                        selector[i].value = text;
+                    } catch (err) {}
+                }
+            } else {
+                var selectorData = [];
+                for (var i = 0; i < selector.length; i++) {
+                    try {
+                        if (selector.length == 1) {
+                            return selector[i].value;
+                        }
+                        selectorData.push(selector[i].value);
+                    } catch (err) {
+                        return;
+                    }
+                }
+                return selectorData;
+            }
+        },
+        "append": function(text) {
+            var regex = /(<([^>]+)>)/ig;
+            child = !regex.exec(text) ? document.createTextNode(text) : null;
+            for (var i = 0; i < selector.length; i++) {
+                try {
+                    if (child) {
+                        selector[i].appendChild(child);
+                    } else {
+                        selector[i].innerHTML = selector[i].innerHTML + text;
+                    }
+                } catch (err) {
+                    return;
                 }
             }
         }
     };
     return events;
-}
-
-function past30Days() {
-    return new Date().getTime() - MS_THRESHOLD;
 }
