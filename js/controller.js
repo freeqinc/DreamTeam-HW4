@@ -35,9 +35,7 @@ $(document).ready(function() {
         logout();
     });
 
-    coinEvent("#coinStack").append(' <tr> <td class = "stack_img_col"> <div class = "coin_mini"> </div></td>' +
-        '<td> <a href = "gold_add.html"> </a>US Eagle</td>' +
-        '<td> 1 </td> <td> 1.244 </td> <td> .917 </td> <td> 1199.10 </td> </tr>');
+    //coinEvent("#coinStack").append('your');
 
     /*getJSON(getMetalURL("gold"), function(data) {
         //console.log(data);

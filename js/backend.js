@@ -183,15 +183,9 @@ function coinEvent(ref) {
             }
         },
         "append": function(text) {
-            var regex = /(<([^>]+)>)/ig;
-            child = !regex.exec(text) ? document.createTextNode(text) : null;
             for (var i = 0; i < selector.length; i++) {
                 try {
-                    if (child) {
-                        selector[i].appendChild(child);
-                    } else {
-                        selector[i].innerHTML = selector[i].innerHTML + text;
-                    }
+                    selector[i].innerHTML = selector[i].innerHTML + text;
                 } catch (err) {
                     return;
                 }
