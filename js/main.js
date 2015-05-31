@@ -11,11 +11,11 @@ $(window).load(function() {
      *                         *
      * * * * * * * * * * * * * */
 
-     $('.icon-spinner2').click(function() {
+    $('.icon-spinner2').click(function() {
         location.reload();
     });
 
-     $("#coinStack").on("click", "tr", function() {
+    $("#coinStack").on("click", "tr", function() {
         $(this).find('a')[0].click();
     });
 
@@ -238,11 +238,11 @@ $(window).load(function() {
      *     MOBILE HANDLING     *
      *                         *
      * * * * * * * * * * * * * */
-     var winWidth = $(window).width();
-     var winHeight = $(window).height();
+    var winWidth = $(window).width();
+    var winHeight = $(window).height();
 
 
-     $('.mtb-1').click(function() {
+    $('.mtb-1').click(function() {
         $('.graph-panel').removeClass('graph-panel-show');
         $('.market-status').fadeIn(0);
         $('.market-list').fadeIn(0);
@@ -253,7 +253,7 @@ $(window).load(function() {
 
     });
 
-     $('.mtb-2').click(function() {
+    $('.mtb-2').click(function() {
         $('.market-status').fadeOut(0);
         $('.market-list').fadeOut(0);
         if (page == "gold.html")
@@ -264,7 +264,7 @@ $(window).load(function() {
         drawGraph();
     });
 
-     var resizer = function() {
+    var resizer = function() {
         if (winWidth > 999) {
             $('.graph-panel').removeClass('graph-panel-show');
             $('.market-status').fadeIn(0);
@@ -284,9 +284,9 @@ $(window).load(function() {
      *       EDIT HANDLING     *
      *                         *
      * * * * * * * * * * * * * */
-     var editOpen = false;
+    var editOpen = false;
 
-     $('#edit').click(function(){
+    $('#edit').click(function() {
         var msTop = $('.main-section').css('padding-top');
         var msLeft = $('.main-section').css('padding-left');
         var msBottom = $('.main-section').css('padding-bottom');
@@ -294,7 +294,7 @@ $(window).load(function() {
         $('#coin_edit').fadeIn(0).velocity({
             top: $('#edit').offset().top - $(window).scrollTop(),
             left: $('#edit').offset().left,
-        },0);
+        }, 0);
         $('#coin_edit').velocity({
             top: 0,
             left: 0,
@@ -302,37 +302,43 @@ $(window).load(function() {
             height: '100%',
             backgroundColor: '#1D1D1D',
             paddingTop: 63,
-        }, {duration: 600, easing: 'easeOutQuint'});
-        setTimeout(function(){
+        }, {
+            duration: 600,
+            easing: 'easeOutQuint'
+        });
+        setTimeout(function() {
             $('#coin_edit').find('*').fadeIn(500);
-        },100);
-        setTimeout(function(){
+        }, 100);
+        setTimeout(function() {
             $(window).scrollTop(0);
             $('#coin_edit_wrapper').velocity({
                 translateY: -$(window).scrollTop()
-            },0);
-        },400);
+            }, 0);
+        }, 400);
     });
 
-     $('#icon-close').click(function(){
+    $('#icon-close').click(function() {
         editOpen = false;
         $('#coin_edit').velocity({
-            top: $('#edit').offset().top- $(window).scrollTop(),
+            top: $('#edit').offset().top - $(window).scrollTop(),
             left: $('#edit').offset().left,
             width: 130,
             height: 40,
             paddingTop: 0,
             backgroundColor: '#397C86',
-        }, {duration: 600, easing: 'easeOutQuint'}).fadeOut(100);
+        }, {
+            duration: 600,
+            easing: 'easeOutQuint'
+        }).fadeOut(100);
         $('#coin_edit').find('*').fadeOut(100);
     });
 
 
-     $(window).scroll(function(){
-        if(editOpen){
+    $(window).scroll(function() {
+        if (editOpen) {
             $('#coin_edit_wrapper').velocity({
                 translateY: -$(window).scrollTop()
-            },0);
+            }, 0);
         }
     });
 
@@ -342,13 +348,12 @@ $(window).load(function() {
      *    ADD HANDLING/DATE    *
      *                         *
      * * * * * * * * * * * * * */
-     var invalidDateInput = false;
-     var defaultDate = new Date();
-     var defaultDateInput = ('0'+(defaultDate.getMonth()+1)).slice(-2)+'-'+('0'+defaultDate.getDate()).slice(-2)+'-'+defaultDate.getFullYear();
-     document.getElementsByName('purchase_date')[0].value = defaultDateInput;
+    var invalidDateInput = false;
+    var defaultDate = new Date();
+    var defaultDateInput = ('0' + (defaultDate.getMonth() + 1)).slice(-2) + '-' + ('0' + defaultDate.getDate()).slice(-2) + '-' + defaultDate.getFullYear();
+    document.getElementsByName('purchase_date')[0].value = defaultDateInput;
 
-     function isValidDate(date)
-     {
+    function isValidDate(date) {
         var matches = /^(\d{2})[-\/](\d{2})[-\/](\d{4})$/.exec(date);
         if (matches == null) return false;
         var d = matches[2];
@@ -356,17 +361,17 @@ $(window).load(function() {
         var y = matches[3];
         var composedDate = new Date(y, m, d);
         return composedDate.getDate() == d &&
-        composedDate.getMonth() == m &&
-        composedDate.getFullYear() == y;
+            composedDate.getMonth() == m &&
+            composedDate.getFullYear() == y;
     }
 
-    $('.purchase_date').focus(function(){
+    $('.purchase_date').focus(function() {
         $(this).removeClass('bad-input');
         invalidDateInput = false;
     });
 
-    $('.purchase_date').blur(function(){
-        if(!isValidDate(document.getElementsByName('purchase_date')[0].value)){
+    $('.purchase_date').blur(function() {
+        if (!isValidDate(document.getElementsByName('purchase_date')[0].value)) {
             $(this).addClass('bad-input');
             $(this).val('MM-DD-YYYY');
             invalidDateInput = true;
