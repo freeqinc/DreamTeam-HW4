@@ -264,7 +264,7 @@ function readStack(metal) {
                     td.innerHTML = data[i];
                     row.appendChild(td);
                 }
-                coinEvent("#coinStack").append("<tr>" + row.innerHTML + "</tr>");
+                coinEvent("#coinStack").append("<tr id=\""+key+"\">" + row.innerHTML + "</tr>");
             }
 
         }
