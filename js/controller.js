@@ -13,7 +13,7 @@ $(document).ready(function() {
     });
 
     $("#save").click(function() {
-        stack.create(stack.construct());
+        stack.create(stack.construct("#addTable"));
         if (invalidDateInput) {
             alert("BAD DATE");
         } else {
@@ -22,6 +22,7 @@ $(document).ready(function() {
     });
 
     $("#edited").click(function() {
+    	stack.editCoin(location.search, stack.construct("#editTable"));
         location.href = metal + ".html";
     });
 
