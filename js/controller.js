@@ -14,11 +14,15 @@ $(document).ready(function() {
 
     $("#save").click(function() {
         stack.create(stack.construct());
-        location.href = metal + ".html"
+        if (invalidDateInput) {
+            alert("BAD DATE");
+        } else {
+            location.href = metal + ".html";
+        }
     });
 
     $("#edited").click(function() {
-        location.href = metal + ".html"
+        location.href = metal + ".html";
     });
 
     if (location.pathname.contains("_detail")) {

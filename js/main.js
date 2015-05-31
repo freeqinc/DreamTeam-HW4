@@ -1,3 +1,5 @@
+var invalidDateInput = false;
+
 $(window).load(function() {
 
     var path = window.location.pathname;
@@ -348,10 +350,10 @@ $(window).load(function() {
      *    ADD HANDLING/DATE    *
      *                         *
      * * * * * * * * * * * * * */
-    var invalidDateInput = false;
     var defaultDate = new Date();
     var defaultDateInput = ('0' + (defaultDate.getMonth() + 1)).slice(-2) + '-' + ('0' + defaultDate.getDate()).slice(-2) + '-' + defaultDate.getFullYear();
-    document.getElementsByName('purchase_date')[0].value = defaultDateInput;
+    //document.getElementsByName('purchase_date')[0].value = defaultDateInput;
+    $(".purchase_date").val(defaultDateInput);
 
     function isValidDate(date) {
         var matches = /^(\d{2})[-\/](\d{2})[-\/](\d{4})$/.exec(date);
