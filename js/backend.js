@@ -29,14 +29,14 @@ userRef.on("value", function(data) {
         console.log("No users found in Firebase");
         return;
     }
-    var list = data.val();
-    for (var key in list) {
-        if (list.hasOwnProperty(key) && !userCollected) {
-            users.push(list[key].auth.uid);
-        }
-    }
+    data.forEach(function(childSnapshot) {
+        users.push(childSnapshot.key());
+    });
     userCollected = true;
+}, function(error) {
+    console.log(error);
 });
+
 
 // Check if user is logged in or not
 firebase.onAuth(function(authData) {
@@ -279,42 +279,42 @@ StackManager.prototype.loadCoin = function(query) {
             if (property.contains("strong")) {
                 property = td[0].getElements("strong")[0].innerHTML;
             }
+            properties.push(property);
             property = property.toLowerCase().replace(/\s+/g, "_");
             property = property.replace(/[\.|#|\$|\/|\[|\]]*/g, "");
             td[1].innerHTML = data.val()[property];
-            properties.push(property);
+
         }
         tr = document.getElements("#editTable").getElements("tr");
         for (var i = 0; i < tr.length; i++) {
-            // key value pair for JSON
-            var property = tr[i].getElements("td")[0];
-            //var value = "";
 
-            // prevent to include strong tag as part of the key
-            if (property.innerHTML.contains("strong")) {
-                property = property.getElements("strong")[0];
-            }
-
-            // grab data from eath td
-            var td = tr[i].getElements("td")[1];
-            var tdStr = td.innerHTML.replace(/(^\s+|\s+$)/g, "");
-
-            // case checking: select, input, strong, or plain text
-            if (tdStr.contains("select")) {
-                value = td.getElements("select")[0].value;
-            } else if (tdStr.contains("input")) {
-                value = td.getElements("input")[0].value;
-            } else if (tdStr.contains("strong")) {
-                value = td.getElements("strong")[0].innerHTML;
-            } else {
-                value = td.innerHTML;
-            }
-
-            // replace property to appropriate string
-            property = property.innerHTML.toLowerCase().replace(/\s+/g, "_");
-            property = property.replace(/[\.|#|\$|\/|\[|\]]*/g, "");
         }
     })
+}
+
+StackManager.prototype.deleteCoin = function(query) {
+    var metal = this.coinInfo.type;
+    var stackRef = userRef.child(currentUser).child("coinStack")
+    var metalRef = stackRef.child(metal);
+    var coinRef = metalRef.child(query.split("=")[1]);
+    var coinTotal = 0;
+
+    console.log("attempting to delete")
+    coinRef.on("value", function(data) {
+        coinTotal = data.val()["total"];
+    });
+
+    stackRef.update({
+        "overallTotal": (parseFloat(this.coinInfo.overallTotal) - coinTotal).toFixed(2).toString()
+    });
+    metalRef.update({
+        "total": (parseFloat(this.coinInfo.total) - coinTotal).toFixed(2).toString()
+    });
+    coinRef.remove(function(error) {
+        if (error) {
+            console.log("Remove Failed");
+        }
+    });
 }
 
 // function that handles login
@@ -332,6 +332,7 @@ function providerLogin(provider, oauthOption) {
         }
         var userExists = false;
         var uid = authData.uid;
+        console.log(users);
         for (var i = 0; i < users.length; i++) {
             if (users[i] == uid) {
                 userExists = true;

@@ -25,6 +25,13 @@ $(document).ready(function() {
         location.href = metal + ".html";
     });
 
+    $("#delete").click(function() {
+    	if(location.pathname.contains("_detail")) {
+    		stack.deleteCoin(location.search);
+    		location.href = metal + ".html";
+    	}
+    })
+
     if (location.pathname.contains("_detail")) {
         stack.validate(location.search);
         stack.loadCoin(location.search);
