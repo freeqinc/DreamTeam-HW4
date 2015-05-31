@@ -631,7 +631,8 @@ a {
     height: 30px;
     line-height: 30px;
     margin-bottom: 15px;
-    cursor: pointer; }
+    cursor: pointer;
+    width: 200px; }
     .coin_main .breadcrumb svg {
       fill: #E6E6E6;
       width: 20px;
@@ -699,6 +700,130 @@ a {
 strong {
   font-family: "monster_r";
   font-weight: 700; }
+
+#edit {
+  background: #397C86;
+  border: 1px solid #397C86;
+  cursor: pointer;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  color: white;
+  text-decoration: none;
+  width: 130px;
+  margin-left: 15px;
+  display: inline-block;
+  height: 40px;
+  line-height: 40px;
+  vertical-align: top; }
+  #edit:hover {
+    border: 1px solid #68CEDE; }
+
+#coin_edit {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 99999;
+  background: #397C86;
+  height: 40px;
+  width: 130px;
+  display: none;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  padding-top: 63px; }
+  #coin_edit * {
+    display: none; }
+  #coin_edit svg {
+    position: absolute;
+    right: 25px;
+    top: 25px;
+    width: 45px;
+    height: 45px;
+    cursor: pointer;
+    z-index: 99;
+    -webkit-transition: all 0.1s ease-out;
+    -moz-transition: all 0.1s ease-out;
+    transition: all 0.1s ease-out; }
+    #coin_edit svg:hover {
+      -webkit-transform: scale(1.05);
+      -moz-transform: scale(1.05);
+      -ms-transform: scale(1.05);
+      -o-transform: scale(1.05);
+      transform: scale(1.05); }
+  #coin_edit #coin_edit_wrapper {
+    margin: 0 auto; }
+  #coin_edit #edit-title {
+    width: 100%;
+    text-align: center;
+    font-size: 1.8em;
+    margin-bottom: 10px; }
+  #coin_edit #coin_edit_section {
+    float: left;
+    padding-bottom: 50px; }
+    #coin_edit #coin_edit_section a {
+      text-decoration: none;
+      color: #E6E6E6; }
+    #coin_edit #coin_edit_section span {
+      display: block;
+      height: 55px;
+      line-height: 55px;
+      text-align: center;
+      font-size: 1.3em;
+      margin-left: auto;
+      margin-right: auto; }
+    #coin_edit #coin_edit_section table {
+      width: 275px;
+      margin-left: auto;
+      margin-right: auto; }
+    #coin_edit #coin_edit_section tr > td {
+      padding-bottom: 15px; }
+    #coin_edit #coin_edit_section tr > td:first-child {
+      text-align: right;
+      padding-right: 15px; }
+    #coin_edit #coin_edit_section tr > td:nth-child(2) {
+      text-align: left;
+      color: #68CEDE; }
+  #coin_edit #save {
+    display: block;
+    background: #397C86;
+    border: 1px solid #151515;
+    cursor: pointer;
+    color: white;
+    text-decoration: none;
+    width: 275px; }
+    #coin_edit #save:hover {
+      border: 1px solid #68CEDE; }
+  #coin_edit #cancel {
+    display: block;
+    background: #1C3A3F;
+    border: 1px solid #151515;
+    color: white;
+    text-decoration: none;
+    width: 275px;
+    height: 40px;
+    line-height: 40px;
+    margin-top: 15px; }
+    #coin_edit #cancel:hover {
+      border: 1px solid #68CEDE; }
+
+#delete {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  background: #D5504C;
+  border: 1px solid #D5504C;
+  cursor: pointer;
+  color: white;
+  text-decoration: none;
+  width: 130px;
+  display: inline-block;
+  height: 40px;
+  line-height: 40px;
+  margin-bottom: 30px;
+  vertical-align: top; }
+  #delete:hover {
+    border: 1px solid #FF7C75; }
 
 /* * * * * * * * * * * * * * * *
  *                             *
@@ -798,6 +923,11 @@ select {
     float: none;
     margin-left: auto;
     margin-right: auto; }
+
+  #coin_edit .coin_image {
+    margin: 0 auto;
+    margin-bottom: 30px;
+    display: block; }
 
   .coin_detail {
     float: none;

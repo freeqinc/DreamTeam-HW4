@@ -5,16 +5,16 @@
  *                             *
  * * * * * * * * * * * * * * * */
 
-@include font-face("robotolight", "../fonts/Roboto-Light", $file-formats: ttf eot);
-@include font-face("robotocon", "../fonts/RobotoCondensed-Regular", $file-formats: ttf eot);
-@include font-face("openlight", "../fonts/OpenSans-Light", $file-formats: ttf eot);
-@include font-face("openregular", "../fonts/OpenSans-Regular", $file-formats: ttf eot);
-@include font-face("opensemi", "../fonts/OpenSans-Semibold", $file-formats: ttf eot);
-@include font-face("raleway_r", "../fonts/Raleway-Regular", $file-formats: ttf eot);
-@include font-face("raleway_m", "../fonts/Raleway-Medium", $file-formats: ttf eot);
-@include font-face("monster_h", "../fonts/montserrat-hairline-webfont", $file-formats: ttf eot);
-@include font-face("monster_l", "../fonts/montserrat-light-webfont", $file-formats: ttf eot);
-@include font-face("monster_r", "../fonts/montserrat-regular-webfont", $file-formats: ttf eot);
+ @include font-face("robotolight", "../fonts/Roboto-Light", $file-formats: ttf eot);
+ @include font-face("robotocon", "../fonts/RobotoCondensed-Regular", $file-formats: ttf eot);
+ @include font-face("openlight", "../fonts/OpenSans-Light", $file-formats: ttf eot);
+ @include font-face("openregular", "../fonts/OpenSans-Regular", $file-formats: ttf eot);
+ @include font-face("opensemi", "../fonts/OpenSans-Semibold", $file-formats: ttf eot);
+ @include font-face("raleway_r", "../fonts/Raleway-Regular", $file-formats: ttf eot);
+ @include font-face("raleway_m", "../fonts/Raleway-Medium", $file-formats: ttf eot);
+ @include font-face("monster_h", "../fonts/montserrat-hairline-webfont", $file-formats: ttf eot);
+ @include font-face("monster_l", "../fonts/montserrat-light-webfont", $file-formats: ttf eot);
+ @include font-face("monster_r", "../fonts/montserrat-regular-webfont", $file-formats: ttf eot);
 /* SASS VARIABLES */
 
 $main-background: #1D1D1D;
@@ -41,7 +41,7 @@ $graph-purple: #C29FFF;
  *                             *
  * * * * * * * * * * * * * * * */
 
-* {
+ * {
     margin: 0;
     padding: 0;
 }
@@ -243,7 +243,7 @@ footer {
  *                             *
  * * * * * * * * * * * * * * * */
 
-.coin_wrapper {
+ .coin_wrapper {
     padding: 40px 40px;
 }
 
@@ -260,7 +260,7 @@ a {
  *                             *
  * * * * * * * * * * * * * * * */
 
-#w1-wrapper {
+ #w1-wrapper {
     text-align: center;
     padding-top: 120px;
     &>section {
@@ -386,7 +386,7 @@ a {
  *                             *
  * * * * * * * * * * * * * * * */
 
-.overview-panel {
+ .overview-panel {
     display: inline-block;
     vertical-align: top;
     width: 300px;
@@ -592,7 +592,7 @@ a {
  *                             *
  * * * * * * * * * * * * * * * */
 
-.current_gold {
+ .current_gold {
     margin-top: -24px;
     margin-left: 170px;
     margin-bottom: 0;
@@ -682,7 +682,7 @@ a {
  *                             *
  * * * * * * * * * * * * * * * */
 
-.coin_main {
+ .coin_main {
     width: 100%;
     height: 100%;
     position: relative;
@@ -692,6 +692,7 @@ a {
         line-height: 30px;
         margin-bottom: 15px;
         cursor: pointer;
+        width: 200px;
         svg {
             fill: $main-font;
             width: 20px;
@@ -776,13 +777,157 @@ strong {
     font-family: "monster_r";
     font-weight: 700;
 }
+
+#edit {
+    background: #397C86;
+    border: 1px solid #397C86;
+    cursor: pointer;
+    @include box-sizing(border-box);
+    &:hover {
+        border: 1px solid $main-accent;
+    }
+    color: white;
+    text-decoration: none;
+    width: 130px;
+    margin-left: 15px;
+    display: inline-block;
+    height: 40px;
+    line-height: 40px;
+    vertical-align: top;
+
+}
+
+#coin_edit{
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 99999;
+    background: #397C86; 
+    height: 40px;
+    width: 130px;
+    display: none;
+    @include box-sizing(border-box);
+    padding-top: 63px;
+
+    * {
+        display: none;
+    }
+
+
+    svg{
+        position: absolute;
+        right: 25px;
+        top: 25px;
+        width: 45px;
+        height: 45px;
+        cursor: pointer;
+        z-index: 99;
+        @include transition(all 0.1s ease-out);
+        &:hover{
+            @include transform(scale(1.05));
+        }
+    }
+
+    #coin_edit_wrapper{
+        margin: 0 auto;
+    }
+
+
+    #edit-title{
+        width: 100%;
+        text-align: center;
+        font-size: 1.8em;
+        margin-bottom: 10px;
+    }
+
+
+    #coin_edit_section{
+        float: left;
+        padding-bottom: 50px;
+        a {
+            text-decoration: none;
+            color: $main-font;
+        }
+        span {
+            display: block;
+            height: 55px;
+            line-height: 55px;
+            text-align: center;
+            font-size: 1.3em;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        table {
+            width: 275px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        tr > td {
+            padding-bottom: 15px;
+        }
+        tr > td:first-child {
+            text-align: right;
+            padding-right: 15px;
+        }
+        tr > td:nth-child(2) {
+            text-align: left;
+            color: $main-accent;
+        }
+    }
+
+    #save {
+        display: block;
+        background: #397C86;
+        border: 1px solid #151515;
+        cursor: pointer;
+        &:hover {
+            border: 1px solid $main-accent;
+        }
+        color: white;
+        text-decoration: none;
+        width: 275px;
+    }
+
+    #cancel {
+        display: block;
+        background: #1C3A3F;
+        border: 1px solid #151515;
+        &:hover {
+            border: 1px solid $main-accent;
+        }
+        color: white;
+        text-decoration: none;
+        width: 275px;
+        height: 40px;
+        line-height: 40px;
+        margin-top: 15px;
+    }
+}
+
+#delete {
+    @include box-sizing(border-box);
+    background: #D5504C;
+    border: 1px solid #D5504C;
+    cursor: pointer;
+    &:hover {
+        border: 1px solid #FF7C75;
+    }
+    color: white;
+    text-decoration: none;
+    width: 130px;
+    display: inline-block;
+    height: 40px;
+    line-height: 40px;
+    margin-bottom: 30px;
+    vertical-align: top;
+}
 /* * * * * * * * * * * * * * * *
  *                             *
  *           WIRE 5            *
  *                             *
  * * * * * * * * * * * * * * * */
 
-input {
+ input {
     background-color: $input-bg-color;
     width: 125px;
     height: 27px;
@@ -847,7 +992,7 @@ select {
  *                             *
  * * * * * * * * * * * * * * * */
 
-@media screen and (max-width: 1000px) {
+ @media screen and (max-width: 1000px) {
     #sign-in-section {
         margin-top: 0px;
     }
@@ -875,10 +1020,20 @@ select {
     .coin_main {
         display: inline;
     }
+
+
     .coin_image {
         float: none;
         margin-left: auto;
         margin-right: auto;
+    }
+
+    #coin_edit{
+        .coin_image{
+            margin: 0 auto;
+            margin-bottom: 30px;
+            display: block;
+        }
     }
     .coin_detail {
         float: none;

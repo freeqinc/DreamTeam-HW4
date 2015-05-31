@@ -54,7 +54,7 @@
                     </symbol>
                     <use xlink:href="#icon-home2"></use>
                 </svg>
-    
+
                 <figcaption>Home</figcaption>
             </figure>    
         </a>  
@@ -166,11 +166,105 @@
                             <td><strong>1199.10</strong></td>
                         </tr>
                     </table>
+                    <span id="edit">Edit</span>
+                    <span id="delete">Delete</span>
                 </section>
             </div>
         </section>
     </section>
-    
+
+    <div id="coin_edit">
+        <svg version="1.1" id="icon-close" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="100px" height="100px" viewBox="0 0 100 100" enable-background="new 0 0 100 100" xml:space="preserve">
+            <line fill="#FFFFFF" stroke="#ababab" stroke-width="18" stroke-linecap="round" stroke-miterlimit="10" x1="19.5" y1="20" x2="80.167" y2="80.667"/>
+            <line fill="#FFFFFF" stroke="#ababab" stroke-width="18" stroke-linecap="round" stroke-miterlimit="10" x1="80.167" y1="20" x2="19.5" y2="80.667"/>
+        </svg>
+        <div id="coin_edit_wrapper">
+            <section class="coin_wrapper">
+                <div class="coin_main">
+                    <section class="coin_image">
+                        <div class="img_box">
+                            <div class="img_circle"></div>
+                        </div>
+                    </section>
+                    <section class="coin_detail">
+                        <div id="edit-title">Edit Details</div>
+                        <table id="addTable">
+                            <tr>
+                                <td>Metal</td>
+                                <td>
+                                    <select>
+                                        <option value="Gold">Gold</option>
+                                        <option value="Silver">Silver</option>
+                                        <option value="Platinum">Platinum</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Type</td>
+                                <td>
+                                    <select>
+                                        <option selected value="US Eagle">US Eagle</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Purchase Date</td>
+                                <td>
+                                    <input name="purchase_date" value="04 March 2015" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Qty.</td>
+                                <td>
+                                    <input name="quantity" value="1" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Premium</td>
+                                <td>
+                                    <input name="quantity" value="47.00" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Unit Price</td>
+                                <td>
+                                    <input name="quantity" value="1250.60" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Gold %</td>
+                                <td>0.999</td>
+                            </tr>
+                            <tr>
+                                <td>Weight/unit (g)</td>
+                                <td>1.244</td>
+                            </tr>
+                            <tr>
+                                <td>Gold g/u</td>
+                                <td>1.244</td>
+                            </tr>
+                            <tr>
+                                <td>Gold ozt/u</td>
+                                <td>0.0400</td>
+                            </tr>
+                            <tr>
+                                <td>Total au (ozt)</td>
+                                <td>0.0400</td>
+                            </tr>
+                            <tr>
+                                <td><strong>TOTAL</strong></td>
+                                <td><strong>1199.10</strong></td>
+                            </tr>
+                        </table>
+                        <!--<a href="gold.html">-->
+                        <span id="save">Save edits</span>
+                    </section>
+                </div>
+            </section>
+        </div>
+    </div>
+
+
     <!-- @concactus import: footer.html -->
     <footer>
         &copy; 2015 CoinFlip
