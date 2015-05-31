@@ -89,9 +89,9 @@ StackManager.prototype.toString = function() {
 }
 
 // create JSON from table
-StackManager.prototype.construct = function() {
+StackManager.prototype.construct = function(id) {
     // tag named "tr" under addTable
-    var tr = document.getElements("#addTable").getElements("tr");
+    var tr = document.getElements(id).getElements("tr");
     var coinStack = {};
     for (var i = 0; i < tr.length; i++) {
 
@@ -279,17 +279,32 @@ StackManager.prototype.loadCoin = function(query) {
             if (property.contains("strong")) {
                 property = td[0].getElements("strong")[0].innerHTML;
             }
-            properties.push(property);
             property = property.toLowerCase().replace(/\s+/g, "_");
             property = property.replace(/[\.|#|\$|\/|\[|\]]*/g, "");
             td[1].innerHTML = data.val()[property];
-
+            properties.push(property);
         }
         tr = document.getElements("#editTable").getElements("tr");
         for (var i = 0; i < tr.length; i++) {
-
+            var td = tr[i].getElements("td")[1];
+            if (td.innerHTML.contains("select")) {
+                td.getElements("select")[0].value = data.val()[properties[i]];
+            } else if (td.innerHTML.contains("input")) {
+                td.getElements("input")[0].value = data.val()[properties[i]];
+            } else if (td.innerHTML.contains("strong")) {
+                td.getElements("strong")[0].innerHTML = data.val()[properties[i]];
+            } else {
+                td.innerHTML = data.val()[properties[i]];
+            }
         }
     })
+}
+
+StackManager.prototype.editCoin = function(query, oldStack) {
+    var metal = this.coinInfo.type;
+    var metalRef = userRef.child(currentUser).child("coinStack").child(metal);
+    var coinRef = metalRef.child(query.split("=")[1]);
+    coinRef.update(oldStack);
 }
 
 StackManager.prototype.deleteCoin = function(query) {
@@ -408,7 +423,7 @@ function sessionHandler(file_before_auth, file_after_auth) {
 
 // grabs appropriate URL for metal
 function getMetalURL(metal) {
-    if (!metal) {
+    if (!metal || typeof metal != "string") {
         return "";
     }
     var data_url = API_URL;
