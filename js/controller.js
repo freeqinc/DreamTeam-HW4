@@ -29,12 +29,14 @@ $(document).ready(function() {
     });
 
     coinEvent("#save").click(function() {
-    	addStack(constructStack());
-    	location.href = "/gold.html"
+        addToStack(constructStack());
+        location.href = "/gold.html"
     });
 
-    readStack("gold");
-    myTotal("gold");
+    if (inSession) {
+        readStack("gold");
+        myTotal("gold");
+    }
     /*getJSON(getMetalURL("gold"), function(data) {
         //console.log(data);
     });*/

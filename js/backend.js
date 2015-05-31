@@ -49,17 +49,25 @@ function providerLogin(provider, oauthOption) {
         for (var i = 0; i < users.length; i++) {
             if (users[i] == uid) {
                 userExists = true;
-                currentUser = i;
                 break;
             }
         }
         if (!userExists) {
-            var data = {
-                uid: authData
-            };
             userRef.child(uid).set(authData);
+            userRef.child(uid).child("coinStack").set({
+                "gold": {
+                    "total": 0
+                },
+                "silver": {
+                    "total": 0
+                },
+                "platinum": {
+                    "total": 0
+                },
+                "overallTotal": 0
+            });
             users.push(uid);
-            currentUser = users.length - 1;
+
         }
     };
 
@@ -138,25 +146,33 @@ function getJSON(url, callback) {
 
 
 // user events needed for this application.
+// "selector > selector" is not yet supported
 function coinEvent(ref) {
-    if (typeof ref == "object") {
+    // create selector based on reference.
+    // object --> check and use attributes
+    // string --> check for prefix.
+    /*if (typeof ref == "object") {
         if (ref.id) {
             selector = [document.getElementById(ref.id)];
         } else if (ref.className) {
             selector = document.getElementsByClassName(ref.className);
         } else {
             selector = document.getElementsByTagName(ref.tagName);
-        }
-    } else if (typeof ref == "string") {
-        if (ref.charAt(0) == ".") {
-            selector = document.getElementsByClassName(ref.substring(1));
-        } else if (ref.charAt(0) == "#") {
-            selector = [document.getElementById(ref.substring(1))];
-        } else {
-            selector = document.getElementsByTagName(ref);
-        }
+        }*/
+    //} else if (typeof ref == "string") {
+    if (ref.charAt(0) == ".") {
+        selector = document.getElementsByClassName(ref.substring(1));
+    } else if (ref.charAt(0) == "#") {
+        selector = [document.getElementById(ref.substring(1))];
+    } else {
+        selector = document.getElementsByTagName(ref);
     }
+    //}
+
+    // object of possible events that coinEvent can have so far.
     var events = {
+
+        // user clicks on designated selector
         "click": function(callback) {
             for (var i = 0; i < selector.length; i++) {
                 try {
@@ -166,6 +182,8 @@ function coinEvent(ref) {
                 }
             }
         },
+
+        // user retrieves or sets the value based on input exists or not
         "val": function(text) {
             if (text) {
                 for (var i = 0; i < selector.length; i++) {
@@ -188,6 +206,8 @@ function coinEvent(ref) {
                 return selectorData;
             }
         },
+
+        // append within current selector
         "append": function(text) {
             for (var i = 0; i < selector.length; i++) {
                 try {
@@ -198,20 +218,30 @@ function coinEvent(ref) {
             }
         }
     };
-    return events;
+    return events; // return events so that user can call event functions
 }
 
+// create JSON from table
 function constructStack() {
+    // tag named "tr" under addTable
     var tr = document.getElementById("addTable").getElementsByTagName("tr");
     var coinStack = {};
     for (var i = 0; i < tr.length; i++) {
+
+        // key value pair for JSON
         var property = tr[i].getElementsByTagName("td")[0];
         var value = '';
-        var td = tr[i].getElementsByTagName("td")[1];
-        var tdValue = td.innerHTML.replace(/(^\s+|\s+$)/g, '');
+
+        // prevent to include strong tag as part of the key
         if (property.innerHTML.indexOf("strong") > -1) {
             property = property.getElementsByTagName("strong")[0];
         }
+
+        // grab data from eath td
+        var td = tr[i].getElementsByTagName("td")[1];
+        var tdValue = td.innerHTML.replace(/(^\s+|\s+$)/g, '');
+
+        // case checking: select, input, strong, or plain text
         if (tdValue.indexOf("select") > -1) {
             value = td.getElementsByTagName("select")[0].value;
         } else if (tdValue.indexOf("input") > -1) {
@@ -221,28 +251,66 @@ function constructStack() {
         } else {
             value = td.innerHTML;
         }
+
+        // replace property to appropriate string
         property = property.innerHTML.toLowerCase().replace(/\s+/g, '_');
         property = property.replace(/[\.|#|\$|\/|\[|\]]*/g, "");
-        coinStack[property] = value;
+        coinStack[property] = value; // put key-value pair
     }
     return coinStack;
 }
 
-function addStack(newStack) {
+// 
+function addToStack(newStack) {
     var stackRef = userRef.child(currentUser).child("coinStack");
+
+    // set reference to particular metal
+    var metalRef = null;
     switch (newStack.metal) {
         case "Gold":
-            stackRef.child("gold").push(newStack);
+            metalRef = stackRef.child("gold");
             break;
         case "Silver":
-            stackRef.child("silver").push(newStack);
+            metalRef = stackRef.child("silver");
             break;
         case "Platinum":
-            stackRef.child("platinum").push(newStack);
+            metalRef = stackRef.child("platinum");
             break;
     }
+    if (metalRef == null) {
+        return; // if no metal found. terminate.
+    }
+
+    metalRef.push(newStack); // put new coin information
+
+    // recalculate total for this designated metal
+    metalRef.once("value", function(data) {
+        if (!data) {
+            console.log("No coins found in Firebase");
+            return;
+        }
+        var newTotal = parseFloat(data.val().total) + parseFloat(newStack.total);
+        newTotal = newTotal.toFixed(2);
+        metalRef.update({
+            "total": newTotal
+        });
+    });
+
+    // recalculate total for overall
+    stackRef.once("value", function(data) {
+        if (!data) {
+            console.log("No coins found in Firebase");
+            return;
+        }
+        var newTotal = parseFloat(data.val().overallTotal) + parseFloat(newStack.total);
+        newTotal = newTotal.toFixed(2);
+        stackRef.update({
+            "overallTotal": newTotal
+        });
+    });
 }
 
+// Display coins on appropriate page of metal
 function readStack(metal) {
     var stackRef = userRef.child(currentUser).child("coinStack");
     stackRef.child(metal).on("value", function(data) {
@@ -250,44 +318,62 @@ function readStack(metal) {
             console.log("No coins found in Firebase");
             return;
         }
-        var list = data.val();
+        var list = data.val(); // JSON of all coins in designated metal
+
+        // convert JSON of coins to table rows. Ignore the value of total
         for (var key in list) {
-            if (list.hasOwnProperty(key)) {
-                var coin = list[key];
-                var row = document.createElement("tr");
-                var data = ['<div class="coin_mini"></div>', coin["type"], coin["qty"], coin["weightunit_(g)"], coin["gold_%"], coin["total"]];
-                for (var i = 0; i < Object.keys(data).length; i++) {
-                    var td = document.createElement("td");
-                    if (i == 0) {
-                        td.className = "stack_img_col";
-                    }
-                    td.innerHTML = data[i];
-                    row.appendChild(td);
+            if (!list.hasOwnProperty(key) || key == "total") {
+                continue;
+            }
+            var coin = list[key];
+            var row = document.createElement("tr");
+
+            // array of information to be inserted
+            var data = ['<div class="coin_mini"></div>', coin["type"], coin["qty"], coin["weightunit_(g)"], coin["gold_%"], coin["total"]];
+
+            // construct td' for this row
+            for (var i = 0; i < data.length; i++) {
+                var td = document.createElement("td");
+                if (i == 0) {
+                    td.className = "stack_img_col";
                 }
-                coinEvent("#coinStack").append("<tr id=\""+key+"\">" + row.innerHTML + "</tr>");
+                td.innerHTML = data[i];
+                row.appendChild(td);
             }
 
+            // row with unique id
+            coinEvent("#coinStack").append("<tr id=\"" + key + "\">" + row.innerHTML + "</tr>");
         }
     });
 }
 
+/* 
+ * The total of designated metal. 
+ * If metal is not appropriate then return overall total.
+ */
 function myTotal(metal) {
     var stackRef = userRef.child(currentUser).child("coinStack");
-    var total = 0;
     stackRef.on("value", function(data) {
         if (!data) {
             console.log("No coins found in Firebase");
             return;
         }
         var stack = data.val();
-        for (var frame in stack) {
-            if (stack.hasOwnProperty(frame) && (metal == "all" || frame == metal)) {
-                for (var key in stack[frame]) {
-                    if (stack[frame].hasOwnProperty(key)) {
-                        total += parseFloat(stack[frame][key].total);
-                    }
-                }
-            }
+
+        // choose appropriate total
+        switch (metal) {
+            case "gold":
+                total = parseFloat(stack.gold.total);
+                break;
+            case "silver":
+                total = parseFloat(stack.silver.total);
+                break;
+            case "platinum":
+                total = parseFloat(stack.platinum.total);
+                break;
+            default:
+                total = parseFloat(stack.overallTotal);
+                break;
         }
         coinEvent(".total-dollars").val("$" + (total.toFixed(2)));
     });
