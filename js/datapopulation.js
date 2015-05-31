@@ -9,7 +9,8 @@ $(document).ready(function() {
     var silvertotal = [];
     var plattotal = [];
     var xlabel = [];
-    var waitFor = [];
+    var waitFor;
+    var waitForTotal;
     var graphsToDraw;
     var everyOtherX = 2;
     var options = {
@@ -76,6 +77,8 @@ $(document).ready(function() {
 
 	};
 
+	var coinChart;
+
 	var drawGraph = function(metal) {
 		var pointStroke = "rgba(255,255,255,0.6)";
 		var pointHighlightFill = "#fff";
@@ -86,8 +89,8 @@ $(document).ready(function() {
 				xlabel[i] = "";
 		}
 
-		if(metal == "all"){
 
+		if(metal == "all"){
 			var data = {
 				labels: xlabel,
 				datasets: [{
@@ -107,7 +110,7 @@ $(document).ready(function() {
 					pointStrokeColor: pointStroke,
 					pointHighlightFill: pointHighlightFill,
 					pointHighlightStroke: pointHighlightStroke,
-					data: [467, 555, 490, 550, 555, 560, 660]
+					data: []
 				}, {
 					label: "Silver Total",
 					fillColor: "rgba(104, 206, 222, 0.05)",
@@ -116,7 +119,7 @@ $(document).ready(function() {
 					pointStrokeColor: pointStroke,
 					pointHighlightFill: pointHighlightFill,
 					pointHighlightStroke: pointHighlightStroke,
-					data: [200, 350, 300, 389, 330, 400, 488]
+					data: []
 				}, {
 					label: "1oz Gold",
 					fillColor: "rgba(104, 206, 222, 0.05)",
@@ -148,7 +151,9 @@ $(document).ready(function() {
 			};
 
 			var ctx = document.getElementById("total-chart").getContext("2d");
-			var coinChart = new Chart(ctx).Line(data, options);
+			if(coinChart != null)
+				coinChart.destroy();
+			coinChart = new Chart(ctx).Line(data, options);
 			coinChart.update();
 		}
 	};
@@ -248,22 +253,23 @@ $(document).ready(function() {
     		}
 	    	var list = data.val(); // JSON of all coins in designated metal
 
-	        // convert JSON of coins to table rows. Ignore the value of total
-	        for (var key in list) {
-	        	if (!list.hasOwnProperty(key) || key == "total") {
-	        		continue;
-	        	}
-	        	var coin = list[key];
-	        	var coinPurch = coin['purchase_date'];
-	        	var coinOzt = coin['total_au_(ozt)'];
-	        	var coinPurchDate = new Date(coinPurch);
-	        	var currDate = new Date();
-	        	var distanceDate = Math.floor((currDate-coinPurchDate)/(24*60*60*1000));
-	        	for (i = 0; i < goldtotal.length || i < distanceDate; i ++){
-	        		//console.log("hello " + coinOzt + " - " + gold1oz[i]);
-	        		goldtotal[i] += (coinOzt*gold1oz[i]);
-	        	}
-	        }
+	    	for (var key in list) {
+	    		if (!list.hasOwnProperty(key) || key == "total") {
+	    			continue;
+	    		}
+	    		var coin = list[key];
+	    		var coinPurch = coin['purchase_date'];
+	    		var coinOzt = coin['total_weight_(ozt)'];
+	    		var coinPurchDate = new Date(coinPurch);
+	    		var currDate = new Date();
+	    		var distanceDate = Math.floor((currDate-coinPurchDate)/(24*60*60*1000));
+	    		for (i = 0; i < goldtotal.length && i < distanceDate+1; i ++){
+	    			goldtotal[goldtotal.length-1] += (coinOzt*gold1oz[i]);
+	    		}
+	    	}
+	    	waitForTotal--;
+	    	if(waitForTotal==0)
+	    		drawGraph(graphsToDraw);
 	    });	
     };
 
@@ -281,7 +287,7 @@ $(document).ready(function() {
     	})
     	.done(function( csvdata ) {
     		//alert("\nData from "+json_url+":\n"+csvdata);
-            console.log("csvdata "+csvdata);
+    		//console.log("csvdata "+csvdata);
     		var csvArray = CSVToArray(csvdata, ",");
     		csvArray = csvArray.slice(1, csvArray.length-1);
     		csvArray.reverse();
@@ -345,8 +351,15 @@ $(document).ready(function() {
     		}
     		waitFor--;
     		if(waitFor == 0)
-    			drawGraph(graphsToDraw);
-    	})
+    			if(inSession){
+    				userRef.child(currentUser).child("today_prices").update(
+    					{"gold": gold1oz[gold1oz.length-1], 
+    					"silver": silver1oz[gold1oz.length-1],
+    					"platinum": plat1oz[plat1oz.length-1],
+    				});
+    			}
+    			//drawGraph(graphsToDraw);
+    		})
 .fail( function(xhr, textStatus, errorThrown) {
 	alert(xhr.responseText);
 	alert(textStatus);
@@ -442,15 +455,10 @@ $(document).ready(function() {
 
     	graphsToDraw = "all";
     	waitFor = 3;
+    	waitForTotal = 1;
     	getMetalPrice('gold', pastDate, currDate);
     	getMetalPrice('silver', pastDate, currDate);
     	getMetalPrice('platinum', pastDate, currDate);
-
-
-
-
-
-
 
     }
 

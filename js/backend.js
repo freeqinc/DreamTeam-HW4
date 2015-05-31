@@ -6,6 +6,7 @@ var currentUser = "";
 var users = [];
 const API_URL = "https://www.quandl.com/api/v1/datasets/WSJ/";
 
+
 // create string contains function
 String.prototype.contains = function(s) {
     return this.indexOf(s) > -1;
@@ -15,11 +16,11 @@ String.prototype.contains = function(s) {
 Node.prototype.getElements = function(s) {
     switch (s.charAt(0)) {
         case "#":
-            return this.getElementById(s.substring(1));
+        return this.getElementById(s.substring(1));
         case ".":
-            return this.getElementsByClassName(s.substring(1));
+        return this.getElementsByClassName(s.substring(1));
         default:
-            return this.getElementsByTagName(s);
+        return this.getElementsByTagName(s);
     }
 }
 
@@ -70,8 +71,17 @@ function providerLogin(provider, oauthOption) {
             }
         }
         if (!userExists) {
+            alert("user doesn't exist")
+            authData['today_prices'] = {
+                'gold' : 'loading...',
+                'silver' : 'loading...',
+                'platinum': 'loading...',
+            };
+            console.log(authData);
+            alert("");
             userRef.child(uid).set(authData);
             users.push(uid);
+            userRef.child(uid).push()
         }
     };
 
@@ -132,11 +142,11 @@ function getMetalURL(metal) {
     var data_url = API_URL;
     switch (metal.toLowerCase()) {
         case "silver":
-            return API_URL + "AG_EIB.json";
+        return API_URL + "AG_EIB.json";
         case "platinum":
-            return API_URL + "PL_MKT.json";
+        return API_URL + "PL_MKT.json";
         default:
-            return API_URL + "AU_EIB.json";
+        return API_URL + "AU_EIB.json";
     }
 }
 
@@ -172,6 +182,8 @@ var StackManager = function() {
 StackManager.prototype.toString = function() {
     return this.metal;
 }
+
+
 
 // create a JSON from HTML table
 StackManager.prototype.construct = function(id) {
@@ -217,17 +229,17 @@ StackManager.prototype.addCoin = function(newStack) {
     // set reference to particular metal
     switch (newStack.metal) {
         case "Gold":
-            metalRef = this.stackRef.child("gold");
-            break;
+        metalRef = this.stackRef.child("gold");
+        break;
         case "Silver":
-            metalRef = this.stackRef.child("silver");
-            break;
+        metalRef = this.stackRef.child("silver");
+        break;
         case "Platinum":
-            metalRef = this.stackRef.child("platinum");
-            break;
+        metalRef = this.stackRef.child("platinum");
+        break;
         default:
-            metalRef = null
-            return;
+        metalRef = null
+        return;
     }
 
     metalRef.push(newStack); // put new coin information
@@ -256,8 +268,8 @@ StackManager.prototype.read = function() {
 
             // array of information to be inserted
             var data = ["<div class=\"coin_mini\"></div>",
-                "<a href=\"gold_detail.html?id=" + key + "\"></a>" + coin["type"],
-                coin["qty"], coin["weightunit_(g)"], coin["gold_%"], coin["total"]
+            "<a href=\"gold_detail.html?id=" + key + "\"></a>" + coin["type"],
+            coin["qty"], coin["weightunit_(g)"], coin["gold_%"], coin["total"]
             ];
 
             // construct td's for this row
@@ -282,17 +294,17 @@ StackManager.prototype.total = function() {
     //var metal = this.coinInfo.type;
     switch (this.metal) {
         case "gold":
-            reference = this.stackRef.child("gold");
-            break;
+        reference = this.stackRef.child("gold");
+        break;
         case "silver":
-            reference = this.stackRef.child("silver");
-            break;
+        reference = this.stackRef.child("silver");
+        break;
         case "platinum":
-            reference = this.stackRef.child("platinum");
-            break;
+        reference = this.stackRef.child("platinum");
+        break;
         default:
-            reference = null;
-            break;
+        reference = null;
+        break;
     }
 
     // check for reference and perform appropriat total calculation

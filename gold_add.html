@@ -21,7 +21,7 @@
 
 <body>
     <!-- @concactus import: topnavpersist.html -->
-     <nav style="display: block; visibility: visible;">
+    <nav style="display: block; visibility: visible;">
         <svg class="icon-spinner2">
             <symbol id="icon-spinner2" viewBox="0 0 1024 1024">
                 <title>spinner2</title>
@@ -55,7 +55,7 @@
                     </symbol>
                     <use xlink:href="#icon-home2"></use>
                 </svg>
-    
+
                 <figcaption>Home</figcaption>
             </figure>    
         </a>  
@@ -132,6 +132,7 @@
                             <td>
                                 <select>
                                     <option selected value="US Eagle">US Eagle</option>
+                                    <option value="Bullion Bar">Bullion Bar</option>
                                 </select>
                             </td>
                         </tr>
@@ -148,34 +149,30 @@
                             </td>
                         </tr>
                         <tr>
-                            <td>Price per oz</td>
+                            <td>Weight per unit (otz)</td>
                             <td>
-                                <input name="quantity" value="47.00" />
+                                <input name="quantity" value="1.0" />
                             </td>
                         </tr>
                         <tr>
-                            <td>Gold %</td>
+                            <td id="metal-perc">Gold %</td>
                             <td>0.999</td>
                         </tr>
                         <tr>
-                            <td>Weight/unit (g)</td>
-                            <td>1.244</td>
+                            <td id="ppo">Price per oz</td>
+                            <td></td>
                         </tr>
                         <tr>
-                            <td>Gold g/u</td>
-                            <td>1.244</td>
+                            <td id="total-weight">Total weight (ozt)</td>
+                            <td>calculating...</td>
                         </tr>
                         <tr>
-                            <td>Gold ozt/u</td>
-                            <td>0.0400</td>
-                        </tr>
-                        <tr>
-                            <td>Total au (ozt)</td>
-                            <td>0.0400</td>
+                            <td id="total-metal">Total au (ozt)</td>
+                            <td>calculating...</td>
                         </tr>
                         <tr>
                             <td><strong>TOTAL</strong></td>
-                            <td><strong>1199.10</strong></td>
+                            <td><strong id="total-cost">calculating...</strong></td>
                         </tr>
                     </table>
                     <!--<a href="gold.html">-->

@@ -44,219 +44,7 @@ $(window).load(function() {
         }
     });
 
-    /* * * * * * * * * * * * * *
-     *                         *
-     *        GRAPHING         *
-     *                         *
-     * * * * * * * * * * * * * */
-    // // graph for gold page
-    // var drawGraph = function() {
-    //     var pointStroke = "rgba(255,255,255,0.6)";
-    //     var pointHighlightFill = "#fff";
-    //     var pointHighlightStroke = "#fff";
 
-    //     if (page == "home.html") {
-    //         var data = {
-    //             labels: ["January", "February", "March", "April", "May", "June", "July"],
-    //             datasets: [{
-    //                 label: "Gold Total",
-    //                 fillColor: "rgba(104, 206, 222, 0.05)",
-    //                 strokeColor: "#FF6D67",
-    //                 pointColor: "#FF6D67",
-    //                 pointStrokeColor: pointStroke,
-    //                 pointHighlightFill: pointHighlightFill,
-    //                 pointHighlightStroke: pointHighlightStroke,
-    //                 data: [700, 820, 700, 800, 730, 950, 900]
-    //             }, {
-    //                 label: "Platinum Total",
-    //                 fillColor: "rgba(104, 206, 222, 0.05)",
-    //                 strokeColor: "#FFA859",
-    //                 pointColor: "#FFA859",
-    //                 pointStrokeColor: pointStroke,
-    //                 pointHighlightFill: pointHighlightFill,
-    //                 pointHighlightStroke: pointHighlightStroke,
-    //                 data: [467, 555, 490, 550, 555, 560, 660]
-    //             }, {
-    //                 label: "Silver Total",
-    //                 fillColor: "rgba(104, 206, 222, 0.05)",
-    //                 strokeColor: "#F3FF88",
-    //                 pointColor: "#F3FF88",
-    //                 pointStrokeColor: pointStroke,
-    //                 pointHighlightFill: pointHighlightFill,
-    //                 pointHighlightStroke: pointHighlightStroke,
-    //                 data: [200, 350, 300, 389, 330, 400, 488]
-    //             }, {
-    //                 label: "1oz Gold",
-    //                 fillColor: "rgba(104, 206, 222, 0.05)",
-    //                 strokeColor: "#9FFF98",
-    //                 pointColor: "#9FFF98",
-    //                 pointStrokeColor: pointStroke,
-    //                 pointHighlightFill: pointHighlightFill,
-    //                 pointHighlightStroke: pointHighlightStroke,
-    //                 data: [100, 110, 120, 90, 102, 135, 115]
-    //             }, {
-    //                 label: "1oz Platinum",
-    //                 fillColor: "rgba(104, 206, 222, 0.05)",
-    //                 strokeColor: "#BBF5FF",
-    //                 pointColor: "#BBF5FF",
-    //                 pointStrokeColor: pointStroke,
-    //                 pointHighlightFill: pointHighlightFill,
-    //                 pointHighlightStroke: pointHighlightStroke,
-    //                 data: [56, 78, 67, 68, 73, 80, 76]
-    //             }, {
-    //                 label: "1oz Silver",
-    //                 fillColor: "rgba(104, 206, 222, 0.05)",
-    //                 strokeColor: "#C29FFF",
-    //                 pointColor: "#C29FFF",
-    //                 pointStrokeColor: pointStroke,
-    //                 pointHighlightFill: pointHighlightFill,
-    //                 pointHighlightStroke: pointHighlightStroke,
-    //                 data: [20, 22, 20, 32, 35, 50, 40]
-    //             }, ]
-    //         };
-
-    //         var options = {
-
-    //             ///Boolean - Whether grid lines are shown across the chart
-    //             scaleShowGridLines: true,
-
-    //             //String - Colour of the grid lines
-    //             scaleGridLineColor: "rgba(104, 206, 222, 0.1)",
-
-    //             //Number - Width of the grid lines
-    //             scaleGridLineWidth: 1,
-
-    //             //Boolean - Whether to show horizontal lines (except X axis)
-    //             scaleShowHorizontalLines: true,
-
-    //             //Boolean - Whether to show vertical lines (except Y axis)
-    //             scaleShowVerticalLines: true,
-
-    //             //Boolean - Whether the line is curved between points
-    //             bezierCurve: true,
-
-    //             //Number - Tension of the bezier curve between points
-    //             bezierCurveTension: 0.4,
-
-    //             //Boolean - Whether to show a dot for each point
-    //             pointDot: true,
-
-    //             //Number - Radius of each point dot in pixels
-    //             pointDotRadius: 4,
-
-    //             //Number - Pixel width of point dot stroke
-    //             pointDotStrokeWidth: 1,
-
-    //             //Number - amount extra to add to the radius to cater for hit detection outside the drawn point
-    //             pointHitDetectionRadius: 20,
-
-    //             //Boolean - Whether to show a stroke for datasets
-    //             datasetStroke: true,
-
-    //             //Number - Pixel width of dataset stroke
-    //             datasetStrokeWidth: 2,
-
-    //             //Boolean - Whether to fill the dataset with a colour
-    //             datasetFill: true,
-
-    //             //String - A legend template
-    //             legendTemplate: "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<datasets.length; i++){%><li><span style=\"background-color:<%=datasets[i].strokeColor%>\"></span><%if(datasets[i].label){%><%=datasets[i].label%><%}%></li><%}%></ul>",
-
-    //             responsive: true,
-
-    //             maintainAspectRatio: false,
-
-
-    //         };
-
-    //         var ctx = document.getElementById("total-chart").getContext("2d");
-    //         var coinChart = new Chart(ctx).Line(data, options);
-    //         coinChart.update();
-    //     } else if (page == "gold.html") {
-    //         var data = {
-    //             labels: ["January", "February", "March", "April", "May", "June", "July"],
-    //             datasets: [{
-    //                 label: "Gold Total",
-    //                 fillColor: "rgba(104, 206, 222, 0.05)",
-    //                 strokeColor: "#FF6D67",
-    //                 pointColor: "#FF6D67",
-    //                 pointStrokeColor: pointStroke,
-    //                 pointHighlightFill: pointHighlightFill,
-    //                 pointHighlightStroke: pointHighlightStroke,
-    //                 data: [700, 820, 700, 800, 730, 950, 900]
-    //             }, {
-    //                 label: "1oz Gold",
-    //                 fillColor: "rgba(104, 206, 222, 0.05)",
-    //                 strokeColor: "#9FFF98",
-    //                 pointColor: "#9FFF98",
-    //                 pointStrokeColor: pointStroke,
-    //                 pointHighlightFill: pointHighlightFill,
-    //                 pointHighlightStroke: pointHighlightStroke,
-    //                 data: [100, 110, 120, 90, 102, 135, 115]
-    //             }]
-    //         };
-
-    //         var options = {
-
-    //             ///Boolean - Whether grid lines are shown across the chart
-    //             scaleShowGridLines: true,
-
-    //             //String - Colour of the grid lines
-    //             scaleGridLineColor: "rgba(104, 206, 222, 0.1)",
-
-    //             //Number - Width of the grid lines
-    //             scaleGridLineWidth: 1,
-
-    //             //Boolean - Whether to show horizontal lines (except X axis)
-    //             scaleShowHorizontalLines: true,
-
-    //             //Boolean - Whether to show vertical lines (except Y axis)
-    //             scaleShowVerticalLines: true,
-
-    //             //Boolean - Whether the line is curved between points
-    //             bezierCurve: true,
-
-    //             //Number - Tension of the bezier curve between points
-    //             bezierCurveTension: 0.4,
-
-    //             //Boolean - Whether to show a dot for each point
-    //             pointDot: true,
-
-    //             //Number - Radius of each point dot in pixels
-    //             pointDotRadius: 4,
-
-    //             //Number - Pixel width of point dot stroke
-    //             pointDotStrokeWidth: 1,
-
-    //             //Number - amount extra to add to the radius to cater for hit detection outside the drawn point
-    //             pointHitDetectionRadius: 20,
-
-    //             //Boolean - Whether to show a stroke for datasets
-    //             datasetStroke: true,
-
-    //             //Number - Pixel width of dataset stroke
-    //             datasetStrokeWidth: 2,
-
-    //             //Boolean - Whether to fill the dataset with a colour
-    //             datasetFill: true,
-
-    //             //String - A legend template
-    //             legendTemplate: "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<datasets.length; i++){%><li><span style=\"background-color:<%=datasets[i].strokeColor%>\"></span><%if(datasets[i].label){%><%=datasets[i].label%><%}%></li><%}%></ul>",
-
-    //             responsive: true,
-
-    //             maintainAspectRatio: false,
-
-
-    //         };
-
-    //         var ctx = document.getElementById("total-chart").getContext("2d");
-    //         var coinChart = new Chart(ctx).Line(data, options);
-    //         coinChart.update();
-    //     }
-    // };
-
-    // drawGraph();
 
     /* * * * * * * * * * * * * *
      *                         *
@@ -402,6 +190,112 @@ $(window).load(function() {
             invalidDateInput = true;
         }
     });
+
+
+
+
+
+    /* * * * * * * * * * * * * *
+     *                         *
+     *   Table form handling   *
+     *                         *
+     * * * * * * * * * * * * * */
+
+
+
+     var tableData = {"Gold":{"US Eagle":{"metal_percent":"0.99"},"Bullion Bar":{"metal_percent":"0.85"}},"Silver":{"US Eagle":{"metal_percent":"0.99"},"Bullion Bar":{"metal_percent":"0.85"}},"Platinum":{"US Eagle":{"metal_percent":"0.99"},"Bullion Bar":{"metal_percent":"0.85"}}};
+
+     var handleFormChange = function(){
+        var tr = document.getElementsByTagName("tr");
+        var coinStack = {};
+        var metal = '';
+        var bartype = '';
+        var qty = 0; // quantity
+        var wpu = 0; // weight per unit
+        var mpr = 0; // metal percent
+        var ppo = 0; // price per ounce
+
+        var tlw = 0; // total weight
+        var tlm = 0; // total metal 
+        var tlc = 0; // total cost
+
+
+
+        for (var i = 0; i < tr.length; i++) {
+            // key value pair for JSON
+            var property = tr[i].getElements("td")[0];
+            switch (property.innerHTML){
+                case 'Metal':
+                metal = tr[i].getElements("td")[1].getElements("select")[0].value;
+                break;
+                case 'Type':
+                bartype = tr[i].getElements("td")[1].getElements("select")[0].value;
+                break;
+                case 'Qty.':
+                qty = tr[i].getElements("td")[1].getElements("input")[0].value;
+                break;
+                case 'Weight per unit (otz)':
+                wpu = tr[i].getElements("td")[1].getElements("input")[0].value;
+                break;
+            }
+
+        }
+
+
+        switch (metal){
+            case 'Gold':
+            $("#total-metal").text("Total au (ozt)");
+            $("#metal-perc").text("Gold %");
+            break;
+            case 'Silver':
+            $("#total-metal").text("Total ag (ozt)");
+            $("#metal-perc").text("Silver %");
+            break;
+            case 'Platinum':
+            $("#total-metal").text("Total pt (ozt)");
+            $("#metal-perc").text("Platinum %");
+            break;
+        }
+
+
+
+        $("#metal-perc").next().text((tableData[metal][bartype]['metal_percent']));
+        mpc = (tableData[metal][bartype]['metal_percent']);
+
+        var stackRef = userRef.child(currentUser).child("today_prices");
+        stackRef.child(metal.toLowerCase()).on("value", function(data) {
+            if (!data) {
+                console.log("NOT FOUND");
+                return;
+            }
+            ppo = data.val(); // JSON of all coins in designated metal
+            $('#ppo').next().text(ppo);
+
+
+            tlw = qty * wpu;
+            tlw = tlw.toFixed(2);
+            tlm = tlw * mpc;
+            tlm = tlm.toFixed(2);
+            tlc = tlm * ppo;
+            tlc = tlc.toFixed(2);
+
+            $("#total-weight").next().text(tlw);
+            $("#total-metal").next().text(tlm);
+            $("#total-cost").text(tlc);
+        }); 
+
+
+
+
+
+    };
+
+
+    $('#addTable, #editTable').find('*').change(function(){
+        handleFormChange();
+    });
+    if( $('#addTable, #editTable').length != 0)
+        handleFormChange();
 
 
 
