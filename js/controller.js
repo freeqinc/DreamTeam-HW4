@@ -1,44 +1,28 @@
 $(document).ready(function() {
+    var stack = new StackManager();
+    var metal = stack.toString();
+    console.log(metal);
+
     // sign in user
-    coinEvent("#log-in-button").click(function() {
+    $("#log-in-button").click(function() {
         providerLogin("google");
     });
 
-    /*coinEvent("#sign-up-button").click(function() {
-        var email = coinEvent("#email").val();
-        var password = coinEvent("#password").val();
-        var filledIn = true;
-        if (!email) {
-            filledIn = false;
-        }
-        if (!password) {
-            filledIn = false;
-        }
-        if (filledIn) {
-            customLogin(email, password);
-        }
-    });*/
-
     // sign out user 
-    /*$(".icon-cog").click(function() {
-        logout();
-    });*/
-
-    coinEvent(".icon-cog").click(function() {
+    $(".icon-cog").click(function() {
         logout();
     });
 
-    coinEvent("#save").click(function() {
-        addToStack(constructStack());
-        location.href = "/gold.html"
+    $("#save").click(function() {
+        stack.create(stack.construct());
+        location.href = "/" + metal + ".html"
     });
 
     if (inSession) {
-        readStack("gold");
-        myTotal("gold");
+        //console.log(coinInfo.type);
+        if (metal) {
+            stack.read(metal);
+        }
+        stack.total(metal);
     }
-    /*getJSON(getMetalURL("gold"), function(data) {
-        //console.log(data);
-    });*/
-
 });
