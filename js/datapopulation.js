@@ -260,7 +260,7 @@ $(document).ready(function() {
 	        	var currDate = new Date();
 	        	var distanceDate = Math.floor((currDate-coinPurchDate)/(24*60*60*1000));
 	        	for (i = 0; i < goldtotal.length || i < distanceDate; i ++){
-	        		console.log("hello " + coinOzt + " - " + gold1oz[i]);
+	        		//console.log("hello " + coinOzt + " - " + gold1oz[i]);
 	        		goldtotal[i] += (coinOzt*gold1oz[i]);
 	        	}
 	        }

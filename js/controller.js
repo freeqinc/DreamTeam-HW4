@@ -8,7 +8,7 @@ $(document).ready(function() {
     });
 
     // sign out user 
-    $(".icon-cog").click(function() {
+    $("#logout").click(function() {
         logout();
     });
 

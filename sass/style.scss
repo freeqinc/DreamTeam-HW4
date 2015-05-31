@@ -157,6 +157,35 @@ nav {
         right: 20px;
     }
 }
+
+
+#settings{
+    position: fixed;
+    width: 200px;
+    height: 200px;
+    right: 0px;
+    top: 63px;
+    background: $nav-background;
+    z-index: 1000;
+    box-shadow: 0px 2px 5px $main-background;
+    overflow: hidden;
+    height: 0;
+
+    #logout{
+        width: 75%;
+        margin: 0 auto;
+        margin-top: 80px;
+        text-align: center;
+        height: 40px;
+        line-height: 40px;
+        font-size: 1.5em;
+        background: #34727C;
+        cursor: pointer;
+        &:hover{
+            background: #48A1B0;
+        }
+    }
+}
 /* SIDE NAV */
 
 aside {

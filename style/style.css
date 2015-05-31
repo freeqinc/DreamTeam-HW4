@@ -179,6 +179,30 @@ nav {
   .mobile-nav .icon-add {
     right: 20px; }
 
+#settings {
+  position: fixed;
+  width: 200px;
+  height: 200px;
+  right: 0px;
+  top: 63px;
+  background: #272E32;
+  z-index: 1000;
+  box-shadow: 0px 2px 5px #1D1D1D;
+  overflow: hidden;
+  height: 0; }
+  #settings #logout {
+    width: 75%;
+    margin: 0 auto;
+    margin-top: 80px;
+    text-align: center;
+    height: 40px;
+    line-height: 40px;
+    font-size: 1.5em;
+    background: #34727C;
+    cursor: pointer; }
+    #settings #logout:hover {
+      background: #48A1B0; }
+
 /* SIDE NAV */
 aside {
   position: fixed;
