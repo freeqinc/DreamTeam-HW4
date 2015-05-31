@@ -281,6 +281,7 @@ $(document).ready(function() {
     	})
     	.done(function( csvdata ) {
     		//alert("\nData from "+json_url+":\n"+csvdata);
+            console.log("csvdata "+csvdata);
     		var csvArray = CSVToArray(csvdata, ",");
     		csvArray = csvArray.slice(1, csvArray.length-1);
     		csvArray.reverse();

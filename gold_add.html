@@ -21,7 +21,7 @@
 
 <body>
     <!-- @concactus import: topnavpersist.html -->
-    <nav style="display: block; visibility: visible;">
+     <nav style="display: block; visibility: visible;">
         <svg class="icon-spinner2">
             <symbol id="icon-spinner2" viewBox="0 0 1024 1024">
                 <title>spinner2</title>
@@ -38,6 +38,9 @@
             <use xlink:href="#icon-cog"></use>
         </svg>
     </nav>
+    <div id="settings">
+        <div id="logout">Logout</div>
+    </div>
     <!-- @concactus end -->
     <input id="sidenav-selector" type="hidden" value="1" style="display: none">
     <!-- @concactus import: sidenav.html -->
@@ -52,22 +55,23 @@
                     </symbol>
                     <use xlink:href="#icon-home2"></use>
                 </svg>
+    
                 <figcaption>Home</figcaption>
-            </figure>
-        </a>
-        <a href="gold.html">
+            </figure>    
+        </a>  
+        <a href="gold.html"> 
             <figure>
                 Au
                 <figcaption>My Gold</figcaption>
-            </figure>
-        </a>
-        <a href="gold.html">
+            </figure>      
+        </a> 
+        <a href="gold.html"> 
             <figure>
                 Ag
                 <figcaption>My Silver</figcaption>
-            </figure>
+            </figure> 
         </a>
-        <a href="gold.html">
+        <a href="gold.html">       
             <figure>
                 Pt
                 <figcaption>My Platinum</figcaption>
@@ -150,12 +154,6 @@
                             </td>
                         </tr>
                         <tr>
-                            <td>Unit Price</td>
-                            <td>
-                                <input name="quantity" value="1250.60" />
-                            </td>
-                        </tr>
-                        <tr>
                             <td>Gold %</td>
                             <td>0.999</td>
                         </tr>
@@ -191,7 +189,7 @@
     <!-- @concactus import: footer.html -->
     <footer>
         &copy; 2015 CoinFlip
-    </footer>
+    </footer> 
     <!-- @concactus end -->
 </body>
 
