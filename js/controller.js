@@ -1,7 +1,6 @@
 $(document).ready(function() {
     var stack = new StackManager();
     var metal = stack.toString();
-    console.log(metal);
 
     // sign in user
     $("#log-in-button").click(function() {
@@ -15,14 +14,22 @@ $(document).ready(function() {
 
     $("#save").click(function() {
         stack.create(stack.construct());
-        location.href = "/" + metal + ".html"
+        location.href = metal + ".html"
     });
 
+    $("#edited").click(function() {
+        location.href = metal + ".html"
+    });
+
+    if (location.pathname.contains("_detail")) {
+        stack.validate(location.search);
+        stack.loadCoin(location.search);
+    }
+
     if (inSession) {
-        //console.log(coinInfo.type);
         if (metal) {
-            stack.read(metal);
+            stack.read();
         }
-        stack.total(metal);
+        stack.total();
     }
 });

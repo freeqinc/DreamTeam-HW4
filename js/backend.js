@@ -49,36 +49,39 @@ firebase.onAuth(function(authData) {
 
 // inititate coinInfo object
 var StackManager = function() {
-    this.coinInfo = {};
-    this.coinInfo.type = "";
+    var coinInfo = {};
+    var coins = [];
 
     if (!inSession) {
+        this.coinInfo = coinInfo;
+        this.coinInfo.type = "";
         return;
     }
 
     if (location.href.contains("gold")) {
-        this.coinInfo.type = "gold";
+        coinInfo.type = "gold";
     } else if (location.href.contains("silver")) {
-        this.coinInfo.type = "silver";
+        coinInfo.type = "silver";
     } else if (location.href.contains("platinum")) {
-        this.coinInfo.type = "platinum";
+        coinInfo.type = "platinum";
     } else {
+        this.coinInfo = coinInfo;
+        this.coinInfo.type = "";
         return;
     }
 
     var stackRef = userRef.child(currentUser).child("coinStack");
-    var metalRef = stackRef.child(this.coinInfo.type);
-
-    console.log(stackRef);
+    var metalRef = stackRef.child(coinInfo.type);
 
     stackRef.on("value", function(data) {
-        this.coinInfo.overallTotal = data.val().overallTotal;
+        coinInfo.overallTotal = data.val().overallTotal;
     });
 
     metalRef.on("value", function(data) {
-        this.coinInfo.total = data.val().total;
+        coinInfo.total = data.val().total;
     });
-    console.log(this.coinInfo);
+
+    this.coinInfo = coinInfo;
 }
 
 StackManager.prototype.toString = function() {
@@ -163,8 +166,12 @@ StackManager.prototype.create = function(newStack) {
 }
 
 // Display coins on appropriate page of metal
-StackManager.prototype.read = function(metal) {
+StackManager.prototype.read = function() {
     var stackRef = userRef.child(currentUser).child("coinStack");
+    var metal = this.coinInfo.type;
+    if (!metal) {
+        return;
+    }
     stackRef.child(metal).on("value", function(data) {
         if (!data) {
             console.log("No coins found in Firebase");
@@ -181,7 +188,10 @@ StackManager.prototype.read = function(metal) {
             var row = document.createElement("tr");
 
             // array of information to be inserted
-            var data = ["<div class=\"coin_mini\"></div>", coin["type"], coin["qty"], coin["weightunit_(g)"], coin["gold_%"], coin["total"]];
+            var data = ["<div class=\"coin_mini\"></div>",
+                "<a href=\"gold_detail.html?id=" + key + "\"></a>" + coin["type"],
+                coin["qty"], coin["weightunit_(g)"], coin["gold_%"], coin["total"]
+            ];
 
             // construct td's for this row
             for (var i = 0; i < data.length; i++) {
@@ -203,9 +213,9 @@ StackManager.prototype.read = function(metal) {
  * The total of designated metal. 
  * If metal is not appropriate then return overall total.
  */
-StackManager.prototype.total = function(metal) {
+StackManager.prototype.total = function() {
     var stackRef = userRef.child(currentUser).child("coinStack");
-    //console.log(this);
+    var metal = this.coinInfo.type;
     stackRef.on("value", function(data) {
         if (!data) {
             console.log("No coins found in Firebase");
@@ -233,7 +243,80 @@ StackManager.prototype.total = function(metal) {
     });
 }
 
+StackManager.prototype.validate = function(query) {
+    var pair = query.split("=");
+    var metal = this.coinInfo.type;
+    var metalRef = userRef.child(currentUser).child("coinStack").child(metal);
+    metalRef.on("value", function(data) {
+        if (!data) {
+            console.log("No coins found in Firebase");
+            return;
+        }
+        var coins = data.val();
+        var valid = false;
+        for (var key in coins) {
+            if (coins.hasOwnProperty(key) && key != "total" && key == pair[1]) {
+                valid = true;
+                break;
+            }
+        }
+        if (!valid) {
+            location.href = "" + metal + ".html";
+        }
+    });
+}
 
+StackManager.prototype.loadCoin = function(query) {
+    var metal = this.coinInfo.type;
+    var metalRef = userRef.child(currentUser).child("coinStack").child(metal);
+    var coinRef = metalRef.child(query.split("=")[1]);
+    coinRef.on("value", function(data) {
+        var tr = document.getElements("#viewTable").getElements("tr");
+        var properties = [];
+        for (var i = 0; i < tr.length; i++) {
+            var td = tr[i].getElements("td");
+            var property = td[0].innerHTML;
+            if (property.contains("strong")) {
+                property = td[0].getElements("strong")[0].innerHTML;
+            }
+            property = property.toLowerCase().replace(/\s+/g, "_");
+            property = property.replace(/[\.|#|\$|\/|\[|\]]*/g, "");
+            td[1].innerHTML = data.val()[property];
+            properties.push(property);
+        }
+        tr = document.getElements("#editTable").getElements("tr");
+        for (var i = 0; i < tr.length; i++) {
+            // key value pair for JSON
+            var property = tr[i].getElements("td")[0];
+            //var value = "";
+
+            // prevent to include strong tag as part of the key
+            if (property.innerHTML.contains("strong")) {
+                property = property.getElements("strong")[0];
+            }
+
+            // grab data from eath td
+            var td = tr[i].getElements("td")[1];
+            var tdStr = td.innerHTML.replace(/(^\s+|\s+$)/g, "");
+
+            // case checking: select, input, strong, or plain text
+            if (tdStr.contains("select")) {
+                value = td.getElements("select")[0].value;
+            } else if (tdStr.contains("input")) {
+                value = td.getElements("input")[0].value;
+            } else if (tdStr.contains("strong")) {
+                value = td.getElements("strong")[0].innerHTML;
+            } else {
+                value = td.innerHTML;
+            }
+
+            // replace property to appropriate string
+            property = property.innerHTML.toLowerCase().replace(/\s+/g, "_");
+            property = property.replace(/[\.|#|\$|\/|\[|\]]*/g, "");
+            coinStack[property] = value; // put key-value pair
+        }
+    })
+}
 
 // function that handles login
 function providerLogin(provider, oauthOption) {
