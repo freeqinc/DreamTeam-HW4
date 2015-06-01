@@ -1,21 +1,20 @@
-
 var path = window.location.pathname;
 var page = path.split("/").pop();
 
 /*
-* * * * * * * * * * * * * * * * * * * * * * * * * * * *
-* * * * * * * * * * * * * * * * * * * * * * * * * * * *
-* * * * * * * * * * * * * * * * * * * * * * * * * * * *
-* * * * * * * * * * * * * * * * * * * * * * * * * * * *
-* * * * * * * * * * * * * * * * * * * * * * * * * * * *
-* * * * * * * * * * * * * * * * * * * * * * * * * * * *
-*                      main.js                        *
-* * * * * * * * * * * * * * * * * * * * * * * * * * * *
-* * * * * * * * * * * * * * * * * * * * * * * * * * * *
-* * * * * * * * * * * * * * * * * * * * * * * * * * * *
-* * * * * * * * * * * * * * * * * * * * * * * * * * * *
-* * * * * * * * * * * * * * * * * * * * * * * * * * * *
-* * * * * * * * * * * * * * * * * * * * * * * * * * * */
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ *                      main.js                        *
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 
 var invalidDateInput = false;
@@ -33,16 +32,16 @@ $(window).load(function() {
      *                         *
      * * * * * * * * * * * * * */
 
-     $('.icon-spinner2').click(function() {
+    $('.icon-spinner2').click(function() {
         location.reload();
     });
 
-     $("#coinStack").on("click", "tr", function() {
+    $("#coinStack").on("click", "tr", function() {
         $(this).find('a')[0].click();
     });
 
-     var settingsOpen = false;
-     $('.icon-cog').click(function() {
+    var settingsOpen = false;
+    $('.icon-cog').click(function() {
         if (settingsOpen) {
             $(this).velocity('stop').velocity({
                 rotateZ: '0deg',
@@ -80,11 +79,11 @@ $(window).load(function() {
      *     MOBILE HANDLING     *
      *                         *
      * * * * * * * * * * * * * */
-     var winWidth = $(window).width();
-     var winHeight = $(window).height();
+    var winWidth = $(window).width();
+    var winHeight = $(window).height();
 
 
-     $('.mtb-1').click(function() {
+    $('.mtb-1').click(function() {
         $('.graph-panel').removeClass('graph-panel-show');
         $('.market-status').fadeIn(0);
         $('.market-list').fadeIn(0);
@@ -95,7 +94,7 @@ $(window).load(function() {
 
     });
 
-     $('.mtb-2').click(function() {
+    $('.mtb-2').click(function() {
         $('.market-status').fadeOut(0);
         $('.market-list').fadeOut(0);
         if (page == "gold.html")
@@ -106,7 +105,7 @@ $(window).load(function() {
         drawGraph();
     });
 
-     var resizer = function() {
+    var resizer = function() {
         if (winWidth > 999) {
             $('.graph-panel').removeClass('graph-panel-show');
             $('.market-status').fadeIn(0);
@@ -126,9 +125,9 @@ $(window).load(function() {
      *       EDIT HANDLING     *
      *                         *
      * * * * * * * * * * * * * */
-     var editOpen = false;
+    var editOpen = false;
 
-     $('#edit').click(function() {
+    $('#edit').click(function() {
         var msTop = $('.main-section').css('padding-top');
         var msLeft = $('.main-section').css('padding-left');
         var msBottom = $('.main-section').css('padding-bottom');
@@ -159,7 +158,7 @@ $(window).load(function() {
         }, 400);
     });
 
-     $('#icon-close').click(function() {
+    $('#icon-close').click(function() {
         editOpen = false;
         $('#coin_edit').velocity({
             top: $('#edit').offset().top - $(window).scrollTop(),
@@ -176,7 +175,7 @@ $(window).load(function() {
     });
 
 
-     $(window).scroll(function() {
+    $(window).scroll(function() {
         if (editOpen) {
             $('#coin_edit_wrapper').velocity({
                 translateY: -$(window).scrollTop()
@@ -189,8 +188,8 @@ $(window).load(function() {
      *    ADD HANDLING/DATE    *
      *                         *
      * * * * * * * * * * * * * */
-     var defaultDate = new Date();
-     var defaultDateInput = ('0' + (defaultDate.getMonth() + 1)).slice(-2) + '-' + ('0' + defaultDate.getDate()).slice(-2) + '-' + defaultDate.getFullYear();
+    var defaultDate = new Date();
+    var defaultDateInput = ('0' + (defaultDate.getMonth() + 1)).slice(-2) + '-' + ('0' + defaultDate.getDate()).slice(-2) + '-' + defaultDate.getFullYear();
     //document.getElementsByName('purchase_date')[0].value = defaultDateInput;
     $(".purchase_date").val(defaultDateInput);
 
@@ -202,8 +201,8 @@ $(window).load(function() {
         var y = matches[3];
         var composedDate = new Date(y, m, d);
         return composedDate.getDate() == d &&
-        composedDate.getMonth() == m &&
-        composedDate.getFullYear() == y;
+            composedDate.getMonth() == m &&
+            composedDate.getFullYear() == y;
     }
 
     $('.purchase_date').focus(function() {
@@ -226,7 +225,7 @@ $(window).load(function() {
      *                         *
      * * * * * * * * * * * * * */
 
-     var tableData = {
+    var tableData = {
         "Gold": {
             "US Eagle": {
                 "metal_percent": "0.99"
@@ -279,17 +278,17 @@ $(window).load(function() {
             var property = tr[i].getElements("td")[0];
             switch (property.innerHTML) {
                 case 'Metal':
-                metal = tr[i].getElements("td")[1].getElements("select")[0].value;
-                break;
+                    metal = tr[i].getElements("td")[1].getElements("select")[0].value;
+                    break;
                 case 'Type':
-                bartype = tr[i].getElements("td")[1].getElements("select")[0].value;
-                break;
+                    bartype = tr[i].getElements("td")[1].getElements("select")[0].value;
+                    break;
                 case 'Qty.':
-                qty = tr[i].getElements("td")[1].getElements("input")[0].value;
-                break;
+                    qty = tr[i].getElements("td")[1].getElements("input")[0].value;
+                    break;
                 case 'Weight per unit (ozt)':
-                wpu = tr[i].getElements("td")[1].getElements("input")[0].value;
-                break;
+                    wpu = tr[i].getElements("td")[1].getElements("input")[0].value;
+                    break;
             }
 
         }
@@ -330,17 +329,17 @@ $(window).load(function() {
 
         switch (metal) {
             case 'Gold':
-            $("#total-metal").text("Total au (ozt)");
-            $("#metal-perc").text("Gold %");
-            break;
+                $("#total-metal").text("Total au (ozt)");
+                $("#metal-perc").text("Gold %");
+                break;
             case 'Silver':
-            $("#total-metal").text("Total ag (ozt)");
-            $("#metal-perc").text("Silver %");
-            break;
+                $("#total-metal").text("Total ag (ozt)");
+                $("#metal-perc").text("Silver %");
+                break;
             case 'Platinum':
-            $("#total-metal").text("Total pt (ozt)");
-            $("#metal-perc").text("Platinum %");
-            break;
+                $("#total-metal").text("Total pt (ozt)");
+                $("#metal-perc").text("Platinum %");
+                break;
         }
 
         $("#metal-perc").next().text((tableData[metal][bartype]['metal_percent']));
@@ -383,64 +382,64 @@ $(window).load(function() {
             $("#total-metal").next().text(tlm);
             $("#total-cost").text(tlc);
         });
-};
+    };
 
-$('#addTable').find('*').change(function() {
-    handleFormChange('add');
-});
-
-$('#editTable').find('*').change(function() {
-    handleFormChange('edit');
-});
-
-try {
-    if ($('#addTable').length != 0)
+    $('#addTable').find('*').change(function() {
         handleFormChange('add');
-} catch (err) {
-    console.log("Don't handle form immediately");
-}
+    });
 
-function checkNumber(num, varType) {
-    if (typeof varType != "string") {
-        return false;
-    }
-
-    switch (varType.toLowerCase()) {
-        case "float":
-        f = parseFloat;
-        break;
-        default:
-        f = parseInt;
-        break;
-    }
+    $('#editTable').find('*').change(function() {
+        handleFormChange('edit');
+    });
 
     try {
-        if (f(num) > 0) {
-            return true;
-        }
+        if ($('#addTable').length != 0)
+            handleFormChange('add');
     } catch (err) {
+        console.log("Don't handle form immediately");
+    }
+
+    function checkNumber(num, varType) {
+        if (typeof varType != "string") {
+            return false;
+        }
+
+        switch (varType.toLowerCase()) {
+            case "float":
+                f = parseFloat;
+                break;
+            default:
+                f = parseInt;
+                break;
+        }
+
+        try {
+            if (f(num) > 0) {
+                return true;
+            }
+        } catch (err) {
+            return false;
+        }
         return false;
     }
-    return false;
-}
 
 });
 
 
 /*
-* * * * * * * * * * * * * * * * * * * * * * * * * * * *
-* * * * * * * * * * * * * * * * * * * * * * * * * * * *
-* * * * * * * * * * * * * * * * * * * * * * * * * * * *
-* * * * * * * * * * * * * * * * * * * * * * * * * * * *
-* * * * * * * * * * * * * * * * * * * * * * * * * * * *
-* * * * * * * * * * * * * * * * * * * * * * * * * * * *
-*                       backend.js                    *
-* * * * * * * * * * * * * * * * * * * * * * * * * * * *
-* * * * * * * * * * * * * * * * * * * * * * * * * * * *
-* * * * * * * * * * * * * * * * * * * * * * * * * * * *
-* * * * * * * * * * * * * * * * * * * * * * * * * * * *
-* * * * * * * * * * * * * * * * * * * * * * * * * * * *
-* * * * * * * * * * * * * * * * * * * * * * * * * * * */
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ *                       backend.js                    *
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 
 
@@ -461,11 +460,11 @@ String.prototype.contains = function(s) {
 Node.prototype.getElements = function(s) {
     switch (s.charAt(0)) {
         case "#":
-        return this.getElementById(s.substring(1));
+            return this.getElementById(s.substring(1));
         case ".":
-        return this.getElementsByClassName(s.substring(1));
+            return this.getElementsByClassName(s.substring(1));
         default:
-        return this.getElementsByTagName(s);
+            return this.getElementsByTagName(s);
     }
 }
 
@@ -584,11 +583,11 @@ function getMetalURL(metal) {
     var data_url = API_URL;
     switch (metal.toLowerCase()) {
         case "silver":
-        return API_URL + "AG_EIB.json";
+            return API_URL + "AG_EIB.json";
         case "platinum":
-        return API_URL + "PL_MKT.json";
+            return API_URL + "PL_MKT.json";
         default:
-        return API_URL + "AU_EIB.json";
+            return API_URL + "AU_EIB.json";
     }
 }
 
@@ -669,17 +668,17 @@ StackManager.prototype.addCoin = function(newStack) {
     // set reference to particular metal
     switch (newStack.metal) {
         case "Gold":
-        metalRef = this.stackRef.child("gold");
-        break;
+            metalRef = this.stackRef.child("gold");
+            break;
         case "Silver":
-        metalRef = this.stackRef.child("silver");
-        break;
+            metalRef = this.stackRef.child("silver");
+            break;
         case "Platinum":
-        metalRef = this.stackRef.child("platinum");
-        break;
+            metalRef = this.stackRef.child("platinum");
+            break;
         default:
-        metalRef = null
-        return;
+            metalRef = null
+            return;
     }
 
     metalRef.push(newStack); // put new coin information
@@ -708,8 +707,8 @@ StackManager.prototype.read = function() {
 
             // array of information to be inserted
             var data = ["<div class=\"coin_mini\"></div>",
-            "<a href=\"gold_detail.html?id=" + key + "\"></a>" + coin["type"],
-            coin["qty"], coin["total_weight_(ozt)"], coin["purchase_date"], coin["total"]
+                "<a href=\"gold_detail.html?id=" + key + "\"></a>" + coin["type"],
+                coin["qty"], coin["total_weight_(ozt)"], coin["purchase_date"], coin["total"]
             ];
 
             // construct td's for this row
@@ -743,17 +742,17 @@ StackManager.prototype.total = function() {
     //var metal = this.coinInfo.type;
     switch (this.metal) {
         case "gold":
-        reference = this.stackRef.child("gold");
-        break;
+            reference = this.stackRef.child("gold");
+            break;
         case "silver":
-        reference = this.stackRef.child("silver");
-        break;
+            reference = this.stackRef.child("silver");
+            break;
         case "platinum":
-        reference = this.stackRef.child("platinum");
-        break;
+            reference = this.stackRef.child("platinum");
+            break;
         default:
-        reference = null;
-        break;
+            reference = null;
+            break;
     }
 
     // check for reference and perform appropriat total calculation
@@ -910,28 +909,63 @@ StackManager.prototype.deleteCoin = function(query) {
     });
 }
 
+StackManager.prototype.createTableArray = function() {
+    var array = [];
+    var row = null;
+    try {
+        row = document.getElements("#coinStack").getElementsByTagName("tr");
+        console.log(row);
+        row = row.getElements("tr");
 
+    } catch (err) {
+        return [];
+    }
+    for (var i = 0; i < row.length; i++) {
+        array.push(row[i]);
+    }
+
+    return array;
+}
+
+StackManager.prototype.filter = function(str, array) {
+    toggle = [];
+    str = str.replace(/\s+$/, '');
+    for (var i = 0; i < array.length; i++) {
+        $(array[i]).show();
+        var td = array[i].getElements("td");
+        //toggle.push(false);
+        console.log("wut " + array[i])
+        if (!td[1].innerHTML.contains(str)) {
+            $(array[i]).hide();
+        }
+    }
+    /*for(var i = 0; i < array.length; i++) {
+        if(!toggle[i]) {
+            $(array[i]).hide();
+        }
+    }*/
+}
 
 /*
-* * * * * * * * * * * * * * * * * * * * * * * * * * * *
-* * * * * * * * * * * * * * * * * * * * * * * * * * * *
-* * * * * * * * * * * * * * * * * * * * * * * * * * * *
-* * * * * * * * * * * * * * * * * * * * * * * * * * * *
-* * * * * * * * * * * * * * * * * * * * * * * * * * * *
-* * * * * * * * * * * * * * * * * * * * * * * * * * * *
-*                     controller.js                   *
-* * * * * * * * * * * * * * * * * * * * * * * * * * * *
-* * * * * * * * * * * * * * * * * * * * * * * * * * * *
-* * * * * * * * * * * * * * * * * * * * * * * * * * * *
-* * * * * * * * * * * * * * * * * * * * * * * * * * * *
-* * * * * * * * * * * * * * * * * * * * * * * * * * * *
-* * * * * * * * * * * * * * * * * * * * * * * * * * * */
-
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ *                     controller.js                   *
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 $(document).ready(function() {
     var stack = new StackManager();
     var metal = stack.toString();
     var imgBase = "";
+    var tableArray = [];
 
     // sign in user
     $("#log-in-button").click(function() {
@@ -1020,774 +1054,769 @@ $(document).ready(function() {
             stack.read();
         }
         stack.total();
+        tableArray = stack.createTableArray();
     }
+
+    $("input[type='search']").keyup(function(e) {
+        if (e.which == 13) {
+
+            stack.filter($(this).val(), tableArray);
+            console.log(tableArray.length);
+        }
+    });
 });
 
 
 
 
 /*
-* * * * * * * * * * * * * * * * * * * * * * * * * * * *
-* * * * * * * * * * * * * * * * * * * * * * * * * * * *
-* * * * * * * * * * * * * * * * * * * * * * * * * * * *
-* * * * * * * * * * * * * * * * * * * * * * * * * * * *
-* * * * * * * * * * * * * * * * * * * * * * * * * * * *
-* * * * * * * * * * * * * * * * * * * * * * * * * * * *
-*                   datapopulation.js                 *
-* * * * * * * * * * * * * * * * * * * * * * * * * * * *
-* * * * * * * * * * * * * * * * * * * * * * * * * * * *
-* * * * * * * * * * * * * * * * * * * * * * * * * * * *
-* * * * * * * * * * * * * * * * * * * * * * * * * * * *
-* * * * * * * * * * * * * * * * * * * * * * * * * * * *
-* * * * * * * * * * * * * * * * * * * * * * * * * * * */
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ *                   datapopulation.js                 *
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-if(!page.includes("add") && !page.includes("detail"))
+if (!page.includes("add") && !page.includes("detail"))
     $(document).ready(function() {
 
-    // draws a graph for the page
-    var gold1oz = [];
-    var silver1oz = [];
-    var plat1oz = [];
-    var goldtotal = [];
-    var silvertotal = [];
-    var plattotal = [];
-    var alltotal = [];
-    var xlabel = [];
-    var waitFor;
-    var waitForTotal;
-    var graphsToDraw;
-    var everyOtherX = 2;
-    var options = {
+        // draws a graph for the page
+        var gold1oz = [];
+        var silver1oz = [];
+        var plat1oz = [];
+        var goldtotal = [];
+        var silvertotal = [];
+        var plattotal = [];
+        var alltotal = [];
+        var xlabel = [];
+        var waitFor;
+        var waitForTotal;
+        var graphsToDraw;
+        var everyOtherX = 2;
+        var options = {
 
-        ///Boolean - Whether grid lines are shown across the chart
-        scaleShowGridLines: true,
+            ///Boolean - Whether grid lines are shown across the chart
+            scaleShowGridLines: true,
 
-        //String - Colour of the grid lines
-        scaleGridLineColor: "rgba(104, 206, 222, 0.1)",
+            //String - Colour of the grid lines
+            scaleGridLineColor: "rgba(104, 206, 222, 0.1)",
 
-        //Number - Width of the grid lines
-        scaleGridLineWidth: 1,
+            //Number - Width of the grid lines
+            scaleGridLineWidth: 1,
 
-        //Boolean - Whether to show horizontal lines (except X axis)
-        scaleShowHorizontalLines: true,
+            //Boolean - Whether to show horizontal lines (except X axis)
+            scaleShowHorizontalLines: true,
 
-        //Boolean - Whether to show vertical lines (except Y axis)
-        scaleShowVerticalLines: true,
+            //Boolean - Whether to show vertical lines (except Y axis)
+            scaleShowVerticalLines: true,
 
-        //Boolean - Whether the line is curved between points
-        bezierCurve: true,
+            //Boolean - Whether the line is curved between points
+            bezierCurve: true,
 
-        //Number - Tension of the bezier curve between points
-        bezierCurveTension: 0.4,
+            //Number - Tension of the bezier curve between points
+            bezierCurveTension: 0.4,
 
-        //Boolean - Whether to show a dot for each point
-        pointDot: true,
+            //Boolean - Whether to show a dot for each point
+            pointDot: true,
 
-        //Number - Radius of each point dot in pixels
-        pointDotRadius: 4,
+            //Number - Radius of each point dot in pixels
+            pointDotRadius: 4,
 
-        //Number - Pixel width of point dot stroke
-        pointDotStrokeWidth: 1,
+            //Number - Pixel width of point dot stroke
+            pointDotStrokeWidth: 1,
 
-        //Number - amount extra to add to the radius to cater for hit detection outside the drawn point
-        pointHitDetectionRadius: 20,
+            //Number - amount extra to add to the radius to cater for hit detection outside the drawn point
+            pointHitDetectionRadius: 20,
 
-        //Boolean - Whether to show a stroke for datasets
-        datasetStroke: true,
+            //Boolean - Whether to show a stroke for datasets
+            datasetStroke: true,
 
-        //Number - Pixel width of dataset stroke
-        datasetStrokeWidth: 2,
+            //Number - Pixel width of dataset stroke
+            datasetStrokeWidth: 2,
 
-        //Boolean - Whether to fill the dataset with a colour
-        datasetFill: true,
+            //Boolean - Whether to fill the dataset with a colour
+            datasetFill: true,
 
-        //String - A legend template
-        legendTemplate: "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<datasets.length; i++){%><li><span style=\"background-color:<%=datasets[i].strokeColor%>\"></span><%if(datasets[i].label){%><%=datasets[i].label%><%}%></li><%}%></ul>",
+            //String - A legend template
+            legendTemplate: "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<datasets.length; i++){%><li><span style=\"background-color:<%=datasets[i].strokeColor%>\"></span><%if(datasets[i].label){%><%=datasets[i].label%><%}%></li><%}%></ul>",
 
-        responsive: true,
+            responsive: true,
 
-        maintainAspectRatio: false,
+            maintainAspectRatio: false,
 
-        // Boolean - If we want to override with a hard coded scale
-        scaleOverride: false,
+            // Boolean - If we want to override with a hard coded scale
+            scaleOverride: false,
 
-        // ** Required if scaleOverride is true **
-        // Number - The number of steps in a hard coded scale
-        scaleSteps: null,
-        // Number - The value jump in the hard coded scale
-        scaleStepWidth: null,
-        // Number - The scale starting value
-        scaleStartValue: null,
+            // ** Required if scaleOverride is true **
+            // Number - The number of steps in a hard coded scale
+            scaleSteps: null,
+            // Number - The value jump in the hard coded scale
+            scaleStepWidth: null,
+            // Number - The scale starting value
+            scaleStartValue: null,
 
-    };
+        };
 
-    var coinChart;
+        var coinChart;
 
-    var drawGraph = function(metal) {
-        var pointStroke = "rgba(255,255,255,0.6)";
-        var pointHighlightFill = "#fff";
-        var pointHighlightStroke = "#fff";
+        var drawGraph = function(metal) {
+            var pointStroke = "rgba(255,255,255,0.6)";
+            var pointHighlightFill = "#fff";
+            var pointHighlightStroke = "#fff";
 
-        for (i = 0; i < xlabel.length; i ++){
-            if (i % everyOtherX != 0)
-                xlabel[i] = "";
-        }
-
-
-        if(metal == "all"){
-            var data = {
-                labels: xlabel,
-                datasets: [{
-                    label: "Gold Total",
-                    fillColor: "rgba(104, 206, 222, 0.05)",
-                    strokeColor: "#FF6D67",
-                    pointColor: "#FF6D67",
-                    pointStrokeColor: pointStroke,
-                    pointHighlightFill: pointHighlightFill,
-                    pointHighlightStroke: pointHighlightStroke,
-                    data: goldtotal
-                }, {
-                    label: "Platinum Total",
-                    fillColor: "rgba(104, 206, 222, 0.05)",
-                    strokeColor: "#FFA859",
-                    pointColor: "#FFA859",
-                    pointStrokeColor: pointStroke,
-                    pointHighlightFill: pointHighlightFill,
-                    pointHighlightStroke: pointHighlightStroke,
-                    data: plattotal
-                }, {
-                    label: "Silver Total",
-                    fillColor: "rgba(104, 206, 222, 0.05)",
-                    strokeColor: "#F3FF88",
-                    pointColor: "#F3FF88",
-                    pointStrokeColor: pointStroke,
-                    pointHighlightFill: pointHighlightFill,
-                    pointHighlightStroke: pointHighlightStroke,
-                    data: silvertotal
-                }, {
-                    label: "1oz Gold",
-                    fillColor: "rgba(104, 206, 222, 0.05)",
-                    strokeColor: "#9FFF98",
-                    pointColor: "#9FFF98",
-                    pointStrokeColor: pointStroke,
-                    pointHighlightFill: pointHighlightFill,
-                    pointHighlightStroke: pointHighlightStroke,
-                    data: gold1oz
-                }, {
-                    label: "1oz Platinum",
-                    fillColor: "rgba(104, 206, 222, 0.05)",
-                    strokeColor: "#BBF5FF",
-                    pointColor: "#BBF5FF",
-                    pointStrokeColor: pointStroke,
-                    pointHighlightFill: pointHighlightFill,
-                    pointHighlightStroke: pointHighlightStroke,
-                    data: plat1oz
-                }, {
-                    label: "1oz Silver",
-                    fillColor: "rgba(104, 206, 222, 0.05)",
-                    strokeColor: "#C29FFF",
-                    pointColor: "#C29FFF",
-                    pointStrokeColor: pointStroke,
-                    pointHighlightFill: pointHighlightFill,
-                    pointHighlightStroke: pointHighlightStroke,
-                    data: silver1oz
-                }, ]
-            };
-        }
-        else if (metal == "gold"){
-            var data = {
-                labels: xlabel,
-                datasets: [{
-                    label: "Gold Total",
-                    fillColor: "rgba(104, 206, 222, 0.05)",
-                    strokeColor: "#FF6D67",
-                    pointColor: "#FF6D67",
-                    pointStrokeColor: pointStroke,
-                    pointHighlightFill: pointHighlightFill,
-                    pointHighlightStroke: pointHighlightStroke,
-                    data: goldtotal
-                }, {
-                    label: "1oz Gold",
-                    fillColor: "rgba(104, 206, 222, 0.05)",
-                    strokeColor: "#9FFF98",
-                    pointColor: "#9FFF98",
-                    pointStrokeColor: pointStroke,
-                    pointHighlightFill: pointHighlightFill,
-                    pointHighlightStroke: pointHighlightStroke,
-                    data: gold1oz
-                }, ]
-            };
-        }
-        else if (metal =="silver"){
-            var data = {
-                labels: xlabel,
-                datasets: [{
-                    label: "Silver Total",
-                    fillColor: "rgba(104, 206, 222, 0.05)",
-                    strokeColor: "#F3FF88",
-                    pointColor: "#F3FF88",
-                    pointStrokeColor: pointStroke,
-                    pointHighlightFill: pointHighlightFill,
-                    pointHighlightStroke: pointHighlightStroke,
-                    data: silvertotal
-                },  {
-                    label: "1oz Silver",
-                    fillColor: "rgba(104, 206, 222, 0.05)",
-                    strokeColor: "#C29FFF",
-                    pointColor: "#C29FFF",
-                    pointStrokeColor: pointStroke,
-                    pointHighlightFill: pointHighlightFill,
-                    pointHighlightStroke: pointHighlightStroke,
-                    data: silver1oz
-                }, ]
+            for (i = 0; i < xlabel.length; i++) {
+                if (i % everyOtherX != 0)
+                    xlabel[i] = "";
             }
-        }
-        else if (metal =="platinum"){
-            var data = {
-                labels: xlabel,
-                datasets: [{
-                    label: "Platinum Total",
-                    fillColor: "rgba(104, 206, 222, 0.05)",
-                    strokeColor: "#FFA859",
-                    pointColor: "#FFA859",
-                    pointStrokeColor: pointStroke,
-                    pointHighlightFill: pointHighlightFill,
-                    pointHighlightStroke: pointHighlightStroke,
-                    data: plattotal
-                }, {
-                    label: "1oz Platinum",
-                    fillColor: "rgba(104, 206, 222, 0.05)",
-                    strokeColor: "#BBF5FF",
-                    pointColor: "#BBF5FF",
-                    pointStrokeColor: pointStroke,
-                    pointHighlightFill: pointHighlightFill,
-                    pointHighlightStroke: pointHighlightStroke,
-                    data: plat1oz
-                }, ]
+
+
+            if (metal == "all") {
+                var data = {
+                    labels: xlabel,
+                    datasets: [{
+                        label: "Gold Total",
+                        fillColor: "rgba(104, 206, 222, 0.05)",
+                        strokeColor: "#FF6D67",
+                        pointColor: "#FF6D67",
+                        pointStrokeColor: pointStroke,
+                        pointHighlightFill: pointHighlightFill,
+                        pointHighlightStroke: pointHighlightStroke,
+                        data: goldtotal
+                    }, {
+                        label: "Platinum Total",
+                        fillColor: "rgba(104, 206, 222, 0.05)",
+                        strokeColor: "#FFA859",
+                        pointColor: "#FFA859",
+                        pointStrokeColor: pointStroke,
+                        pointHighlightFill: pointHighlightFill,
+                        pointHighlightStroke: pointHighlightStroke,
+                        data: plattotal
+                    }, {
+                        label: "Silver Total",
+                        fillColor: "rgba(104, 206, 222, 0.05)",
+                        strokeColor: "#F3FF88",
+                        pointColor: "#F3FF88",
+                        pointStrokeColor: pointStroke,
+                        pointHighlightFill: pointHighlightFill,
+                        pointHighlightStroke: pointHighlightStroke,
+                        data: silvertotal
+                    }, {
+                        label: "1oz Gold",
+                        fillColor: "rgba(104, 206, 222, 0.05)",
+                        strokeColor: "#9FFF98",
+                        pointColor: "#9FFF98",
+                        pointStrokeColor: pointStroke,
+                        pointHighlightFill: pointHighlightFill,
+                        pointHighlightStroke: pointHighlightStroke,
+                        data: gold1oz
+                    }, {
+                        label: "1oz Platinum",
+                        fillColor: "rgba(104, 206, 222, 0.05)",
+                        strokeColor: "#BBF5FF",
+                        pointColor: "#BBF5FF",
+                        pointStrokeColor: pointStroke,
+                        pointHighlightFill: pointHighlightFill,
+                        pointHighlightStroke: pointHighlightStroke,
+                        data: plat1oz
+                    }, {
+                        label: "1oz Silver",
+                        fillColor: "rgba(104, 206, 222, 0.05)",
+                        strokeColor: "#C29FFF",
+                        pointColor: "#C29FFF",
+                        pointStrokeColor: pointStroke,
+                        pointHighlightFill: pointHighlightFill,
+                        pointHighlightStroke: pointHighlightStroke,
+                        data: silver1oz
+                    }, ]
+                };
+            } else if (metal == "gold") {
+                var data = {
+                    labels: xlabel,
+                    datasets: [{
+                        label: "Gold Total",
+                        fillColor: "rgba(104, 206, 222, 0.05)",
+                        strokeColor: "#FF6D67",
+                        pointColor: "#FF6D67",
+                        pointStrokeColor: pointStroke,
+                        pointHighlightFill: pointHighlightFill,
+                        pointHighlightStroke: pointHighlightStroke,
+                        data: goldtotal
+                    }, {
+                        label: "1oz Gold",
+                        fillColor: "rgba(104, 206, 222, 0.05)",
+                        strokeColor: "#9FFF98",
+                        pointColor: "#9FFF98",
+                        pointStrokeColor: pointStroke,
+                        pointHighlightFill: pointHighlightFill,
+                        pointHighlightStroke: pointHighlightStroke,
+                        data: gold1oz
+                    }, ]
+                };
+            } else if (metal == "silver") {
+                var data = {
+                    labels: xlabel,
+                    datasets: [{
+                        label: "Silver Total",
+                        fillColor: "rgba(104, 206, 222, 0.05)",
+                        strokeColor: "#F3FF88",
+                        pointColor: "#F3FF88",
+                        pointStrokeColor: pointStroke,
+                        pointHighlightFill: pointHighlightFill,
+                        pointHighlightStroke: pointHighlightStroke,
+                        data: silvertotal
+                    }, {
+                        label: "1oz Silver",
+                        fillColor: "rgba(104, 206, 222, 0.05)",
+                        strokeColor: "#C29FFF",
+                        pointColor: "#C29FFF",
+                        pointStrokeColor: pointStroke,
+                        pointHighlightFill: pointHighlightFill,
+                        pointHighlightStroke: pointHighlightStroke,
+                        data: silver1oz
+                    }, ]
+                }
+            } else if (metal == "platinum") {
+                var data = {
+                    labels: xlabel,
+                    datasets: [{
+                        label: "Platinum Total",
+                        fillColor: "rgba(104, 206, 222, 0.05)",
+                        strokeColor: "#FFA859",
+                        pointColor: "#FFA859",
+                        pointStrokeColor: pointStroke,
+                        pointHighlightFill: pointHighlightFill,
+                        pointHighlightStroke: pointHighlightStroke,
+                        data: plattotal
+                    }, {
+                        label: "1oz Platinum",
+                        fillColor: "rgba(104, 206, 222, 0.05)",
+                        strokeColor: "#BBF5FF",
+                        pointColor: "#BBF5FF",
+                        pointStrokeColor: pointStroke,
+                        pointHighlightFill: pointHighlightFill,
+                        pointHighlightStroke: pointHighlightStroke,
+                        data: plat1oz
+                    }, ]
+                }
             }
-        }
-        var ctx = document.getElementById("total-chart").getContext("2d");
-        if(coinChart != null)
-            coinChart.destroy();
-        coinChart = new Chart(ctx).Line(data, options);
-        coinChart.update();
-    };
+            var ctx = document.getElementById("total-chart").getContext("2d");
+            if (coinChart != null)
+                coinChart.destroy();
+            coinChart = new Chart(ctx).Line(data, options);
+            coinChart.update();
+        };
 
 
 
-    function CSVToArray( strData, strDelimiter ){
-        // Check to see if the delimiter is defined. If not,
-        // then default to comma.
-        strDelimiter = (strDelimiter || ",");
+        function CSVToArray(strData, strDelimiter) {
+            // Check to see if the delimiter is defined. If not,
+            // then default to comma.
+            strDelimiter = (strDelimiter || ",");
 
-        // Create a regular expression to parse the CSV values.
-        var objPattern = new RegExp(
-            (
-                // Delimiters.
-                "(\\" + strDelimiter + "|\\r?\\n|\\r|^)" +
+            // Create a regular expression to parse the CSV values.
+            var objPattern = new RegExp(
+                (
+                    // Delimiters.
+                    "(\\" + strDelimiter + "|\\r?\\n|\\r|^)" +
 
-                // Quoted fields.
-                "(?:\"([^\"]*(?:\"\"[^\"]*)*)\"|" +
+                    // Quoted fields.
+                    "(?:\"([^\"]*(?:\"\"[^\"]*)*)\"|" +
 
-                // Standard fields.
-                "([^\"\\" + strDelimiter + "\\r\\n]*))"
-            ),
-            "gi"
+                    // Standard fields.
+                    "([^\"\\" + strDelimiter + "\\r\\n]*))"
+                ),
+                "gi"
             );
 
 
-        // Create an array to hold our data. Give the array
-        // a default empty first row.
-        var arrData = [[]];
+            // Create an array to hold our data. Give the array
+            // a default empty first row.
+            var arrData = [
+                []
+            ];
 
-        // Create an array to hold our individual pattern
-        // matching groups.
-        var arrMatches = null;
+            // Create an array to hold our individual pattern
+            // matching groups.
+            var arrMatches = null;
 
 
-        // Keep looping over the regular expression matches
-        // until we can no longer find a match.
-        while (arrMatches = objPattern.exec( strData )){
+            // Keep looping over the regular expression matches
+            // until we can no longer find a match.
+            while (arrMatches = objPattern.exec(strData)) {
 
-            // Get the delimiter that was found.
-            var strMatchedDelimiter = arrMatches[ 1 ];
+                // Get the delimiter that was found.
+                var strMatchedDelimiter = arrMatches[1];
 
-            // Check to see if the given delimiter has a length
-            // (is not the start of string) and if it matches
-            // field delimiter. If id does not, then we know
-            // that this delimiter is a row delimiter.
-            if (
-                strMatchedDelimiter.length &&
-                strMatchedDelimiter !== strDelimiter
-                ){
+                // Check to see if the given delimiter has a length
+                // (is not the start of string) and if it matches
+                // field delimiter. If id does not, then we know
+                // that this delimiter is a row delimiter.
+                if (
+                    strMatchedDelimiter.length &&
+                    strMatchedDelimiter !== strDelimiter
+                ) {
 
-                // Since we have reached a new row of data,
-                // add an empty row to our data array.
-                arrData.push( [] );
+                    // Since we have reached a new row of data,
+                    // add an empty row to our data array.
+                    arrData.push([]);
 
-            }
+                }
 
-            var strMatchedValue;
+                var strMatchedValue;
 
-            // Now that we have our delimiter out of the way,
-            // let's check to see which kind of value we
-            // captured (quoted or unquoted).
-            if (arrMatches[ 2 ]){
+                // Now that we have our delimiter out of the way,
+                // let's check to see which kind of value we
+                // captured (quoted or unquoted).
+                if (arrMatches[2]) {
 
-                // We found a quoted value. When we capture
-                // this value, unescape any double quotes.
-                strMatchedValue = arrMatches[ 2 ].replace(
-                    new RegExp( "\"\"", "g" ),
-                    "\""
+                    // We found a quoted value. When we capture
+                    // this value, unescape any double quotes.
+                    strMatchedValue = arrMatches[2].replace(
+                        new RegExp("\"\"", "g"),
+                        "\""
                     );
 
-            } else {
+                } else {
 
-                // We found a non-quoted value.
-                strMatchedValue = arrMatches[ 3 ];
+                    // We found a non-quoted value.
+                    strMatchedValue = arrMatches[3];
 
-            }
-
-
-            // Now that we have our value string, let's add
-            // it to the data array.
-            arrData[ arrData.length - 1 ].push( strMatchedValue );
-        }
-
-        // Return the parsed data.
-        return( arrData );
-    };
-
-
-    var calcdailychange = function(){
-        if (page =="home.html"){
-            for (i = 0; i < plattotal.length; i ++)
-                alltotal.push(goldtotal[i]+silvertotal[i]+plattotal[i]);
-            var perc = (alltotal[alltotal.length-1]-alltotal[alltotal.length-2])/alltotal[alltotal.length-2]
-            if (alltotal[alltotal.length-2] == 0)
-                perc = 0;
-            perc = (perc * 100).toFixed(1);
-            if(perc>=0){
-                $(".total-change").addClass("pos-change");
-                $(".total-change").text("+"+perc+"%");
-            }
-            else{
-                $(".total-change").addClass("neg-change");
-                $(".total-change").text("-"+perc+"%");
-            }
-        }
-    }
-
-    var getMyGold = function() {
-        var stackRef = userRef.child(currentUser).child("coinStack");
-        stackRef.child('gold').on("value", function(data) {
-            if (!data) {
-                console.log("No coins found in Firebase");
-                return;
-            }
-            var list = data.val(); 
-
-            for (var key in list) {
-                if (!list.hasOwnProperty(key) || key == "total") {
-                    continue;
                 }
-                var coin = list[key];
-                var coinPurch = coin['purchase_date'];
-                var coinOzt = coin['total_weight_(ozt)'];
-                var coinPurchDate = new Date(coinPurch);
-                var currDate = new Date();
-                var distanceDate = Math.floor((currDate-coinPurchDate)/(24*60*60*1000));
-                for (i = 0; i < goldtotal.length && i < distanceDate+1; i ++){
-                    goldtotal[goldtotal.length-1-i] += (coinOzt*gold1oz[i]);
-                }
-            }
-            waitForTotal--;
-            if(waitForTotal==0 && waitFor == 0){
-                drawGraph(graphsToDraw);
-                calcdailychange();
-            }
-            
 
-            if (page == "gold.html"){
-                var perc = (goldtotal[goldtotal.length-1]-goldtotal[goldtotal.length-2])/goldtotal[goldtotal.length-2]
-                if (goldtotal[goldtotal.length-2] == 0)
+
+                // Now that we have our value string, let's add
+                // it to the data array.
+                arrData[arrData.length - 1].push(strMatchedValue);
+            }
+
+            // Return the parsed data.
+            return (arrData);
+        };
+
+
+        var calcdailychange = function() {
+            if (page == "home.html") {
+                for (i = 0; i < plattotal.length; i++)
+                    alltotal.push(goldtotal[i] + silvertotal[i] + plattotal[i]);
+                var perc = (alltotal[alltotal.length - 1] - alltotal[alltotal.length - 2]) / alltotal[alltotal.length - 2]
+                if (alltotal[alltotal.length - 2] == 0)
                     perc = 0;
                 perc = (perc * 100).toFixed(1);
-                if(perc>=0){
-                    $(".daily-change").addClass("pos-change");
-                    $(".daily-change").text("+"+perc+"%");
-                }
-                else{
-                    $(".daily-change").addClass("neg-change");
-                    $(".daily-change").text("-"+perc+"%");
-                }
-
-                var perc = (goldtotal[goldtotal.length-1]-goldtotal[0])/goldtotal[0]
-                if (goldtotal[0] == 0)
-                    perc = 0;
-                perc = (perc * 100).toFixed(1);
-                if(perc>=0){
-                    $(".overall-change").addClass("pos-change");
-                    $(".overall-change").text("+"+perc+"%");
-                }
-                else {
-                    $(".overall-change").addClass("neg-change");
-                    $(".overall-change").text("-"+perc+"%");
+                if (perc >= 0) {
+                    $(".total-change").addClass("pos-change");
+                    $(".total-change").text("+" + perc + "%");
+                } else {
+                    $(".total-change").addClass("neg-change");
+                    $(".total-change").text("-" + perc + "%");
                 }
             }
-        }); 
-};
-
-
-var getMySilver = function() {
-    var stackRef = userRef.child(currentUser).child("coinStack");
-    stackRef.child('silver').on("value", function(data) {
-        if (!data) {
-            console.log("No coins found in Firebase");
-            return;
-        }
-        var list = data.val(); 
-
-        for (var key in list) {
-            if (!list.hasOwnProperty(key) || key == "total") {
-                continue;
-            }
-            var coin = list[key];
-            var coinPurch = coin['purchase_date'];
-            var coinOzt = coin['total_weight_(ozt)'];
-            var coinPurchDate = new Date(coinPurch);
-            var currDate = new Date();
-            var distanceDate = Math.floor((currDate-coinPurchDate)/(24*60*60*1000));
-            for (i = 0; i < silvertotal.length && i < distanceDate+1; i ++){
-                silvertotal[silvertotal.length-1-i] += (coinOzt*silver1oz[i]);
-            }
-        }
-        waitForTotal--;
-        if(waitForTotal==0 && waitFor == 0){
-            drawGraph(graphsToDraw);
-            calcdailychange();
         }
 
-        if (page == "silver.html"){
-            var perc = (silvertotal[silvertotal.length-1]-silvertotal[silvertotal.length-2])/silvertotal[silvertotal.length-2]
-            if (silvertotal[silvertotal.length-2] == 0)
-                perc = 0;
-            perc = (perc * 100).toFixed(1);
-            if(perc>=0){
-                $(".daily-change").addClass("pos-change");
-                $(".daily-change").text("+"+perc+"%");
-            }
-            else{
-                $(".daily-change").addClass("neg-change");
-                $(".daily-change").text("-"+perc+"%");
-            }
+        var getMyGold = function() {
+            var stackRef = userRef.child(currentUser).child("coinStack");
+            stackRef.child('gold').on("value", function(data) {
+                if (!data) {
+                    console.log("No coins found in Firebase");
+                    return;
+                }
+                var list = data.val();
 
-            var perc = (silvertotal[silvertotal.length-1]-silvertotal[0])/silvertotal[0]
-            if (silvertotal[0] == 0)
-                perc = 0;
-            perc = (perc * 100).toFixed(1);
-            if(perc>=0){
-                $(".overall-change").addClass("pos-change");
-                $(".overall-change").text("+"+perc+"%");
-            }
-            else {
-                $(".overall-change").addClass("neg-change");
-                $(".overall-change").text("-"+perc+"%");
-            }
-        }
-    }); 
-};
-
-
-var getMyPlatinum = function() {
-    var stackRef = userRef.child(currentUser).child("coinStack");
-    stackRef.child('platinum').on("value", function(data) {
-        if (!data) {
-            console.log("No coins found in Firebase");
-            return;
-        }
-        var list = data.val(); 
-
-        for (var key in list) {
-            if (!list.hasOwnProperty(key) || key == "total") {
-                continue;
-            }
-            var coin = list[key];
-            var coinPurch = coin['purchase_date'];
-            var coinOzt = coin['total_weight_(ozt)'];
-            var coinPurchDate = new Date(coinPurch);
-            var currDate = new Date();
-            var distanceDate = Math.floor((currDate-coinPurchDate)/(24*60*60*1000));
-            for (i = 0; i < plattotal.length && i < distanceDate+1; i ++){
-                plattotal[plattotal.length-1-i] += (coinOzt*plat1oz[i]);
-            }
-        }
-        waitForTotal--;
-        if(waitForTotal==0 && waitFor == 0){
-            drawGraph(graphsToDraw);
-            calcdailychange();
-        }
-
-        if (page == "platinum.html"){
-            var perc = (plattotal[plattotal.length-1]-plattotal[plattotal.length-2])/plattotal[plattotal.length-2]
-            if (plattotal[plattotal.length-2] == 0)
-                perc = 0;
-            perc = (perc * 100).toFixed(1);
-            if(perc>=0){
-                $(".daily-change").addClass("pos-change");
-                $(".daily-change").text("+"+perc+"%");
-            }
-            else{
-                $(".daily-change").addClass("neg-change");
-                $(".daily-change").text("-"+perc+"%");
-            }
-
-            var perc = (plattotal[plattotal.length-1]-plattotal[0])/plattotal[0]
-            if (plattotal[0] == 0)
-                perc = 0;
-            perc = (perc * 100).toFixed(1);
-            if(perc>=0){
-                $(".overall-change").addClass("pos-change");
-                $(".overall-change").text("+"+perc+"%");
-            }
-            else {
-                $(".overall-change").addClass("neg-change");
-                $(".overall-change").text("-"+perc+"%");
-            }
-        }
-    }); 
-};
-
-function getMetalJSON(json_url, metal){
-    var csvArr = [];
-    $.ajax({
-        type: "GET",
-        dataType: 'text',
-        url: json_url,
-        crossDomain : true,
-        xhrFields: {
-            withCredentials: false
-        }
-    })
-    .done(function( csvdata ) {
-            //alert("\nData from "+json_url+":\n"+csvdata);
-            //console.log("csvdata "+csvdata);
-            var csvArray = CSVToArray(csvdata, ",");
-            csvArray = csvArray.slice(1, csvArray.length-1);
-            csvArray.reverse();
-
-            var preprocessedArray = [];
-            var processedArray = [];
-
-
-            // catch up with xlabel first date
-            var xlabelfirst = xlabel[0];
-            var lastPrice = csvArray[0][1];
-            var csvarrayfirst = new Date(csvArray[0][0]);
-            var csvIter = 0;
-            while(xlabelfirst != ((csvarrayfirst.getMonth()+1)+'-'+('0'+csvarrayfirst.getDate()).slice(-2))){
-
-                //console.log(csvarrayfirst + " @ " + xlabelfirst);
-                //console.log(xlabelfirst + " @ " + ((csvarrayfirst.getMonth()+1)+'-'+('0'+csvarrayfirst.getDate()).slice(-2)));
-                if(csvarrayfirst.valueOf() == new Date(csvArray[csvIter+1][0]).valueOf()){
-                    csvIter++;
-                    lastPrice = csvArray[csvIter][1];
+                for (var key in list) {
+                    if (!list.hasOwnProperty(key) || key == "total") {
+                        continue;
+                    }
+                    var coin = list[key];
+                    var coinPurch = coin['purchase_date'];
+                    var coinOzt = coin['total_weight_(ozt)'];
+                    var coinPurchDate = new Date(coinPurch);
+                    var currDate = new Date();
+                    var distanceDate = Math.floor((currDate - coinPurchDate) / (24 * 60 * 60 * 1000));
+                    for (i = 0; i < goldtotal.length && i < distanceDate + 1; i++) {
+                        goldtotal[goldtotal.length - 1 - i] += (coinOzt * gold1oz[i]);
+                    }
+                }
+                waitForTotal--;
+                if (waitForTotal == 0 && waitFor == 0) {
+                    drawGraph(graphsToDraw);
+                    calcdailychange();
                 }
 
-                csvarrayfirst.setDate(csvarrayfirst.getDate()+1);
-            }
 
-            preprocessedArray.push([csvarrayfirst.getFullYear()+'-'+('0'+(csvarrayfirst.getMonth()+1)).slice(-2)+'-'+('0'+csvarrayfirst.getDate()).slice(-2), lastPrice]);
-            //alert(processedArray[0]);
+                if (page == "gold.html") {
+                    var perc = (goldtotal[goldtotal.length - 1] - goldtotal[goldtotal.length - 2]) / goldtotal[goldtotal.length - 2]
+                    if (goldtotal[goldtotal.length - 2] == 0)
+                        perc = 0;
+                    perc = (perc * 100).toFixed(1);
+                    if (perc >= 0) {
+                        $(".daily-change").addClass("pos-change");
+                        $(".daily-change").text("+" + perc + "%");
+                    } else {
+                        $(".daily-change").addClass("neg-change");
+                        $(".daily-change").text("-" + perc + "%");
+                    }
 
-
-            for(i = 1; i < xlabel.length; i++){
-                csvarrayfirst.setDate(csvarrayfirst.getDate()+1);
-                preprocessedArray.push([csvarrayfirst.getFullYear()+'-'+('0'+(csvarrayfirst.getMonth()+1)).slice(-2)+'-'+('0'+csvarrayfirst.getDate()).slice(-2), lastPrice]);
-                if((csvArray[csvIter+1] != null) && csvarrayfirst.valueOf() == new Date(csvArray[csvIter+1][0]).valueOf()){
-                    csvIter++;
-                    lastPrice = csvArray[csvIter][1];
+                    var perc = (goldtotal[goldtotal.length - 1] - goldtotal[0]) / goldtotal[0]
+                    if (goldtotal[0] == 0)
+                        perc = 0;
+                    perc = (perc * 100).toFixed(1);
+                    if (perc >= 0) {
+                        $(".overall-change").addClass("pos-change");
+                        $(".overall-change").text("+" + perc + "%");
+                    } else {
+                        $(".overall-change").addClass("neg-change");
+                        $(".overall-change").text("-" + perc + "%");
+                    }
                 }
-            }
-
-            //alert(csvArray);
-            //alert(xlabel);
-            //alert(processedArray);
-            //console.log(csvArray);
-            //console.log(processedArray);
-
-            for(i = 0; i < preprocessedArray.length; i++){
-                processedArray.push(preprocessedArray[i][1]);
-            }
+            });
+        };
 
 
-            switch (metal){
+        var getMySilver = function() {
+            var stackRef = userRef.child(currentUser).child("coinStack");
+            stackRef.child('silver').on("value", function(data) {
+                if (!data) {
+                    console.log("No coins found in Firebase");
+                    return;
+                }
+                var list = data.val();
+
+                for (var key in list) {
+                    if (!list.hasOwnProperty(key) || key == "total") {
+                        continue;
+                    }
+                    var coin = list[key];
+                    var coinPurch = coin['purchase_date'];
+                    var coinOzt = coin['total_weight_(ozt)'];
+                    var coinPurchDate = new Date(coinPurch);
+                    var currDate = new Date();
+                    var distanceDate = Math.floor((currDate - coinPurchDate) / (24 * 60 * 60 * 1000));
+                    for (i = 0; i < silvertotal.length && i < distanceDate + 1; i++) {
+                        silvertotal[silvertotal.length - 1 - i] += (coinOzt * silver1oz[i]);
+                    }
+                }
+                waitForTotal--;
+                if (waitForTotal == 0 && waitFor == 0) {
+                    drawGraph(graphsToDraw);
+                    calcdailychange();
+                }
+
+                if (page == "silver.html") {
+                    var perc = (silvertotal[silvertotal.length - 1] - silvertotal[silvertotal.length - 2]) / silvertotal[silvertotal.length - 2]
+                    if (silvertotal[silvertotal.length - 2] == 0)
+                        perc = 0;
+                    perc = (perc * 100).toFixed(1);
+                    if (perc >= 0) {
+                        $(".daily-change").addClass("pos-change");
+                        $(".daily-change").text("+" + perc + "%");
+                    } else {
+                        $(".daily-change").addClass("neg-change");
+                        $(".daily-change").text("-" + perc + "%");
+                    }
+
+                    var perc = (silvertotal[silvertotal.length - 1] - silvertotal[0]) / silvertotal[0]
+                    if (silvertotal[0] == 0)
+                        perc = 0;
+                    perc = (perc * 100).toFixed(1);
+                    if (perc >= 0) {
+                        $(".overall-change").addClass("pos-change");
+                        $(".overall-change").text("+" + perc + "%");
+                    } else {
+                        $(".overall-change").addClass("neg-change");
+                        $(".overall-change").text("-" + perc + "%");
+                    }
+                }
+            });
+        };
+
+
+        var getMyPlatinum = function() {
+            var stackRef = userRef.child(currentUser).child("coinStack");
+            stackRef.child('platinum').on("value", function(data) {
+                if (!data) {
+                    console.log("No coins found in Firebase");
+                    return;
+                }
+                var list = data.val();
+
+                for (var key in list) {
+                    if (!list.hasOwnProperty(key) || key == "total") {
+                        continue;
+                    }
+                    var coin = list[key];
+                    var coinPurch = coin['purchase_date'];
+                    var coinOzt = coin['total_weight_(ozt)'];
+                    var coinPurchDate = new Date(coinPurch);
+                    var currDate = new Date();
+                    var distanceDate = Math.floor((currDate - coinPurchDate) / (24 * 60 * 60 * 1000));
+                    for (i = 0; i < plattotal.length && i < distanceDate + 1; i++) {
+                        plattotal[plattotal.length - 1 - i] += (coinOzt * plat1oz[i]);
+                    }
+                }
+                waitForTotal--;
+                if (waitForTotal == 0 && waitFor == 0) {
+                    drawGraph(graphsToDraw);
+                    calcdailychange();
+                }
+
+                if (page == "platinum.html") {
+                    var perc = (plattotal[plattotal.length - 1] - plattotal[plattotal.length - 2]) / plattotal[plattotal.length - 2]
+                    if (plattotal[plattotal.length - 2] == 0)
+                        perc = 0;
+                    perc = (perc * 100).toFixed(1);
+                    if (perc >= 0) {
+                        $(".daily-change").addClass("pos-change");
+                        $(".daily-change").text("+" + perc + "%");
+                    } else {
+                        $(".daily-change").addClass("neg-change");
+                        $(".daily-change").text("-" + perc + "%");
+                    }
+
+                    var perc = (plattotal[plattotal.length - 1] - plattotal[0]) / plattotal[0]
+                    if (plattotal[0] == 0)
+                        perc = 0;
+                    perc = (perc * 100).toFixed(1);
+                    if (perc >= 0) {
+                        $(".overall-change").addClass("pos-change");
+                        $(".overall-change").text("+" + perc + "%");
+                    } else {
+                        $(".overall-change").addClass("neg-change");
+                        $(".overall-change").text("-" + perc + "%");
+                    }
+                }
+            });
+        };
+
+        function getMetalJSON(json_url, metal) {
+            var csvArr = [];
+            $.ajax({
+                    type: "GET",
+                    dataType: 'text',
+                    url: json_url,
+                    crossDomain: true,
+                    xhrFields: {
+                        withCredentials: false
+                    }
+                })
+                .done(function(csvdata) {
+                    //alert("\nData from "+json_url+":\n"+csvdata);
+                    //console.log("csvdata "+csvdata);
+                    var csvArray = CSVToArray(csvdata, ",");
+                    csvArray = csvArray.slice(1, csvArray.length - 1);
+                    csvArray.reverse();
+
+                    var preprocessedArray = [];
+                    var processedArray = [];
+
+
+                    // catch up with xlabel first date
+                    var xlabelfirst = xlabel[0];
+                    var lastPrice = csvArray[0][1];
+                    var csvarrayfirst = new Date(csvArray[0][0]);
+                    var csvIter = 0;
+                    while (xlabelfirst != ((csvarrayfirst.getMonth() + 1) + '-' + ('0' + csvarrayfirst.getDate()).slice(-2))) {
+
+                        //console.log(csvarrayfirst + " @ " + xlabelfirst);
+                        //console.log(xlabelfirst + " @ " + ((csvarrayfirst.getMonth()+1)+'-'+('0'+csvarrayfirst.getDate()).slice(-2)));
+                        if (csvarrayfirst.valueOf() == new Date(csvArray[csvIter + 1][0]).valueOf()) {
+                            csvIter++;
+                            lastPrice = csvArray[csvIter][1];
+                        }
+
+                        csvarrayfirst.setDate(csvarrayfirst.getDate() + 1);
+                    }
+
+                    preprocessedArray.push([csvarrayfirst.getFullYear() + '-' + ('0' + (csvarrayfirst.getMonth() + 1)).slice(-2) + '-' + ('0' + csvarrayfirst.getDate()).slice(-2), lastPrice]);
+                    //alert(processedArray[0]);
+
+
+                    for (i = 1; i < xlabel.length; i++) {
+                        csvarrayfirst.setDate(csvarrayfirst.getDate() + 1);
+                        preprocessedArray.push([csvarrayfirst.getFullYear() + '-' + ('0' + (csvarrayfirst.getMonth() + 1)).slice(-2) + '-' + ('0' + csvarrayfirst.getDate()).slice(-2), lastPrice]);
+                        if ((csvArray[csvIter + 1] != null) && csvarrayfirst.valueOf() == new Date(csvArray[csvIter + 1][0]).valueOf()) {
+                            csvIter++;
+                            lastPrice = csvArray[csvIter][1];
+                        }
+                    }
+
+                    //alert(csvArray);
+                    //alert(xlabel);
+                    //alert(processedArray);
+                    //console.log(csvArray);
+                    //console.log(processedArray);
+
+                    for (i = 0; i < preprocessedArray.length; i++) {
+                        processedArray.push(preprocessedArray[i][1]);
+                    }
+
+
+                    switch (metal) {
+                        case 'gold':
+                            gold1oz = processedArray;
+                            getMyGold();
+                            break;
+                        case 'silver':
+                            silver1oz = processedArray;
+                            getMySilver();
+                            break;
+                        case 'platinum':
+                            plat1oz = processedArray;
+                            getMyPlatinum();
+                            break;
+                    }
+                    waitFor--;
+                    if (waitForTotal == 0 && waitFor == 0)
+                        drawGraph(graphsToDraw);
+                    if (waitFor == 0)
+                        if (inSession && page == "home.html") {
+                            userRef.child(currentUser).child("today_prices").update({
+                                "gold": gold1oz[gold1oz.length - 1],
+                                "silver": silver1oz[gold1oz.length - 1],
+                                "platinum": plat1oz[plat1oz.length - 1],
+                            });
+                        }
+                })
+                .fail(function(xhr, textStatus, errorThrown) {
+                    alert(xhr.responseText);
+                    alert(textStatus);
+                });
+        };
+
+
+        // popMarketList()
+        // used in home.html 
+        // populates the bid/ask/change data for the market-item-stats
+        function popMarketList(page) {
+            $.ajax({
+                    type: "GET",
+                    dataType: 'text',
+                    url: "https://cse134b.herokuapp.com/jm",
+                    crossDomain: true,
+                    xhrFields: {
+                        withCredentials: false
+                    }
+                })
+                .done(function(csvdata) {
+                    var jsonAB = eval(csvdata);
+                    if (page == "home.html") {
+                        for (var i = 0; i < 3; i++) {
+                            var bid = jsonAB[i].bid;
+                            var ask = jsonAB[i].ask;
+                            var change = jsonAB[i].oneDayChange;
+                            var header = document.getElementsByClassName("market-item-stats");
+                            header[i].getElementsByTagName('td')[0].innerHTML = bid;
+                            header[i].getElementsByTagName('td')[1].innerHTML = ask;
+                            var elmtChange = header[i].getElementsByTagName('td')[2];
+                            elmtChange.innerHTML = change;
+                            change >= 0 ? elmtChange.className = "pos-change" : elmtChange.className = "neg-change";
+
+                        }
+                    } else {
+                        var i;
+                        if (page == "gold.html")
+                            i = 0;
+                        else if (page == "silver.html")
+                            i = 1;
+                        else if (page == "platinum.html")
+                            i = 2;
+                        else
+                            return; // don't populate this stuff otherwise
+
+                        var bid = jsonAB[i].bid;
+                        var ask = jsonAB[i].ask;
+                        var change = jsonAB[i].oneDayChange;
+                        var header = document.getElementsByClassName("market-item-stats");
+                        header[0].getElementsByTagName('td')[0].innerHTML = bid;
+                        header[0].getElementsByTagName('td')[1].innerHTML = ask;
+                        var elmtChange = header[0].getElementsByTagName('td')[2];
+                        elmtChange.innerHTML = change;
+                        change >= 0 ? elmtChange.className = "pos-change" : elmtChange.className = "neg-change";
+                    }
+                })
+                .fail(function(xhr, textStatus, errorThrown) {
+                    alert(xhr.responseText);
+                    alert(textStatus);
+                });
+        };
+
+
+        function getMetalPrice(metal, start, end) {
+            var json_url = "https://www.quandl.com/api/v1/datasets/WSJ/"; // there is a daily limit of 50 connections for unregistered users. You can create an account and add your security token like: https://www.quandl.com/api/v1/datasets/WSJ/PL_MKT.csv?auth_token=933vrq6wUfABXEf_sgH7&trim_start=2015-05-01 However the security is updated daily. Also you can use your own, or third party proxy like http://websitescraper.herokuapp.com/?url=https://www.quandl.com/api/v1/datasets/WSJ/AU_EIB.csv for additional 50 connections. This proxy will accept any url and return you the data, also helping to deal with same origin policy
+            switch (metal) {
                 case 'gold':
-                gold1oz = processedArray;
-                getMyGold();
-                break;
+                    json_url += "AU_EIB";
+                    break;
                 case 'silver':
-                silver1oz = processedArray;
-                getMySilver();
-                break;
+                    json_url += "AG_EIB";
+                    break;
                 case 'platinum':
-                plat1oz = processedArray;
-                getMyPlatinum();
-                break;
+                    json_url += "PL_MKT";
+                    break;
             }
-            waitFor--;
-            if(waitForTotal==0 && waitFor == 0)
-                drawGraph(graphsToDraw);
-            if(waitFor == 0)
-                if(inSession && page == "home.html"){
-                    userRef.child(currentUser).child("today_prices").update(
-                       {"gold": gold1oz[gold1oz.length-1], 
-                       "silver": silver1oz[gold1oz.length-1],
-                       "platinum": plat1oz[plat1oz.length-1],
-                   });
-                }
-            })
-.fail( function(xhr, textStatus, errorThrown) {
-    alert(xhr.responseText);
-    alert(textStatus);
-});
-};
-
-
-    // popMarketList()
-    // used in home.html 
-    // populates the bid/ask/change data for the market-item-stats
-    function popMarketList(page){
-        $.ajax({
-            type: "GET",
-            dataType: 'text',
-            url: "https://cse134b.herokuapp.com/jm",
-            crossDomain : true,
-            xhrFields: {
-                withCredentials: false
+            json_url += ".csv?auth_token=WhJThfjMzZMAu-2CQK5-&trim_start=" + start;
+            if (end) {
+                json_url += "&trim_end=" + end;
             }
-        })
-        .done(function( csvdata ) {
-            var jsonAB = eval(csvdata);
-            if (page =="home.html"){
-                for (var i = 0; i < 3; i++) {
-                    var bid = jsonAB[i].bid;
-                    var ask = jsonAB[i].ask;
-                    var change = jsonAB[i].oneDayChange;
-                    var header = document.getElementsByClassName("market-item-stats");
-                    header[i].getElementsByTagName('td')[0].innerHTML = bid;
-                    header[i].getElementsByTagName('td')[1].innerHTML = ask;
-                    var elmtChange  = header[i].getElementsByTagName('td')[2];
-                    elmtChange.innerHTML = change;
-                    change >= 0 ? elmtChange.className = "pos-change" : elmtChange.className = "neg-change";
-
-                }
-            }
-            else {
-                var i;
-                if( page =="gold.html")
-                    i = 0;
-                else if (page =="silver.html")
-                    i = 1;
-                else if (page=="platinum.html")
-                    i = 2;
-                else
-                    return; // don't populate this stuff otherwise
-
-                var bid = jsonAB[i].bid;
-                var ask = jsonAB[i].ask;
-                var change = jsonAB[i].oneDayChange;
-                var header = document.getElementsByClassName("market-item-stats");
-                header[0].getElementsByTagName('td')[0].innerHTML = bid;
-                header[0].getElementsByTagName('td')[1].innerHTML = ask;
-                var elmtChange  = header[0].getElementsByTagName('td')[2];
-                elmtChange.innerHTML = change;
-                change >= 0 ? elmtChange.className = "pos-change" : elmtChange.className = "neg-change";
-            }
-        })
-.fail( function(xhr, textStatus, errorThrown) {
-    alert(xhr.responseText);
-    alert(textStatus);
-});
-};
+            getMetalJSON(json_url, metal);
+        };
 
 
-function getMetalPrice(metal,start,end)
-{
-        var json_url = "https://www.quandl.com/api/v1/datasets/WSJ/"; // there is a daily limit of 50 connections for unregistered users. You can create an account and add your security token like: https://www.quandl.com/api/v1/datasets/WSJ/PL_MKT.csv?auth_token=933vrq6wUfABXEf_sgH7&trim_start=2015-05-01 However the security is updated daily. Also you can use your own, or third party proxy like http://websitescraper.herokuapp.com/?url=https://www.quandl.com/api/v1/datasets/WSJ/AU_EIB.csv for additional 50 connections. This proxy will accept any url and return you the data, also helping to deal with same origin policy
-        switch (metal) {
-            case 'gold':
-            json_url+="AU_EIB";
-            break;
-            case 'silver':
-            json_url+="AG_EIB";
-            break;
-            case 'platinum':
-            json_url+="PL_MKT";
-            break;
+        var path = window.location.pathname;
+        var page = path.split("/").pop();
+
+
+        // populate the market list in home.html
+        popMarketList(page);
+
+
+
+        // populate the graph 
+        var daysBack = 31;
+        var date = new Date();
+        var currDate = date.getFullYear() + '-' + ('0' + (date.getMonth() + 1)).slice(-2) + '-' + ('0' + date.getDate()).slice(-2);
+        date.setDate(date.getDate() - daysBack - 7);
+        var pastDate = date.getFullYear() + '-' + ('0' + (date.getMonth() + 1)).slice(-2) + '-' + ('0' + date.getDate()).slice(-2);
+        var xlabeldate = new Date();
+
+        for (i = 0; i < daysBack; i++) {
+            xlabel[daysBack - i - 1] = (xlabeldate.getMonth() + 1) + '-' + ('0' + xlabeldate.getDate()).slice(-2);
+            xlabeldate.setDate(xlabeldate.getDate() - 1);
+            goldtotal.push(0);
+            silvertotal.push(0);
+            plattotal.push(0);
         }
-        json_url+=".csv?auth_token=WhJThfjMzZMAu-2CQK5-&trim_start="+start;
-        if(end){
-            json_url+="&trim_end="+end;
+
+
+        if (page == "home.html") {
+
+            graphsToDraw = "all";
+            waitFor = 3;
+            waitForTotal = 3;
+            getMetalPrice('gold', pastDate, currDate);
+            getMetalPrice('silver', pastDate, currDate);
+            getMetalPrice('platinum', pastDate, currDate);
+
+        } else if (page == "gold.html") {
+            graphsToDraw = "gold";
+            waitFor = 1;
+            waitForTotal = 1;
+            getMetalPrice('gold', pastDate, currDate);
+        } else if (page == "silver.html") {
+            graphsToDraw = "silver";
+            waitFor = 1;
+            waitForTotal = 1;
+            getMetalPrice('silver', pastDate, currDate);
+        } else if (page == "platinum.html") {
+            graphsToDraw = "platinum";
+            waitFor = 1;
+            waitForTotal = 1;
+            getMetalPrice('platinum', pastDate, currDate);
         }
-        getMetalJSON(json_url, metal);
-    };
 
-
-    var path = window.location.pathname;
-    var page = path.split("/").pop();
-
-
-    // populate the market list in home.html
-    popMarketList(page);
-
-
-
-    // populate the graph 
-    var daysBack = 31;
-    var date = new Date();
-    var currDate = date.getFullYear()+'-'+('0'+(date.getMonth()+1)).slice(-2)+'-'+('0'+date.getDate()).slice(-2);
-    date.setDate(date.getDate()-daysBack-7);
-    var pastDate = date.getFullYear()+'-'+('0'+(date.getMonth()+1)).slice(-2)+'-'+('0'+date.getDate()).slice(-2);
-    var xlabeldate = new Date();
-
-    for( i = 0; i < daysBack; i++){
-        xlabel[daysBack-i-1] = (xlabeldate.getMonth()+1)+'-'+('0'+xlabeldate.getDate()).slice(-2);
-        xlabeldate.setDate(xlabeldate.getDate()-1);
-        goldtotal.push(0);
-        silvertotal.push(0);
-        plattotal.push(0);
-    }
-
-
-    if(page == "home.html"){
-
-        graphsToDraw = "all";
-        waitFor = 3;
-        waitForTotal = 3;
-        getMetalPrice('gold', pastDate, currDate);
-        getMetalPrice('silver', pastDate, currDate);
-        getMetalPrice('platinum', pastDate, currDate);
-
-    }
-    else if(page == "gold.html"){
-        graphsToDraw = "gold";
-        waitFor = 1;
-        waitForTotal = 1;
-        getMetalPrice('gold', pastDate, currDate);
-    }
-    else if (page =="silver.html"){
-        graphsToDraw = "silver";
-        waitFor = 1;
-        waitForTotal = 1;
-        getMetalPrice('silver', pastDate, currDate);
-    }
-    else if (page =="platinum.html"){
-        graphsToDraw = "platinum";
-        waitFor = 1;
-        waitForTotal = 1;
-        getMetalPrice('platinum', pastDate, currDate);
-    }
-
-});
-
+    });
