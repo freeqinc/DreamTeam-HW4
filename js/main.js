@@ -1,4 +1,6 @@
 var invalidDateInput = false;
+var invalidQtyInput = false;
+var invalidWPUInput = false;
 
 $(window).load(function() {
 
@@ -275,6 +277,39 @@ $(window).load(function() {
 
         }
 
+        $('input[name="quantity"]').focus(function() {
+            $(this).removeClass('bad-input');
+            invalidQtyInput = false;
+        });
+
+        $('input[name="quantity"]').blur(function() {
+            if (!checkNumber(qty, "integer")) {
+                $(this).addClass('bad-input');
+                $(this).val('1');
+                invalidQtyInput = true;
+            }
+        });
+
+        $('input[name="weight_otz"]').focus(function() {
+            $(this).removeClass('bad-input');
+            invalidWPUInput = false;
+        });
+
+        $('input[name="weight_otz"]').blur(function() {
+            if (!checkNumber(wpu, "float")) {
+                $(this).addClass('bad-input');
+                $(this).val('1.0');
+                invalidWPUInput = true;
+            }
+        });
+
+        $('input[name="weight_otz"]').change(function() {
+            var value = parseFloat($(this).val());
+            if (value % 1 == 0) {
+                value = value.toString() + ".0"
+            }
+            $(this).val(value);
+        });
 
         switch (metal) {
             case 'Gold':
@@ -305,13 +340,29 @@ $(window).load(function() {
             ppo = data.val(); // JSON of all coins in designated metal
             $('#ppo').next().text(ppo);
 
+            try {
+                qty = parseInt(qty);
+                wpu = parseFloat(wpu);
+                mpc = parseFloat(mpc);
+                tlw = qty * wpu;
+                tlw = tlw.toFixed(2);
+                tlm = tlw * mpc;
+                tlm = tlm.toFixed(2);
+                tlc = tlm * ppo;
+                tlc = tlc.toFixed(2);
+            } catch (err) {
+                console.log(err);
+                tlw = "invalid";
+                tlm = "invalid";
+                tlc = "invalid";
+            }
 
-            tlw = qty * wpu;
-            tlw = tlw.toFixed(2);
-            tlm = tlw * mpc;
-            tlm = tlm.toFixed(2);
-            tlc = tlm * ppo;
-            tlc = tlc.toFixed(2);
+            if (!checkNumber(wpu, "float") || !checkNumber(qty, "integer")) {
+                tlw = "invalid";
+                tlm = "invalid";
+                tlc = "invalid";
+            }
+
 
             $("#total-weight").next().text(tlw);
             $("#total-metal").next().text(tlm);
@@ -326,6 +377,26 @@ $(window).load(function() {
     if ($('#addTable, #editTable').length != 0)
         handleFormChange();
 
+    function checkNumber(num, varType) {
+        if (typeof varType != "string") {
+            return false;
+        }
 
+        switch (varType.toLowerCase()) {
+            case "float":
+                f = parseFloat;
+                break;
+            default:
+                f = parseInt;
+                break;
+        }
+
+        try {
+            if (f(num) > 0) {
+                return true;
+            }
+        } catch (err) {}
+        return false;
+    }
 
 });
