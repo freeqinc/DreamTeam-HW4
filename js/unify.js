@@ -488,7 +488,7 @@ function providerLogin(provider, oauthOption) {
             }
         }
         if (!userExists) {
-            alert("user doesn't exist")
+            //alert("user doesn't exist")
             authData['today_prices'] = {
                 'gold': 'loading...',
                 'silver': 'loading...',
@@ -509,8 +509,6 @@ function providerLogin(provider, oauthOption) {
 }
 
 function customLogin(email, password) {
-    console.log(email);
-    console.log(password);
     userRef.createUser({
         email: email,
         password: password
