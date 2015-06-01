@@ -287,11 +287,11 @@ $(document).ready(function() {
 	    		var currDate = new Date();
 	    		var distanceDate = Math.floor((currDate-coinPurchDate)/(24*60*60*1000));
 	    		for (i = 0; i < goldtotal.length && i < distanceDate+1; i ++){
-	    			goldtotal[goldtotal.length-1] += (coinOzt*gold1oz[i]);
+	    			goldtotal[goldtotal.length-1-i] += (coinOzt*gold1oz[i]);
 	    		}
 	    	}
 	    	waitForTotal--;
-	    	if(waitForTotal==0)
+	    	if(waitForTotal==0 && waitFor == 0)
 	    		drawGraph(graphsToDraw);
 	    });	
     };
@@ -373,16 +373,17 @@ $(document).ready(function() {
     			break;
     		}
     		waitFor--;
-    		if(waitFor == 0)
-    			if(inSession){
-    				userRef.child(currentUser).child("today_prices").update(
-    					{"gold": gold1oz[gold1oz.length-1], 
-    					"silver": silver1oz[gold1oz.length-1],
-    					"platinum": plat1oz[plat1oz.length-1],
-    				});
-    			}
-    			//drawGraph(graphsToDraw);
-    		})
+            if(waitForTotal==0 && waitFor == 0)
+                drawGraph(graphsToDraw);
+            if(waitFor == 0)
+                if(inSession){
+                    userRef.child(currentUser).child("today_prices").update(
+                       {"gold": gold1oz[gold1oz.length-1], 
+                       "silver": silver1oz[gold1oz.length-1],
+                       "platinum": plat1oz[plat1oz.length-1],
+                   });
+                }
+            })
 .fail( function(xhr, textStatus, errorThrown) {
 	alert(xhr.responseText);
 	alert(textStatus);

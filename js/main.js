@@ -11,17 +11,17 @@ $(window).load(function() {
      *                         *
      * * * * * * * * * * * * * */
 
-    $('.icon-spinner2').click(function() {
+     $('.icon-spinner2').click(function() {
         location.reload();
     });
 
-    $("#coinStack").on("click", "tr", function() {
+     $("#coinStack").on("click", "tr", function() {
         $(this).find('a')[0].click();
     });
 
 
-    var settingsOpen = false;
-    $('.icon-cog').click(function() {
+     var settingsOpen = false;
+     $('.icon-cog').click(function() {
         if (settingsOpen) {
             $(this).velocity('stop').velocity({
                 rotateZ: '0deg',
@@ -60,11 +60,11 @@ $(window).load(function() {
      *     MOBILE HANDLING     *
      *                         *
      * * * * * * * * * * * * * */
-    var winWidth = $(window).width();
-    var winHeight = $(window).height();
+     var winWidth = $(window).width();
+     var winHeight = $(window).height();
 
 
-    $('.mtb-1').click(function() {
+     $('.mtb-1').click(function() {
         $('.graph-panel').removeClass('graph-panel-show');
         $('.market-status').fadeIn(0);
         $('.market-list').fadeIn(0);
@@ -75,7 +75,7 @@ $(window).load(function() {
 
     });
 
-    $('.mtb-2').click(function() {
+     $('.mtb-2').click(function() {
         $('.market-status').fadeOut(0);
         $('.market-list').fadeOut(0);
         if (page == "gold.html")
@@ -86,7 +86,7 @@ $(window).load(function() {
         drawGraph();
     });
 
-    var resizer = function() {
+     var resizer = function() {
         if (winWidth > 999) {
             $('.graph-panel').removeClass('graph-panel-show');
             $('.market-status').fadeIn(0);
@@ -106,9 +106,9 @@ $(window).load(function() {
      *       EDIT HANDLING     *
      *                         *
      * * * * * * * * * * * * * */
-    var editOpen = false;
+     var editOpen = false;
 
-    $('#edit').click(function() {
+     $('#edit').click(function() {
         var msTop = $('.main-section').css('padding-top');
         var msLeft = $('.main-section').css('padding-left');
         var msBottom = $('.main-section').css('padding-bottom');
@@ -139,7 +139,7 @@ $(window).load(function() {
         }, 400);
     });
 
-    $('#icon-close').click(function() {
+     $('#icon-close').click(function() {
         editOpen = false;
         $('#coin_edit').velocity({
             top: $('#edit').offset().top - $(window).scrollTop(),
@@ -156,7 +156,7 @@ $(window).load(function() {
     });
 
 
-    $(window).scroll(function() {
+     $(window).scroll(function() {
         if (editOpen) {
             $('#coin_edit_wrapper').velocity({
                 translateY: -$(window).scrollTop()
@@ -170,8 +170,8 @@ $(window).load(function() {
      *    ADD HANDLING/DATE    *
      *                         *
      * * * * * * * * * * * * * */
-    var defaultDate = new Date();
-    var defaultDateInput = ('0' + (defaultDate.getMonth() + 1)).slice(-2) + '-' + ('0' + defaultDate.getDate()).slice(-2) + '-' + defaultDate.getFullYear();
+     var defaultDate = new Date();
+     var defaultDateInput = ('0' + (defaultDate.getMonth() + 1)).slice(-2) + '-' + ('0' + defaultDate.getDate()).slice(-2) + '-' + defaultDate.getFullYear();
     //document.getElementsByName('purchase_date')[0].value = defaultDateInput;
     $(".purchase_date").val(defaultDateInput);
 
@@ -183,8 +183,8 @@ $(window).load(function() {
         var y = matches[3];
         var composedDate = new Date(y, m, d);
         return composedDate.getDate() == d &&
-            composedDate.getMonth() == m &&
-            composedDate.getFullYear() == y;
+        composedDate.getMonth() == m &&
+        composedDate.getFullYear() == y;
     }
 
     $('.purchase_date').focus(function() {
@@ -212,7 +212,7 @@ $(window).load(function() {
 
 
 
-    var tableData = {
+     var tableData = {
         "Gold": {
             "US Eagle": {
                 "metal_percent": "0.99"
@@ -239,8 +239,16 @@ $(window).load(function() {
         }
     };
 
-    var handleFormChange = function() {
-        var tr = document.getElementsByTagName("tr");
+    var handleFormChange = function(type) {
+
+        var tr;
+        if(type=='add'){
+            tr = document.getElementsByTagName("tr");
+        }
+        else{
+            tr = $('#editTable').find('tr');
+        }
+
         var coinStack = {};
         var metal = '';
         var bartype = '';
@@ -260,17 +268,17 @@ $(window).load(function() {
             var property = tr[i].getElements("td")[0];
             switch (property.innerHTML) {
                 case 'Metal':
-                    metal = tr[i].getElements("td")[1].getElements("select")[0].value;
-                    break;
+                metal = tr[i].getElements("td")[1].getElements("select")[0].value;
+                break;
                 case 'Type':
-                    bartype = tr[i].getElements("td")[1].getElements("select")[0].value;
-                    break;
+                bartype = tr[i].getElements("td")[1].getElements("select")[0].value;
+                break;
                 case 'Qty.':
-                    qty = tr[i].getElements("td")[1].getElements("input")[0].value;
-                    break;
-                case 'Weight per unit (otz)':
-                    wpu = tr[i].getElements("td")[1].getElements("input")[0].value;
-                    break;
+                qty = tr[i].getElements("td")[1].getElements("input")[0].value;
+                break;
+                case 'Weight per unit (ozt)':
+                wpu = tr[i].getElements("td")[1].getElements("input")[0].value;
+                break;
             }
 
         }
@@ -278,17 +286,17 @@ $(window).load(function() {
 
         switch (metal) {
             case 'Gold':
-                $("#total-metal").text("Total au (ozt)");
-                $("#metal-perc").text("Gold %");
-                break;
+            $("#total-metal").text("Total au (ozt)");
+            $("#metal-perc").text("Gold %");
+            break;
             case 'Silver':
-                $("#total-metal").text("Total ag (ozt)");
-                $("#metal-perc").text("Silver %");
-                break;
+            $("#total-metal").text("Total ag (ozt)");
+            $("#metal-perc").text("Silver %");
+            break;
             case 'Platinum':
-                $("#total-metal").text("Total pt (ozt)");
-                $("#metal-perc").text("Platinum %");
-                break;
+            $("#total-metal").text("Total pt (ozt)");
+            $("#metal-perc").text("Platinum %");
+            break;
         }
 
 
@@ -320,11 +328,21 @@ $(window).load(function() {
     };
 
 
-    $('#addTable, #editTable').find('*').change(function() {
-        handleFormChange();
+    $('#addTable').find('*').change(function() {
+        handleFormChange('add');
     });
-    if ($('#addTable, #editTable').length != 0)
-        handleFormChange();
+
+    $('#editTable').find('*').change(function(){
+        handleFormChange('edit');
+    });
+
+    try{
+        if ($('#addTable').length != 0)
+            handleFormChange('add');
+    }
+    catch (err) {
+        console.log("Don't handle form immediately");
+    }
 
 
 

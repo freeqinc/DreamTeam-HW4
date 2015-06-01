@@ -133,32 +133,28 @@
                             <td>0</td>
                         </tr>
                         <tr>
-                            <td>Price per oz</td>
-                            <td>00.00</td>
+                            <td>Weight per unit (ozt)</td>
+                            <td>0.000</td>
                         </tr>
                         <tr>
                             <td>Gold %</td>
                             <td>0.000</td>
                         </tr>
                         <tr>
-                            <td>Weight/unit (g)</td>
+                            <td>Price per oz</td>
                             <td>0.000</td>
                         </tr>
                         <tr>
-                            <td>Gold g/u</td>
+                            <td>Total weight (ozt)</td>
                             <td>0.000</td>
-                        </tr>
-                        <tr>
-                            <td>Gold ozt/u</td>
-                            <td>0.0000</td>
                         </tr>
                         <tr>
                             <td>Total au (ozt)</td>
-                            <td>0.0000</td>
+                            <td>0.000</td>
                         </tr>
                         <tr>
                             <td><strong>TOTAL</strong></td>
-                            <td><strong>0.00</strong></td>
+                            <td><strong>0.000</strong></td>
                         </tr>
                     </table>
                     <span id="edit">Edit</span>
@@ -184,79 +180,76 @@
                     <section class="coin_detail">
                         <div id="edit-title">Edit Details</div>
                         <table id="editTable">
-                            <tr>
-                                <td>Metal</td>
-                                <td>
-                                    <select>
-                                        <option value="Gold">Gold</option>
-                                        <option value="Silver">Silver</option>
-                                        <option value="Platinum">Platinum</option>
-                                    </select>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Type</td>
-                                <td>
-                                    <select>
-                                        <option selected value="US Eagle">US Eagle</option>
-                                    </select>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Purchase Date</td>
-                                <td>
-                                    <input name="purchase_date" value="04 March 2015" />
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Qty.</td>
-                                <td>
-                                    <input name="quantity" value="1" />
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Price per oz</td>
-                                <td>
-                                    0.00
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Gold %</td>
-                                <td>0.999</td>
-                            </tr>
-                            <tr>
-                                <td>Weight/unit (g)</td>
-                                <td>1.244</td>
-                            </tr>
-                            <tr>
-                                <td>Gold g/u</td>
-                                <td>1.244</td>
-                            </tr>
-                            <tr>
-                                <td>Gold ozt/u</td>
-                                <td>0.0400</td>
-                            </tr>
-                            <tr>
-                                <td>Total au (ozt)</td>
-                                <td>0.0400</td>
-                            </tr>
-                            <tr>
-                                <td><strong>TOTAL</strong></td>
-                                <td><strong>1199.10</strong></td>
-                            </tr>
-                        </table>
-                        <!--<a href="gold.html">-->
-                        <span id="edited">Save edits</span>
-                    </section>
-                </div>
-            </section>
-        </div>
+                          <tr>
+                            <td>Metal</td>
+                            <td>
+                                <select>
+                                    <option value="Gold">Gold</option>
+                                    <option value="Silver">Silver</option>
+                                    <option value="Platinum">Platinum</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Type</td>
+                            <td>
+                                <select>
+                                    <option selected value="US Eagle">US Eagle</option>
+                                    <option value="Bullion Bar">Bullion Bar</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Purchase Date</td>
+                            <td>
+                                <input class="purchase_date" name="purchase_date" value="" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Qty.</td>
+                            <td>
+                                <input name="quantity" value="1" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Weight per unit (ozt)</td>
+                            <td>
+                                <input name="quantity" value="1.0" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td id="metal-perc">Gold %</td>
+                            <td>0.999</td>
+                        </tr>
+                        <tr>
+                            <td id="ppo">Price per oz</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td id="total-weight">Total weight (ozt)</td>
+                            <td>calculating...</td>
+                        </tr>
+                        <tr>
+                            <td id="total-metal">Total au (ozt)</td>
+                            <td>calculating...</td>
+                        </tr>
+                        <tr>
+                            <td><strong>TOTAL</strong></td>
+                            <td><strong id="total-cost">calculating...</strong></td>
+                        </tr>
+                    </table>
+                    <!--<a href="gold.html">-->
+                    <span id="edited">Save edits</span>
+                </section>
+            </div>
+        </section>
     </div>
-    <!-- @concactus import: footer.html -->
-    <footer>
-        &copy; 2015 CoinFlip
-    </footer>
-    <!-- @concactus end -->
+</div>
+<!-- @concactus import: footer.html -->
+<footer>
+    &copy; 2015 CoinFlip
+</footer>
+<!-- @concactus end -->
 </body>
 
 </html>

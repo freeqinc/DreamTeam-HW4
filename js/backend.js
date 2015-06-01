@@ -392,6 +392,7 @@ StackManager.prototype.loadCoin = function(query) {
             }
             property = property.toLowerCase().replace(/\s+/g, "_");
             property = property.replace(/[\.|#|\$|\/|\[|\]]*/g, "");
+            console.log(property);
             td[1].innerHTML = data.val()[property];
             properties.push(property); // used for round 2
         }
