@@ -5,16 +5,16 @@
  *                             *
  * * * * * * * * * * * * * * * */
 
- @include font-face("robotolight", "../fonts/Roboto-Light", $file-formats: ttf eot);
- @include font-face("robotocon", "../fonts/RobotoCondensed-Regular", $file-formats: ttf eot);
- @include font-face("openlight", "../fonts/OpenSans-Light", $file-formats: ttf eot);
- @include font-face("openregular", "../fonts/OpenSans-Regular", $file-formats: ttf eot);
- @include font-face("opensemi", "../fonts/OpenSans-Semibold", $file-formats: ttf eot);
- @include font-face("raleway_r", "../fonts/Raleway-Regular", $file-formats: ttf eot);
- @include font-face("raleway_m", "../fonts/Raleway-Medium", $file-formats: ttf eot);
- @include font-face("monster_h", "../fonts/montserrat-hairline-webfont", $file-formats: ttf eot);
- @include font-face("monster_l", "../fonts/montserrat-light-webfont", $file-formats: ttf eot);
- @include font-face("monster_r", "../fonts/montserrat-regular-webfont", $file-formats: ttf eot);
+@include font-face("robotolight", "../fonts/Roboto-Light", $file-formats: ttf eot);
+@include font-face("robotocon", "../fonts/RobotoCondensed-Regular", $file-formats: ttf eot);
+@include font-face("openlight", "../fonts/OpenSans-Light", $file-formats: ttf eot);
+@include font-face("openregular", "../fonts/OpenSans-Regular", $file-formats: ttf eot);
+@include font-face("opensemi", "../fonts/OpenSans-Semibold", $file-formats: ttf eot);
+@include font-face("raleway_r", "../fonts/Raleway-Regular", $file-formats: ttf eot);
+@include font-face("raleway_m", "../fonts/Raleway-Medium", $file-formats: ttf eot);
+@include font-face("monster_h", "../fonts/montserrat-hairline-webfont", $file-formats: ttf eot);
+@include font-face("monster_l", "../fonts/montserrat-light-webfont", $file-formats: ttf eot);
+@include font-face("monster_r", "../fonts/montserrat-regular-webfont", $file-formats: ttf eot);
 /* SASS VARIABLES */
 
 $main-background: #1D1D1D;
@@ -41,7 +41,7 @@ $graph-purple: #C29FFF;
  *                             *
  * * * * * * * * * * * * * * * */
 
- * {
+* {
     margin: 0;
     padding: 0;
 }
@@ -158,8 +158,7 @@ nav {
     }
 }
 
-
-#settings{
+#settings {
     position: fixed;
     width: 200px;
     height: 200px;
@@ -170,8 +169,7 @@ nav {
     box-shadow: 0px 2px 5px $main-background;
     overflow: hidden;
     height: 0;
-
-    #logout{
+    #logout {
         width: 75%;
         margin: 0 auto;
         margin-top: 80px;
@@ -181,7 +179,7 @@ nav {
         font-size: 1.5em;
         background: #34727C;
         cursor: pointer;
-        &:hover{
+        &:hover {
             background: #48A1B0;
         }
     }
@@ -272,7 +270,7 @@ footer {
  *                             *
  * * * * * * * * * * * * * * * */
 
- .coin_wrapper {
+.coin_wrapper {
     padding: 40px 40px;
 }
 
@@ -289,7 +287,7 @@ a {
  *                             *
  * * * * * * * * * * * * * * * */
 
- #w1-wrapper {
+#w1-wrapper {
     text-align: center;
     padding-top: 120px;
     &>section {
@@ -415,7 +413,7 @@ a {
  *                             *
  * * * * * * * * * * * * * * * */
 
- .overview-panel {
+.overview-panel {
     display: inline-block;
     vertical-align: top;
     width: 300px;
@@ -621,7 +619,7 @@ a {
  *                             *
  * * * * * * * * * * * * * * * */
 
- .current_gold {
+.current_gold {
     margin-top: -24px;
     margin-left: 140px;
     margin-bottom: 0;
@@ -711,7 +709,7 @@ a {
  *                             *
  * * * * * * * * * * * * * * * */
 
- .coin_main {
+.coin_main {
     width: 100%;
     height: 100%;
     position: relative;
@@ -824,27 +822,23 @@ strong {
     height: 40px;
     line-height: 40px;
     vertical-align: top;
-
 }
 
-#coin_edit{
+#coin_edit {
     position: fixed;
     top: 0;
     left: 0;
     z-index: 99999;
-    background: #397C86; 
+    background: #397C86;
     height: 40px;
     width: 130px;
     display: none;
     @include box-sizing(border-box);
     padding-top: 63px;
-
     * {
         display: none;
     }
-
-
-    svg{
+    svg {
         position: absolute;
         right: 25px;
         top: 25px;
@@ -853,25 +847,20 @@ strong {
         cursor: pointer;
         z-index: 99;
         @include transition(all 0.1s ease-out);
-        &:hover{
+        &:hover {
             @include transform(scale(1.05));
         }
     }
-
-    #coin_edit_wrapper{
+    #coin_edit_wrapper {
         margin: 0 auto;
     }
-
-
-    #edit-title{
+    #edit-title {
         width: 100%;
         text-align: center;
         font-size: 1.8em;
         margin-bottom: 10px;
     }
-
-
-    #coin_edit_section{
+    #coin_edit_section {
         float: left;
         padding-bottom: 50px;
         a {
@@ -904,8 +893,8 @@ strong {
             color: $main-accent;
         }
     }
-
-    #save, #edited {
+    #save,
+    #edited {
         display: block;
         background: #397C86;
         border: 1px solid #151515;
@@ -917,7 +906,6 @@ strong {
         text-decoration: none;
         width: 275px;
     }
-
     #cancel {
         display: block;
         background: #1C3A3F;
@@ -957,7 +945,7 @@ strong {
  *                             *
  * * * * * * * * * * * * * * * */
 
- input {
+input {
     background-color: $input-bg-color;
     width: 125px;
     height: 27px;
@@ -974,7 +962,7 @@ input:focus {
     outline: 2px solid $main-accent;
 }
 
-.bad-input{
+.bad-input {
     outline: 2px solid #E9434B !important;
     color: #E9434B !important;
     font-weight: 900 !important;
@@ -1032,14 +1020,13 @@ select {
     display: none;
     visibility: hidden;
 }
-
 /* * * * * * * * * * * * * * * *
  *                             *
  *     RESPONSIVE HANDLING     *
  *                             *
  * * * * * * * * * * * * * * * */
 
- @media screen and (max-width: 1000px) {
+@media screen and (max-width: 1000px) {
     #sign-in-section {
         margin-top: 0px;
     }
@@ -1067,16 +1054,13 @@ select {
     .coin_main {
         display: inline;
     }
-
-
     .coin_image {
         float: none;
         margin-left: auto;
         margin-right: auto;
     }
-
-    #coin_edit{
-        .coin_image{
+    #coin_edit {
+        .coin_image {
             margin: 0 auto;
             margin-bottom: 30px;
             display: block;

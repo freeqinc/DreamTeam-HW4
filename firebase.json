@@ -1,0 +1,9 @@
+{
+  "firebase": "134b-dreamteam",
+  "public": ".",
+  "ignore": [
+    "firebase.json",
+    "**/.*",
+    "**/node_modules/**"
+  ]
+}

@@ -480,7 +480,6 @@ function providerLogin(provider, oauthOption) {
         }
         var userExists = false;
         var uid = authData.uid;
-        console.log(users);
         for (var i = 0; i < users.length; i++) {
             if (users[i] == uid) {
                 userExists = true;

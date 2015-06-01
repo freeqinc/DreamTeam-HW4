@@ -9,3 +9,4 @@
 *.pyc
 *.class
 style.css.map
+tmp_dir/
