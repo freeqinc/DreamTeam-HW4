@@ -704,8 +704,6 @@ StackManager.prototype.read = function() {
                 row.appendChild(td);
             }
 
-            console.log(list[key]);
-
             var css = {
                 "background-image": "url(\"" + list[key].image + "\")",
                 "background-size": "100% auto",
@@ -793,8 +791,6 @@ StackManager.prototype.validate = function(query) {
         return;
     }
 
-    console.log(metal);
-
     // find key that matches given access. redirect if failed.
     this.stackRef.child(metal).on("value", function(data) {
         if (!data) {
@@ -846,13 +842,11 @@ StackManager.prototype.loadCoin = function(query) {
 
         // round 2: display data on edit form of coin
         tr = document.getElements("#editTable").getElements("tr");
-        console.log(data.val());
         for (var i = 0; i < tr.length; i++) {
             var td = tr[i].getElements("td")[1];
             if (td.innerHTML.contains("select")) {
                 td.getElements("select")[0].value = data.val()[properties[i]];
             } else if (td.innerHTML.contains("input")) {
-                console.log(td.getElements("input")[0]);
                 td.getElements("input")[0].value = data.val()[properties[i]];
             } else if (td.innerHTML.contains("strong")) {
                 td.getElements("strong")[0].innerHTML = data.val()[properties[i]];
@@ -909,43 +903,6 @@ StackManager.prototype.deleteCoin = function(query) {
             console.log("Remove Failed");
         }
     });
-}
-
-StackManager.prototype.createTableArray = function() {
-    var array = [];
-    var row = null;
-    try {
-        row = document.getElements("#coinStack").getElementsByTagName("tr");
-        console.log(row);
-        row = row.getElements("tr");
-
-    } catch (err) {
-        return [];
-    }
-    for (var i = 0; i < row.length; i++) {
-        array.push(row[i]);
-    }
-
-    return array;
-}
-
-StackManager.prototype.filter = function(str, array) {
-    toggle = [];
-    str = str.replace(/\s+$/, '');
-    for (var i = 0; i < array.length; i++) {
-        $(array[i]).show();
-        var td = array[i].getElements("td");
-        //toggle.push(false);
-        console.log("wut " + array[i])
-        if (!td[1].innerHTML.contains(str)) {
-            $(array[i]).hide();
-        }
-    }
-    /*for(var i = 0; i < array.length; i++) {
-        if(!toggle[i]) {
-            $(array[i]).hide();
-        }
-    }*/
 }
 
 /*
@@ -1088,16 +1045,7 @@ $(document).ready(function() {
             stack.read();
         }
         stack.total();
-        tableArray = stack.createTableArray();
     }
-
-    $("input[type='search']").keyup(function(e) {
-        if (e.which == 13) {
-
-            stack.filter($(this).val(), tableArray);
-            console.log(tableArray.length);
-        }
-    });
 });
 
 
