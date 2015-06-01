@@ -943,7 +943,7 @@ $(document).ready(function() {
             var reader = new FileReader();
             reader.onload = imageLoaded;
             reader.readAsDataURL(this.files[0]);
-            console.log(this.files[0]);
+            //console.log(this.files[0]);
         }
     });
 
@@ -999,7 +999,9 @@ $(document).ready(function() {
             alert(badOutputString);
         else {
             stack.addCoin(stack.construct("#addTable", imgBase));
-            location.href = metal + ".html";
+            tmpMetal = document.getElements("select")[0].value;
+            tmpMetal = tmpMetal.toLowerCase();
+            location.href = tmpMetal + ".html";
         }
     });
 
