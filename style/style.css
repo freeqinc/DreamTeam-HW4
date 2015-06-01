@@ -809,7 +809,8 @@ strong {
     #coin_edit #coin_edit_section tr > td:nth-child(2) {
       text-align: left;
       color: #68CEDE; }
-  #coin_edit #save, #coin_edit #edited {
+  #coin_edit #save,
+  #coin_edit #edited {
     display: block;
     background: #397C86;
     border: 1px solid #151515;
@@ -817,7 +818,8 @@ strong {
     color: white;
     text-decoration: none;
     width: 275px; }
-    #coin_edit #save:hover, #coin_edit #edited:hover {
+    #coin_edit #save:hover,
+    #coin_edit #edited:hover {
       border: 1px solid #68CEDE; }
   #coin_edit #cancel {
     display: block;
