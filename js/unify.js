@@ -1051,6 +1051,7 @@ if(!page.includes("add") && !page.includes("detail"))
     var goldtotal = [];
     var silvertotal = [];
     var plattotal = [];
+    var alltotal = [];
     var xlabel = [];
     var waitFor;
     var waitForTotal;
@@ -1153,7 +1154,7 @@ if(!page.includes("add") && !page.includes("detail"))
                     pointStrokeColor: pointStroke,
                     pointHighlightFill: pointHighlightFill,
                     pointHighlightStroke: pointHighlightStroke,
-                    data: []
+                    data: plattotal
                 }, {
                     label: "Silver Total",
                     fillColor: "rgba(104, 206, 222, 0.05)",
@@ -1162,7 +1163,7 @@ if(!page.includes("add") && !page.includes("detail"))
                     pointStrokeColor: pointStroke,
                     pointHighlightFill: pointHighlightFill,
                     pointHighlightStroke: pointHighlightStroke,
-                    data: []
+                    data: silvertotal
                 }, {
                     label: "1oz Gold",
                     fillColor: "rgba(104, 206, 222, 0.05)",
@@ -1216,6 +1217,54 @@ if(!page.includes("add") && !page.includes("detail"))
                     data: gold1oz
                 }, ]
             };
+        }
+        else if (metal =="silver"){
+            var data = {
+                labels: xlabel,
+                datasets: [{
+                    label: "Silver Total",
+                    fillColor: "rgba(104, 206, 222, 0.05)",
+                    strokeColor: "#F3FF88",
+                    pointColor: "#F3FF88",
+                    pointStrokeColor: pointStroke,
+                    pointHighlightFill: pointHighlightFill,
+                    pointHighlightStroke: pointHighlightStroke,
+                    data: silvertotal
+                },  {
+                    label: "1oz Silver",
+                    fillColor: "rgba(104, 206, 222, 0.05)",
+                    strokeColor: "#C29FFF",
+                    pointColor: "#C29FFF",
+                    pointStrokeColor: pointStroke,
+                    pointHighlightFill: pointHighlightFill,
+                    pointHighlightStroke: pointHighlightStroke,
+                    data: silver1oz
+                }, ]
+            }
+        }
+        else if (metal =="platinum"){
+            var data = {
+                labels: xlabel,
+                datasets: [{
+                    label: "Platinum Total",
+                    fillColor: "rgba(104, 206, 222, 0.05)",
+                    strokeColor: "#FFA859",
+                    pointColor: "#FFA859",
+                    pointStrokeColor: pointStroke,
+                    pointHighlightFill: pointHighlightFill,
+                    pointHighlightStroke: pointHighlightStroke,
+                    data: plattotal
+                }, {
+                    label: "1oz Platinum",
+                    fillColor: "rgba(104, 206, 222, 0.05)",
+                    strokeColor: "#BBF5FF",
+                    pointColor: "#BBF5FF",
+                    pointStrokeColor: pointStroke,
+                    pointHighlightFill: pointHighlightFill,
+                    pointHighlightStroke: pointHighlightStroke,
+                    data: plat1oz
+                }, ]
+            }
         }
         var ctx = document.getElementById("total-chart").getContext("2d");
         if(coinChart != null)
@@ -1310,14 +1359,33 @@ if(!page.includes("add") && !page.includes("detail"))
     };
 
 
-    var getMyGold = function(){
+    var calcdailychange = function(){
+        if (page =="home.html"){
+            for (i = 0; i < plattotal.length; i ++)
+                alltotal.push(goldtotal[i]+silvertotal[i]+plattotal[i]);
+            var perc = (alltotal[alltotal.length-1]-alltotal[alltotal.length-2])/alltotal[alltotal.length-2]
+            if (alltotal[alltotal.length-2] == 0)
+                perc = 0;
+            perc = (perc * 100).toFixed(1);
+            if(perc>=0){
+                $(".total-change").addClass("pos-change");
+                $(".total-change").text("+"+perc+"%");
+            }
+            else{
+                $(".total-change").addClass("neg-change");
+                $(".total-change").text("-"+perc+"%");
+            }
+        }
+    }
+
+    var getMyGold = function() {
         var stackRef = userRef.child(currentUser).child("coinStack");
         stackRef.child('gold').on("value", function(data) {
             if (!data) {
                 console.log("No coins found in Firebase");
                 return;
             }
-            var list = data.val(); // JSON of all coins in designated metal
+            var list = data.val(); 
 
             for (var key in list) {
                 if (!list.hasOwnProperty(key) || key == "total") {
@@ -1336,9 +1404,9 @@ if(!page.includes("add") && !page.includes("detail"))
             waitForTotal--;
             if(waitForTotal==0 && waitFor == 0){
                 drawGraph(graphsToDraw);
-
+                calcdailychange();
             }
-
+            
 
             if (page == "gold.html"){
                 var perc = (goldtotal[goldtotal.length-1]-goldtotal[goldtotal.length-2])/goldtotal[goldtotal.length-2]
@@ -1348,7 +1416,6 @@ if(!page.includes("add") && !page.includes("detail"))
                 if(perc>=0){
                     $(".daily-change").addClass("pos-change");
                     $(".daily-change").text("+"+perc+"%");
-
                 }
                 else{
                     $(".daily-change").addClass("neg-change");
@@ -1362,9 +1429,8 @@ if(!page.includes("add") && !page.includes("detail"))
                 if(perc>=0){
                     $(".overall-change").addClass("pos-change");
                     $(".overall-change").text("+"+perc+"%");
-
                 }
-                else{
+                else {
                     $(".overall-change").addClass("neg-change");
                     $(".overall-change").text("-"+perc+"%");
                 }
@@ -1373,18 +1439,137 @@ if(!page.includes("add") && !page.includes("detail"))
 };
 
 
+var getMySilver = function() {
+    var stackRef = userRef.child(currentUser).child("coinStack");
+    stackRef.child('silver').on("value", function(data) {
+        if (!data) {
+            console.log("No coins found in Firebase");
+            return;
+        }
+        var list = data.val(); 
+
+        for (var key in list) {
+            if (!list.hasOwnProperty(key) || key == "total") {
+                continue;
+            }
+            var coin = list[key];
+            var coinPurch = coin['purchase_date'];
+            var coinOzt = coin['total_weight_(ozt)'];
+            var coinPurchDate = new Date(coinPurch);
+            var currDate = new Date();
+            var distanceDate = Math.floor((currDate-coinPurchDate)/(24*60*60*1000));
+            for (i = 0; i < silvertotal.length && i < distanceDate+1; i ++){
+                silvertotal[silvertotal.length-1-i] += (coinOzt*silver1oz[i]);
+            }
+        }
+        waitForTotal--;
+        if(waitForTotal==0 && waitFor == 0){
+            drawGraph(graphsToDraw);
+            calcdailychange();
+        }
+
+        if (page == "silver.html"){
+            var perc = (silvertotal[silvertotal.length-1]-silvertotal[silvertotal.length-2])/silvertotal[silvertotal.length-2]
+            if (silvertotal[silvertotal.length-2] == 0)
+                perc = 0;
+            perc = (perc * 100).toFixed(1);
+            if(perc>=0){
+                $(".daily-change").addClass("pos-change");
+                $(".daily-change").text("+"+perc+"%");
+            }
+            else{
+                $(".daily-change").addClass("neg-change");
+                $(".daily-change").text("-"+perc+"%");
+            }
+
+            var perc = (silvertotal[silvertotal.length-1]-silvertotal[0])/silvertotal[0]
+            if (silvertotal[0] == 0)
+                perc = 0;
+            perc = (perc * 100).toFixed(1);
+            if(perc>=0){
+                $(".overall-change").addClass("pos-change");
+                $(".overall-change").text("+"+perc+"%");
+            }
+            else {
+                $(".overall-change").addClass("neg-change");
+                $(".overall-change").text("-"+perc+"%");
+            }
+        }
+    }); 
+};
+
+
+var getMyPlatinum = function() {
+    var stackRef = userRef.child(currentUser).child("coinStack");
+    stackRef.child('platinum').on("value", function(data) {
+        if (!data) {
+            console.log("No coins found in Firebase");
+            return;
+        }
+        var list = data.val(); 
+
+        for (var key in list) {
+            if (!list.hasOwnProperty(key) || key == "total") {
+                continue;
+            }
+            var coin = list[key];
+            var coinPurch = coin['purchase_date'];
+            var coinOzt = coin['total_weight_(ozt)'];
+            var coinPurchDate = new Date(coinPurch);
+            var currDate = new Date();
+            var distanceDate = Math.floor((currDate-coinPurchDate)/(24*60*60*1000));
+            for (i = 0; i < plattotal.length && i < distanceDate+1; i ++){
+                plattotal[plattotal.length-1-i] += (coinOzt*plat1oz[i]);
+            }
+        }
+        waitForTotal--;
+        if(waitForTotal==0 && waitFor == 0){
+            drawGraph(graphsToDraw);
+            calcdailychange();
+        }
+
+        if (page == "platinum.html"){
+            var perc = (plattotal[plattotal.length-1]-plattotal[plattotal.length-2])/plattotal[plattotal.length-2]
+            if (plattotal[plattotal.length-2] == 0)
+                perc = 0;
+            perc = (perc * 100).toFixed(1);
+            if(perc>=0){
+                $(".daily-change").addClass("pos-change");
+                $(".daily-change").text("+"+perc+"%");
+            }
+            else{
+                $(".daily-change").addClass("neg-change");
+                $(".daily-change").text("-"+perc+"%");
+            }
+
+            var perc = (plattotal[plattotal.length-1]-plattotal[0])/plattotal[0]
+            if (plattotal[0] == 0)
+                perc = 0;
+            perc = (perc * 100).toFixed(1);
+            if(perc>=0){
+                $(".overall-change").addClass("pos-change");
+                $(".overall-change").text("+"+perc+"%");
+            }
+            else {
+                $(".overall-change").addClass("neg-change");
+                $(".overall-change").text("-"+perc+"%");
+            }
+        }
+    }); 
+};
+
 function getMetalJSON(json_url, metal){
- var csvArr = [];
- $.ajax({
-  type: "GET",
-  dataType: 'text',
-  url: json_url,
-  crossDomain : true,
-  xhrFields: {
-   withCredentials: false
-}
-})
- .done(function( csvdata ) {
+    var csvArr = [];
+    $.ajax({
+        type: "GET",
+        dataType: 'text',
+        url: json_url,
+        crossDomain : true,
+        xhrFields: {
+            withCredentials: false
+        }
+    })
+    .done(function( csvdata ) {
             //alert("\nData from "+json_url+":\n"+csvdata);
             //console.log("csvdata "+csvdata);
             var csvArray = CSVToArray(csvdata, ",");
@@ -1443,9 +1628,11 @@ function getMetalJSON(json_url, metal){
                 break;
                 case 'silver':
                 silver1oz = processedArray;
+                getMySilver();
                 break;
                 case 'platinum':
                 plat1oz = processedArray;
+                getMyPlatinum();
                 break;
             }
             waitFor--;
@@ -1454,10 +1641,10 @@ function getMetalJSON(json_url, metal){
             if(waitFor == 0)
                 if(inSession && page == "home.html"){
                     userRef.child(currentUser).child("today_prices").update(
-                     {"gold": gold1oz[gold1oz.length-1], 
-                     "silver": silver1oz[gold1oz.length-1],
-                     "platinum": plat1oz[plat1oz.length-1],
-                 });
+                       {"gold": gold1oz[gold1oz.length-1], 
+                       "silver": silver1oz[gold1oz.length-1],
+                       "platinum": plat1oz[plat1oz.length-1],
+                   });
                 }
             })
 .fail( function(xhr, textStatus, errorThrown) {
@@ -1577,7 +1764,7 @@ function getMetalPrice(metal,start,end)
 
         graphsToDraw = "all";
         waitFor = 3;
-        waitForTotal = 1;
+        waitForTotal = 3;
         getMetalPrice('gold', pastDate, currDate);
         getMetalPrice('silver', pastDate, currDate);
         getMetalPrice('platinum', pastDate, currDate);
@@ -1588,7 +1775,18 @@ function getMetalPrice(metal,start,end)
         waitFor = 1;
         waitForTotal = 1;
         getMetalPrice('gold', pastDate, currDate);
-
+    }
+    else if (page =="silver.html"){
+        graphsToDraw = "silver";
+        waitFor = 1;
+        waitForTotal = 1;
+        getMetalPrice('silver', pastDate, currDate);
+    }
+    else if (page =="platinum.html"){
+        graphsToDraw = "platinum";
+        waitFor = 1;
+        waitForTotal = 1;
+        getMetalPrice('platinum', pastDate, currDate);
     }
 
 });
