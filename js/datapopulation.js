@@ -376,7 +376,7 @@ $(document).ready(function() {
             if(waitForTotal==0 && waitFor == 0)
                 drawGraph(graphsToDraw);
             if(waitFor == 0)
-                if(inSession){
+                if(inSession && page == "home.html"){
                     userRef.child(currentUser).child("today_prices").update(
                        {"gold": gold1oz[gold1oz.length-1], 
                        "silver": silver1oz[gold1oz.length-1],
