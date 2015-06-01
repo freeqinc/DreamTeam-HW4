@@ -9,20 +9,14 @@
     <meta name=viewport content="width=device-width, initial-scale=.8, minimum-scale = .8, user-scalable=yes">
     <link rel="icon" href="favicon.ico" type="image/x-icon" />
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
-    <!--<script src='https://cdn.firebase.com/js/client/2.2.1/firebase.js'></script>
-    <script src="./js/jquery-1.11.2.min.js"></script>
-    <script src="./js/velocity.min.js"></script>-->
     <script src="./js/libraries.js"></script>
-    <script src="./js/main.js"></script>
-    <script src="./js/backend.js"></script>
-    <script src="./js/controller.js"></script>
-    <script src="./js/datapopulation.js"></script>
+    <script src="./js/unify.js"></script>
     <title>My Gold - BullionTracker</title>
 </head>
 
 <body>
     <!-- @concactus import: topnavpersist.html -->
-     <nav style="display: block; visibility: visible;">
+    <nav style="display: block; visibility: visible;">
         <svg class="icon-spinner2">
             <symbol id="icon-spinner2" viewBox="0 0 1024 1024">
                 <title>spinner2</title>
@@ -58,7 +52,7 @@
                     </symbol>
                     <use xlink:href="#icon-home2"></use>
                 </svg>
-    
+                
                 <figcaption>Home</figcaption>
             </figure>    
         </a>  
@@ -116,11 +110,11 @@
                     <table class="current_gold">
                         <tr>
                             <td>Daily</td>
-                            <td>+3.5%</td>
+                            <td class="daily-change">+0%</td>
                         </tr>
                         <tr>
                             <td>Overall</td>
-                            <td>+1.2%</td>
+                            <td class="overall-change">+0%</td>
                         </tr>
                     </table> 
                     <div class="total-label" id="my_gold_value">My Gold Value</div>

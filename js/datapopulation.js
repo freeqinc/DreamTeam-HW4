@@ -291,24 +291,57 @@ $(document).ready(function() {
 	    		}
 	    	}
 	    	waitForTotal--;
-	    	if(waitForTotal==0 && waitFor == 0)
+	    	if(waitForTotal==0 && waitFor == 0){
 	    		drawGraph(graphsToDraw);
-	    });	
-    };
+
+            }
 
 
-    function getMetalJSON(json_url, metal){
-    	var csvArr = [];
-    	$.ajax({
-    		type: "GET",
-    		dataType: 'text',
-    		url: json_url,
-    		crossDomain : true,
-    		xhrFields: {
-    			withCredentials: false
-    		}
-    	})
-    	.done(function( csvdata ) {
+            if (page == "gold.html"){
+                var perc = (goldtotal[goldtotal.length-1]-goldtotal[goldtotal.length-2])/goldtotal[goldtotal.length-2]
+                if (goldtotal[goldtotal.length-2] == 0)
+                    perc = 0;
+                perc = (perc * 100).toFixed(1);
+                if(perc>=0){
+                    $(".daily-change").addClass("pos-change");
+                    $(".daily-change").text("+"+perc+"%");
+
+                }
+                else{
+                    $(".daily-change").addClass("neg-change");
+                    $(".daily-change").text("-"+perc+"%");
+                }
+
+                var perc = (goldtotal[goldtotal.length-1]-goldtotal[0])/goldtotal[0]
+                if (goldtotal[0] == 0)
+                    perc = 0;
+                perc = (perc * 100).toFixed(1);
+                if(perc>=0){
+                    $(".overall-change").addClass("pos-change");
+                    $(".overall-change").text("+"+perc+"%");
+
+                }
+                else{
+                    $(".overall-change").addClass("neg-change");
+                    $(".overall-change").text("-"+perc+"%");
+                }
+            }
+        });	
+};
+
+
+function getMetalJSON(json_url, metal){
+   var csvArr = [];
+   $.ajax({
+      type: "GET",
+      dataType: 'text',
+      url: json_url,
+      crossDomain : true,
+      xhrFields: {
+         withCredentials: false
+     }
+ })
+   .done(function( csvdata ) {
     		//alert("\nData from "+json_url+":\n"+csvdata);
     		//console.log("csvdata "+csvdata);
     		var csvArray = CSVToArray(csvdata, ",");
@@ -505,12 +538,14 @@ function getMetalPrice(metal,start,end)
     	getMetalPrice('gold', pastDate, currDate);
     	getMetalPrice('silver', pastDate, currDate);
     	getMetalPrice('platinum', pastDate, currDate);
+
     }
     else if(page == "gold.html"){
     	graphsToDraw = "gold";
     	waitFor = 1;
     	waitForTotal = 1;
     	getMetalPrice('gold', pastDate, currDate);
+
     }
 
 });
