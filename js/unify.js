@@ -17,11 +17,11 @@ var page = path.split("/").pop();
  * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 
- var invalidDateInput = false;
- var invalidQtyInput = false;
- var invalidWPUInput = false;
+var invalidDateInput = false;
+var invalidQtyInput = false;
+var invalidWPUInput = false;
 
- $(window).load(function() {
+$(window).load(function() {
 
     var path = window.location.pathname;
     var page = path.split("/").pop();
@@ -32,16 +32,16 @@ var page = path.split("/").pop();
      *                         *
      * * * * * * * * * * * * * */
 
-     $('.icon-spinner2').click(function() {
+    $('.icon-spinner2').click(function() {
         location.reload();
     });
 
-     $("#coinStack").on("click", "tr", function() {
+    $("#coinStack").on("click", "tr", function() {
         $(this).find('a')[0].click();
     });
 
-     var settingsOpen = false;
-     $('.icon-cog').click(function() {
+    var settingsOpen = false;
+    $('.icon-cog').click(function() {
         if (settingsOpen) {
             $(this).velocity('stop').velocity({
                 rotateZ: '0deg',
@@ -79,11 +79,11 @@ var page = path.split("/").pop();
      *     MOBILE HANDLING     *
      *                         *
      * * * * * * * * * * * * * */
-     var winWidth = $(window).width();
-     var winHeight = $(window).height();
+    var winWidth = $(window).width();
+    var winHeight = $(window).height();
 
 
-     $('.mtb-1').click(function() {
+    $('.mtb-1').click(function() {
         $('.graph-panel').removeClass('graph-panel-show');
         $('.market-status').fadeIn(0);
         $('.market-list').fadeIn(0);
@@ -94,7 +94,7 @@ var page = path.split("/").pop();
 
     });
 
-     $('.mtb-2').click(function() {
+    $('.mtb-2').click(function() {
         $('.market-status').fadeOut(0);
         $('.market-list').fadeOut(0);
         if (page == "gold.html")
@@ -105,7 +105,7 @@ var page = path.split("/").pop();
         drawGraph();
     });
 
-     var resizer = function() {
+    var resizer = function() {
         if (winWidth > 999) {
             $('.graph-panel').removeClass('graph-panel-show');
             $('.market-status').fadeIn(0);
@@ -125,9 +125,9 @@ var page = path.split("/").pop();
      *       EDIT HANDLING     *
      *                         *
      * * * * * * * * * * * * * */
-     var editOpen = false;
+    var editOpen = false;
 
-     $('#edit').click(function() {
+    $('#edit').click(function() {
         var msTop = $('.main-section').css('padding-top');
         var msLeft = $('.main-section').css('padding-left');
         var msBottom = $('.main-section').css('padding-bottom');
@@ -158,7 +158,7 @@ var page = path.split("/").pop();
         }, 400);
     });
 
-     $('#icon-close').click(function() {
+    $('#icon-close').click(function() {
         editOpen = false;
         $('#coin_edit').velocity({
             top: $('#edit').offset().top - $(window).scrollTop(),
@@ -175,7 +175,7 @@ var page = path.split("/").pop();
     });
 
 
-     $(window).scroll(function() {
+    $(window).scroll(function() {
         if (editOpen) {
             $('#coin_edit_wrapper').velocity({
                 translateY: -$(window).scrollTop()
@@ -188,8 +188,8 @@ var page = path.split("/").pop();
      *    ADD HANDLING/DATE    *
      *                         *
      * * * * * * * * * * * * * */
-     var defaultDate = new Date();
-     var defaultDateInput = ('0' + (defaultDate.getMonth() + 1)).slice(-2) + '-' + ('0' + defaultDate.getDate()).slice(-2) + '-' + defaultDate.getFullYear();
+    var defaultDate = new Date();
+    var defaultDateInput = ('0' + (defaultDate.getMonth() + 1)).slice(-2) + '-' + ('0' + defaultDate.getDate()).slice(-2) + '-' + defaultDate.getFullYear();
     //document.getElementsByName('purchase_date')[0].value = defaultDateInput;
     $(".purchase_date").val(defaultDateInput);
 
@@ -201,8 +201,8 @@ var page = path.split("/").pop();
         var y = matches[3];
         var composedDate = new Date(y, m, d);
         return composedDate.getDate() == d &&
-        composedDate.getMonth() == m &&
-        composedDate.getFullYear() == y;
+            composedDate.getMonth() == m &&
+            composedDate.getFullYear() == y;
     }
 
 
@@ -228,7 +228,7 @@ var page = path.split("/").pop();
     });
 
     $('input[name="quantity"]').blur(function() {
-        if(!regege.exec($(this).val())){
+        if (!regege.exec($(this).val())) {
             $(this).addClass('bad-input');
             $(this).val('1');
             invalidQtyInput = true;
@@ -241,7 +241,7 @@ var page = path.split("/").pop();
     });
 
     $('input[name="weight_otz"]').blur(function() {
-        if(!regege.exec($(this).val())){
+        if (!regege.exec($(this).val())) {
             $(this).addClass('bad-input');
             $(this).val('1.0');
             invalidWPUInput = true;
@@ -263,7 +263,7 @@ var page = path.split("/").pop();
      *                         *
      * * * * * * * * * * * * * */
 
-     var tableData = {
+    var tableData = {
         "Gold": {
             "US Eagle": {
                 "metal_percent": "0.99"
@@ -318,34 +318,34 @@ var page = path.split("/").pop();
             var property = tr[i].getElements("td")[0];
             switch (property.innerHTML) {
                 case 'Metal':
-                metal = tr[i].getElements("td")[1].getElements("select")[0].value;
-                break;
+                    metal = tr[i].getElements("td")[1].getElements("select")[0].value;
+                    break;
                 case 'Type':
-                bartype = tr[i].getElements("td")[1].getElements("select")[0].value;
-                break;
+                    bartype = tr[i].getElements("td")[1].getElements("select")[0].value;
+                    break;
                 case 'Qty.':
-                qty = tr[i].getElements("td")[1].getElements("input")[0].value;
-                break;
+                    qty = tr[i].getElements("td")[1].getElements("input")[0].value;
+                    break;
                 case 'Weight per unit (ozt)':
-                wpu = tr[i].getElements("td")[1].getElements("input")[0].value;
-                break;
+                    wpu = tr[i].getElements("td")[1].getElements("input")[0].value;
+                    break;
             }
 
         }
 
         switch (metal) {
             case 'Gold':
-            $("#total-metal").text("Total au (ozt)");
-            $("#metal-perc").text("Gold %");
-            break;
+                $("#total-metal").text("Total au (ozt)");
+                $("#metal-perc").text("Gold %");
+                break;
             case 'Silver':
-            $("#total-metal").text("Total ag (ozt)");
-            $("#metal-perc").text("Silver %");
-            break;
+                $("#total-metal").text("Total ag (ozt)");
+                $("#metal-perc").text("Silver %");
+                break;
             case 'Platinum':
-            $("#total-metal").text("Total pt (ozt)");
-            $("#metal-perc").text("Platinum %");
-            break;
+                $("#total-metal").text("Total pt (ozt)");
+                $("#metal-perc").text("Platinum %");
+                break;
         }
 
         $("#metal-perc").next().text((tableData[metal][bartype]['metal_percent']));
@@ -388,22 +388,22 @@ var page = path.split("/").pop();
             $("#total-metal").next().text(tlm);
             $("#total-cost").text(tlc);
         });
-};
+    };
 
-$('#addTable').find('*').change(function() {
-    handleFormChange('add');
-});
-
-$('#editTable').find('*').change(function() {
-    handleFormChange('edit');
-});
-
-try {
-    if ($('#addTable').length != 0)
+    $('#addTable').find('*').change(function() {
         handleFormChange('add');
-} catch (err) {
-    console.log("Don't handle form immediately");
-}
+    });
+
+    $('#editTable').find('*').change(function() {
+        handleFormChange('edit');
+    });
+
+    try {
+        if ($('#addTable').length != 0)
+            handleFormChange('add');
+    } catch (err) {
+        console.log("Don't handle form immediately");
+    }
 
 });
 
@@ -425,13 +425,13 @@ try {
 
 
 
- var firebase = new Firebase("https://134b-dreamteam.firebaseio.com/");
- var userRef = firebase.child("users");
- var userCollected = false;
- var inSession = false;
- var currentUser = "";
- var users = [];
- const API_URL = "https://www.quandl.com/api/v1/datasets/WSJ/";
+var firebase = new Firebase("https://134b-dreamteam.firebaseio.com/");
+var userRef = firebase.child("users");
+var userCollected = false;
+var inSession = false;
+var currentUser = "";
+var users = [];
+const API_URL = "https://www.quandl.com/api/v1/datasets/WSJ/";
 
 // create string contains function
 String.prototype.contains = function(s) {
@@ -442,11 +442,11 @@ String.prototype.contains = function(s) {
 Node.prototype.getElements = function(s) {
     switch (s.charAt(0)) {
         case "#":
-        return this.getElementById(s.substring(1));
+            return this.getElementById(s.substring(1));
         case ".":
-        return this.getElementsByClassName(s.substring(1));
+            return this.getElementsByClassName(s.substring(1));
         default:
-        return this.getElementsByTagName(s);
+            return this.getElementsByTagName(s);
     }
 }
 
@@ -565,11 +565,11 @@ function getMetalURL(metal) {
     var data_url = API_URL;
     switch (metal.toLowerCase()) {
         case "silver":
-        return API_URL + "AG_EIB.json";
+            return API_URL + "AG_EIB.json";
         case "platinum":
-        return API_URL + "PL_MKT.json";
+            return API_URL + "PL_MKT.json";
         default:
-        return API_URL + "AU_EIB.json";
+            return API_URL + "AU_EIB.json";
     }
 }
 
@@ -650,17 +650,17 @@ StackManager.prototype.addCoin = function(newStack) {
     // set reference to particular metal
     switch (newStack.metal) {
         case "Gold":
-        metalRef = this.stackRef.child("gold");
-        break;
+            metalRef = this.stackRef.child("gold");
+            break;
         case "Silver":
-        metalRef = this.stackRef.child("silver");
-        break;
+            metalRef = this.stackRef.child("silver");
+            break;
         case "Platinum":
-        metalRef = this.stackRef.child("platinum");
-        break;
+            metalRef = this.stackRef.child("platinum");
+            break;
         default:
-        metalRef = null
-        return;
+            metalRef = null
+            return;
     }
 
     metalRef.push(newStack); // put new coin information
@@ -669,10 +669,19 @@ StackManager.prototype.addCoin = function(newStack) {
 // Display coins on appropriate page of metal
 StackManager.prototype.read = function() {
     //var stackRef = userRef.child(currentUser).child("coinStack");
-    if (!this.metal) {
+    if (location.pathname.contains("gold")) {
+        metal = "gold";
+    } else if (location.pathname.contains("silver")) {
+        metal = "silver";
+    } else if (location.pathname.contains("platinum")) {
+        metal = "platinum";
+    } else {
+        metal = "";
+    }
+    if (!metal) {
         return;
     }
-    this.stackRef.child(this.metal).on("value", function(data) {
+    this.stackRef.child(metal).on("value", function(data) {
         if (!data) {
             console.log("No coins found in Firebase");
             return;
@@ -689,8 +698,8 @@ StackManager.prototype.read = function() {
 
             // array of information to be inserted
             var data = ["<div class=\"coin_mini\"></div>",
-            "<a href=\"gold_detail.html?id=" + key + "\"></a>" + coin["type"],
-            coin["qty"], coin["total_weight_(ozt)"], coin["purchase_date"], coin["total"]
+                "<a href=\"" + metal + "_detail.html?id=" + key + "\"></a>" + coin["type"],
+                coin["qty"], coin["total_weight_(ozt)"], coin["purchase_date"], coin["total"]
             ];
 
             // construct td's for this row
@@ -705,15 +714,18 @@ StackManager.prototype.read = function() {
 
             console.log(list[key]);
 
-            // row with unique id
-            $("#coinStack").append("<tr id=\"" + key + "\">" + row.innerHTML + "</tr>");
-            $("#" + key + " > td > .coin_mini").css({
-                "background-color": "transparent",
+            var css = {
                 "background-image": "url(\"" + list[key].image + "\")",
                 "background-size": "100% auto",
                 "background-repeat": "no-repeat",
                 "background-position": "center"
-            });
+            };
+            // row with unique id
+            $("#coinStack").append("<tr id=\"" + key + "\">" + row.innerHTML + "</tr>");
+            if (list[key].image) {
+                css["background-color"] = "transparent";
+            }
+            $("#" + key + " > td > .coin_mini").css(css);
         }
     });
 }
@@ -724,17 +736,17 @@ StackManager.prototype.total = function() {
     //var metal = this.coinInfo.type;
     switch (this.metal) {
         case "gold":
-        reference = this.stackRef.child("gold");
-        break;
+            reference = this.stackRef.child("gold");
+            break;
         case "silver":
-        reference = this.stackRef.child("silver");
-        break;
+            reference = this.stackRef.child("silver");
+            break;
         case "platinum":
-        reference = this.stackRef.child("platinum");
-        break;
+            reference = this.stackRef.child("platinum");
+            break;
         default:
-        reference = null;
-        break;
+            reference = null;
+            break;
     }
 
     // check for reference and perform appropriat total calculation
@@ -766,14 +778,30 @@ StackManager.prototype.total = function() {
 // validate if URL query has valid key for firebase access
 StackManager.prototype.validate = function(query) {
     // check for access validity
-    var metal = this.metal;
+
+    if (location.pathname.contains("gold")) {
+        metal = "gold";
+    } else if (location.pathname.contains("silver")) {
+        metal = "silver";
+    } else if (location.pathname.contains("platinum")) {
+        metal = "platinum";
+    } else {
+        metal = "";
+    }
+
+    //var metal = this.metal;
     var access = null;
     try {
         access = query.split("=")[1];
+        if (!metal) {
+            return;
+        }
     } catch (err) {
         console.log(err);
         return;
     }
+
+    console.log(metal);
 
     // find key that matches given access. redirect if failed.
     this.stackRef.child(metal).on("value", function(data) {
@@ -943,7 +971,7 @@ StackManager.prototype.filter = function(str, array) {
  * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
- $(document).ready(function() {
+$(document).ready(function() {
     var stack = new StackManager();
     var metal = stack.toString();
     var imgBase = "";
@@ -1012,7 +1040,7 @@ StackManager.prototype.filter = function(str, array) {
         invalidWPUInput
         if (invalidDateInput) {
             badOutputString += "Invalid Date Format\n";
-        } 
+        }
         if (invalidQtyInput) {
             badOutputString += "Invalid Qty Format\n";
         }
@@ -1020,7 +1048,7 @@ StackManager.prototype.filter = function(str, array) {
             badOutputString += "Invalid Weight Format\n";
         }
 
-        if( badOutputString.length > 0)
+        if (badOutputString.length > 0)
             alert(badOutputString);
         else {
             stack.addCoin(stack.construct("#addTable", imgBase));
@@ -1035,7 +1063,7 @@ StackManager.prototype.filter = function(str, array) {
         invalidWPUInput
         if (invalidDateInput) {
             badOutputString += "Invalid Date Format\n";
-        } 
+        }
         if (invalidQtyInput) {
             badOutputString += "Invalid Qty Format\n";
         }
@@ -1043,7 +1071,7 @@ StackManager.prototype.filter = function(str, array) {
             badOutputString += "Invalid Weight Format\n";
         }
 
-        if( badOutputString.length > 0)
+        if (badOutputString.length > 0)
             alert(badOutputString);
         else {
             stack.editCoin(location.search, stack.construct("#editTable", imgBase));
@@ -1098,7 +1126,7 @@ StackManager.prototype.filter = function(str, array) {
  * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
- if ((page.indexOf("add") == -1) && (page.indexOf("detail") == -1))
+if ((page.indexOf("add") == -1) && (page.indexOf("detail") == -1))
     $(document).ready(function() {
 
         // draws a graph for the page
@@ -1347,13 +1375,13 @@ StackManager.prototype.filter = function(str, array) {
                     "([^\"\\" + strDelimiter + "\\r\\n]*))"
                 ),
                 "gi"
-                );
+            );
 
 
             // Create an array to hold our data. Give the array
             // a default empty first row.
             var arrData = [
-            []
+                []
             ];
 
             // Create an array to hold our individual pattern
@@ -1375,7 +1403,7 @@ StackManager.prototype.filter = function(str, array) {
                 if (
                     strMatchedDelimiter.length &&
                     strMatchedDelimiter !== strDelimiter
-                    ) {
+                ) {
 
                     // Since we have reached a new row of data,
                     // add an empty row to our data array.
@@ -1395,7 +1423,7 @@ StackManager.prototype.filter = function(str, array) {
                     strMatchedValue = arrMatches[2].replace(
                         new RegExp("\"\"", "g"),
                         "\""
-                        );
+                    );
 
                 } else {
 
@@ -1489,136 +1517,136 @@ StackManager.prototype.filter = function(str, array) {
                     }
                 }
             });
-};
+        };
 
 
-var getMySilver = function() {
-    var stackRef = userRef.child(currentUser).child("coinStack");
-    stackRef.child('silver').on("value", function(data) {
-        if (!data) {
-            console.log("No coins found in Firebase");
-            return;
-        }
-        var list = data.val();
+        var getMySilver = function() {
+            var stackRef = userRef.child(currentUser).child("coinStack");
+            stackRef.child('silver').on("value", function(data) {
+                if (!data) {
+                    console.log("No coins found in Firebase");
+                    return;
+                }
+                var list = data.val();
 
-        for (var key in list) {
-            if (!list.hasOwnProperty(key) || key == "total") {
-                continue;
-            }
-            var coin = list[key];
-            var coinPurch = coin['purchase_date'];
-            var coinOzt = coin['total_weight_(ozt)'];
-            var coinPurchDate = new Date(coinPurch);
-            var currDate = new Date();
-            var distanceDate = Math.floor((currDate - coinPurchDate) / (24 * 60 * 60 * 1000));
-            for (i = 0; i < silvertotal.length && i < distanceDate + 1; i++) {
-                silvertotal[silvertotal.length - 1 - i] += (coinOzt * silver1oz[i]);
-            }
-        }
-        waitForTotal--;
-        if (waitForTotal == 0 && waitFor == 0) {
-            drawGraph(graphsToDraw);
-            calcdailychange();
-        }
+                for (var key in list) {
+                    if (!list.hasOwnProperty(key) || key == "total") {
+                        continue;
+                    }
+                    var coin = list[key];
+                    var coinPurch = coin['purchase_date'];
+                    var coinOzt = coin['total_weight_(ozt)'];
+                    var coinPurchDate = new Date(coinPurch);
+                    var currDate = new Date();
+                    var distanceDate = Math.floor((currDate - coinPurchDate) / (24 * 60 * 60 * 1000));
+                    for (i = 0; i < silvertotal.length && i < distanceDate + 1; i++) {
+                        silvertotal[silvertotal.length - 1 - i] += (coinOzt * silver1oz[i]);
+                    }
+                }
+                waitForTotal--;
+                if (waitForTotal == 0 && waitFor == 0) {
+                    drawGraph(graphsToDraw);
+                    calcdailychange();
+                }
 
-        if (page == "silver.html") {
-            var perc = (silvertotal[silvertotal.length - 1] - silvertotal[silvertotal.length - 2]) / silvertotal[silvertotal.length - 2]
-            if (silvertotal[silvertotal.length - 2] == 0)
-                perc = 0;
-            perc = (perc * 100).toFixed(1);
-            if (perc >= 0) {
-                $(".daily-change").addClass("pos-change");
-                $(".daily-change").text("+" + perc + "%");
-            } else {
-                $(".daily-change").addClass("neg-change");
-                $(".daily-change").text("-" + perc + "%");
-            }
+                if (page == "silver.html") {
+                    var perc = (silvertotal[silvertotal.length - 1] - silvertotal[silvertotal.length - 2]) / silvertotal[silvertotal.length - 2]
+                    if (silvertotal[silvertotal.length - 2] == 0)
+                        perc = 0;
+                    perc = (perc * 100).toFixed(1);
+                    if (perc >= 0) {
+                        $(".daily-change").addClass("pos-change");
+                        $(".daily-change").text("+" + perc + "%");
+                    } else {
+                        $(".daily-change").addClass("neg-change");
+                        $(".daily-change").text("-" + perc + "%");
+                    }
 
-            var perc = (silvertotal[silvertotal.length - 1] - silvertotal[0]) / silvertotal[0]
-            if (silvertotal[0] == 0)
-                perc = 0;
-            perc = (perc * 100).toFixed(1);
-            if (perc >= 0) {
-                $(".overall-change").addClass("pos-change");
-                $(".overall-change").text("+" + perc + "%");
-            } else {
-                $(".overall-change").addClass("neg-change");
-                $(".overall-change").text("-" + perc + "%");
-            }
-        }
-    });
-};
+                    var perc = (silvertotal[silvertotal.length - 1] - silvertotal[0]) / silvertotal[0]
+                    if (silvertotal[0] == 0)
+                        perc = 0;
+                    perc = (perc * 100).toFixed(1);
+                    if (perc >= 0) {
+                        $(".overall-change").addClass("pos-change");
+                        $(".overall-change").text("+" + perc + "%");
+                    } else {
+                        $(".overall-change").addClass("neg-change");
+                        $(".overall-change").text("-" + perc + "%");
+                    }
+                }
+            });
+        };
 
 
-var getMyPlatinum = function() {
-    var stackRef = userRef.child(currentUser).child("coinStack");
-    stackRef.child('platinum').on("value", function(data) {
-        if (!data) {
-            console.log("No coins found in Firebase");
-            return;
-        }
-        var list = data.val();
+        var getMyPlatinum = function() {
+            var stackRef = userRef.child(currentUser).child("coinStack");
+            stackRef.child('platinum').on("value", function(data) {
+                if (!data) {
+                    console.log("No coins found in Firebase");
+                    return;
+                }
+                var list = data.val();
 
-        for (var key in list) {
-            if (!list.hasOwnProperty(key) || key == "total") {
-                continue;
-            }
-            var coin = list[key];
-            var coinPurch = coin['purchase_date'];
-            var coinOzt = coin['total_weight_(ozt)'];
-            var coinPurchDate = new Date(coinPurch);
-            var currDate = new Date();
-            var distanceDate = Math.floor((currDate - coinPurchDate) / (24 * 60 * 60 * 1000));
-            for (i = 0; i < plattotal.length && i < distanceDate + 1; i++) {
-                plattotal[plattotal.length - 1 - i] += (coinOzt * plat1oz[i]);
-            }
-        }
-        waitForTotal--;
-        if (waitForTotal == 0 && waitFor == 0) {
-            drawGraph(graphsToDraw);
-            calcdailychange();
-        }
+                for (var key in list) {
+                    if (!list.hasOwnProperty(key) || key == "total") {
+                        continue;
+                    }
+                    var coin = list[key];
+                    var coinPurch = coin['purchase_date'];
+                    var coinOzt = coin['total_weight_(ozt)'];
+                    var coinPurchDate = new Date(coinPurch);
+                    var currDate = new Date();
+                    var distanceDate = Math.floor((currDate - coinPurchDate) / (24 * 60 * 60 * 1000));
+                    for (i = 0; i < plattotal.length && i < distanceDate + 1; i++) {
+                        plattotal[plattotal.length - 1 - i] += (coinOzt * plat1oz[i]);
+                    }
+                }
+                waitForTotal--;
+                if (waitForTotal == 0 && waitFor == 0) {
+                    drawGraph(graphsToDraw);
+                    calcdailychange();
+                }
 
-        if (page == "platinum.html") {
-            var perc = (plattotal[plattotal.length - 1] - plattotal[plattotal.length - 2]) / plattotal[plattotal.length - 2]
-            if (plattotal[plattotal.length - 2] == 0)
-                perc = 0;
-            perc = (perc * 100).toFixed(1);
-            if (perc >= 0) {
-                $(".daily-change").addClass("pos-change");
-                $(".daily-change").text("+" + perc + "%");
-            } else {
-                $(".daily-change").addClass("neg-change");
-                $(".daily-change").text("-" + perc + "%");
-            }
+                if (page == "platinum.html") {
+                    var perc = (plattotal[plattotal.length - 1] - plattotal[plattotal.length - 2]) / plattotal[plattotal.length - 2]
+                    if (plattotal[plattotal.length - 2] == 0)
+                        perc = 0;
+                    perc = (perc * 100).toFixed(1);
+                    if (perc >= 0) {
+                        $(".daily-change").addClass("pos-change");
+                        $(".daily-change").text("+" + perc + "%");
+                    } else {
+                        $(".daily-change").addClass("neg-change");
+                        $(".daily-change").text("-" + perc + "%");
+                    }
 
-            var perc = (plattotal[plattotal.length - 1] - plattotal[0]) / plattotal[0]
-            if (plattotal[0] == 0)
-                perc = 0;
-            perc = (perc * 100).toFixed(1);
-            if (perc >= 0) {
-                $(".overall-change").addClass("pos-change");
-                $(".overall-change").text("+" + perc + "%");
-            } else {
-                $(".overall-change").addClass("neg-change");
-                $(".overall-change").text("-" + perc + "%");
-            }
-        }
-    });
-};
+                    var perc = (plattotal[plattotal.length - 1] - plattotal[0]) / plattotal[0]
+                    if (plattotal[0] == 0)
+                        perc = 0;
+                    perc = (perc * 100).toFixed(1);
+                    if (perc >= 0) {
+                        $(".overall-change").addClass("pos-change");
+                        $(".overall-change").text("+" + perc + "%");
+                    } else {
+                        $(".overall-change").addClass("neg-change");
+                        $(".overall-change").text("-" + perc + "%");
+                    }
+                }
+            });
+        };
 
-function getMetalJSON(json_url, metal) {
-    var csvArr = [];
-    $.ajax({
-        type: "GET",
-        dataType: 'text',
-        url: json_url,
-        crossDomain: true,
-        xhrFields: {
-            withCredentials: false
-        }
-    })
-    .done(function(csvdata) {
+        function getMetalJSON(json_url, metal) {
+            var csvArr = [];
+            $.ajax({
+                    type: "GET",
+                    dataType: 'text',
+                    url: json_url,
+                    crossDomain: true,
+                    xhrFields: {
+                        withCredentials: false
+                    }
+                })
+                .done(function(csvdata) {
                     //alert("\nData from "+json_url+":\n"+csvdata);
                     //console.log("csvdata "+csvdata);
                     var csvArray = CSVToArray(csvdata, ",");
@@ -1672,17 +1700,17 @@ function getMetalJSON(json_url, metal) {
 
                     switch (metal) {
                         case 'gold':
-                        gold1oz = processedArray;
-                        getMyGold();
-                        break;
+                            gold1oz = processedArray;
+                            getMyGold();
+                            break;
                         case 'silver':
-                        silver1oz = processedArray;
-                        getMySilver();
-                        break;
+                            silver1oz = processedArray;
+                            getMySilver();
+                            break;
                         case 'platinum':
-                        plat1oz = processedArray;
-                        getMyPlatinum();
-                        break;
+                            plat1oz = processedArray;
+                            getMyPlatinum();
+                            break;
                     }
                     waitFor--;
                     if (waitForTotal == 0 && waitFor == 0)
@@ -1695,12 +1723,12 @@ function getMetalJSON(json_url, metal) {
                                 "platinum": plat1oz[plat1oz.length - 1],
                             });
                         }
-                    })
-.fail(function(xhr, textStatus, errorThrown) {
+                })
+                .fail(function(xhr, textStatus, errorThrown) {
                     //alert(xhr.responseText);
                     //alert(textStatus);
                 });
-};
+        };
 
 
         // popMarketList()
@@ -1708,38 +1736,38 @@ function getMetalJSON(json_url, metal) {
         // populates the bid/ask/change data for the market-item-stats
         function popMarketList(page) {
             $.ajax({
-                type: "GET",
-                dataType: 'text',
-                url: "https://cse134b.herokuapp.com/jm",
-                crossDomain: true,
-                xhrFields: {
-                    withCredentials: false
-                }
-            })
-            .done(function(csvdata) {
-                var jsonAB = eval(csvdata);
-                if (page == "home.html") {
-                    for (var i = 0; i < 3; i++) {
-                        var bid = jsonAB[i].bid;
-                        var ask = jsonAB[i].ask;
-                        var change = jsonAB[i].oneDayChange;
-                        var header = document.getElementsByClassName("market-item-stats");
-                        header[i].getElementsByTagName('td')[0].innerHTML = bid;
-                        header[i].getElementsByTagName('td')[1].innerHTML = ask;
-                        var elmtChange = header[i].getElementsByTagName('td')[2];
-                        elmtChange.innerHTML = change;
-                        change >= 0 ? elmtChange.className = "pos-change" : elmtChange.className = "neg-change";
-
+                    type: "GET",
+                    dataType: 'text',
+                    url: "https://cse134b.herokuapp.com/jm",
+                    crossDomain: true,
+                    xhrFields: {
+                        withCredentials: false
                     }
-                } else {
-                    var i;
-                    if (page == "gold.html")
-                        i = 0;
-                    else if (page == "silver.html")
-                        i = 1;
-                    else if (page == "platinum.html")
-                        i = 2;
-                    else
+                })
+                .done(function(csvdata) {
+                    var jsonAB = eval(csvdata);
+                    if (page == "home.html") {
+                        for (var i = 0; i < 3; i++) {
+                            var bid = jsonAB[i].bid;
+                            var ask = jsonAB[i].ask;
+                            var change = jsonAB[i].oneDayChange;
+                            var header = document.getElementsByClassName("market-item-stats");
+                            header[i].getElementsByTagName('td')[0].innerHTML = bid;
+                            header[i].getElementsByTagName('td')[1].innerHTML = ask;
+                            var elmtChange = header[i].getElementsByTagName('td')[2];
+                            elmtChange.innerHTML = change;
+                            change >= 0 ? elmtChange.className = "pos-change" : elmtChange.className = "neg-change";
+
+                        }
+                    } else {
+                        var i;
+                        if (page == "gold.html")
+                            i = 0;
+                        else if (page == "silver.html")
+                            i = 1;
+                        else if (page == "platinum.html")
+                            i = 2;
+                        else
                             return; // don't populate this stuff otherwise
 
                         var bid = jsonAB[i].bid;
@@ -1753,25 +1781,25 @@ function getMetalJSON(json_url, metal) {
                         change >= 0 ? elmtChange.className = "pos-change" : elmtChange.className = "neg-change";
                     }
                 })
-.fail(function(xhr, textStatus, errorThrown) {
+                .fail(function(xhr, textStatus, errorThrown) {
                     //alert(xhr.responseText);
                     //alert(textStatus);
                 });
-};
+        };
 
 
-function getMetalPrice(metal, start, end) {
+        function getMetalPrice(metal, start, end) {
             var json_url = "https://www.quandl.com/api/v1/datasets/WSJ/"; // there is a daily limit of 50 connections for unregistered users. You can create an account and add your security token like: https://www.quandl.com/api/v1/datasets/WSJ/PL_MKT.csv?auth_token=933vrq6wUfABXEf_sgH7&trim_start=2015-05-01 However the security is updated daily. Also you can use your own, or third party proxy like http://websitescraper.herokuapp.com/?url=https://www.quandl.com/api/v1/datasets/WSJ/AU_EIB.csv for additional 50 connections. This proxy will accept any url and return you the data, also helping to deal with same origin policy
             switch (metal) {
                 case 'gold':
-                json_url += "AU_EIB";
-                break;
+                    json_url += "AU_EIB";
+                    break;
                 case 'silver':
-                json_url += "AG_EIB";
-                break;
+                    json_url += "AG_EIB";
+                    break;
                 case 'platinum':
-                json_url += "PL_MKT";
-                break;
+                    json_url += "PL_MKT";
+                    break;
             }
             json_url += ".csv?auth_token=WhJThfjMzZMAu-2CQK5-&trim_start=" + start;
             if (end) {
