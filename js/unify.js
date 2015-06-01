@@ -230,7 +230,7 @@ $(window).load(function() {
     $('input[name="quantity"]').blur(function() {
         if (!regege.exec($(this).val())) {
             $(this).addClass('bad-input');
-            $(this).val('1');
+            $(this).val('invalid-number');
             invalidQtyInput = true;
         }
     });
@@ -243,17 +243,9 @@ $(window).load(function() {
     $('input[name="weight_otz"]').blur(function() {
         if (!regege.exec($(this).val())) {
             $(this).addClass('bad-input');
-            $(this).val('1.0');
+            $(this).val('invalid-number');
             invalidWPUInput = true;
         }
-    });
-
-    $('input[name="weight_otz"]').change(function() {
-        var value = parseFloat($(this).val());
-        if (value % 1 == 0) {
-            value = value.toString() + ".0"
-        }
-        $(this).val(value);
     });
 
 

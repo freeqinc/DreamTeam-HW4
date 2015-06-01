@@ -11,7 +11,7 @@
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
     <script src="./js/libraries.js"></script>
     <script src="./js/unify.js"></script>
-    <title>New Item - BullionTracker</title>
+    <title>Platinum Item - BullionTracker</title>
 </head>
 
 <body>
@@ -81,7 +81,7 @@
     <section class="main-section">
         <section class="coin_wrapper">
             <div class="mobile-nav">
-                <a href="silver.html">
+                <a href="platinum.html">
                     <svg class="icon icon-keyboard-arrow-left">
                         <symbol id="icon-keyboard-arrow-left" viewBox="0 0 1024 1024">
                             <title>keyboard-arrow-left</title>
@@ -90,10 +90,10 @@
                         <use xlink:href="#icon-keyboard-arrow-left"></use>
                     </svg>
                 </a>
-                ADD ITEM
+                ITEM DETAIL
             </div>
             <div class="coin_main">
-                <a href="silver.html">
+                <a href="platinum.html">
                     <div class="breadcrumb">
                         <svg class="icon icon-play-arrow-rev">
                             <symbol id="icon-play-arrow" viewBox="0 0 1024 1024">
@@ -102,24 +102,87 @@
                             </symbol>
                             <use xlink:href="#icon-play-arrow"></use>
                         </svg>
-                        Add Item
+                        Item Detail
                     </div>
                 </a>
-                <section id="image_upload" class="coin_image">
-                    <input type="file" id="uploader"/>
-                    <div class="img_box" id="img_holder">
-                        <div class="img_circle">Click to Add</div>
+                <section class="coin_image">
+                    <div class="img_box">
+                        <div class="img_circle">Click to Add Image</div>
                     </div>
                 </section>
                 <section class="coin_detail">
-                    <table id="addTable">
+                    <table id="viewTable">
                         <tr>
+                            <td>Metal</td>
+                            <td>Unknown</td>
+                        </tr>
+                        <tr>
+                            <td>Type</td>
+                            <td>Unknown</td>
+                        </tr>
+                        <tr>
+                            <td>Purchase Date</td>
+                            <td>00-00-0000</td>
+                        </tr>
+                        <tr>
+                            <td>Qty.</td>
+                            <td>0</td>
+                        </tr>
+                        <tr>
+                            <td>Weight per unit (ozt)</td>
+                            <td>0.000</td>
+                        </tr>
+                        <tr>
+                            <td>Platinum %</td>
+                            <td>0.000</td>
+                        </tr>
+                        <tr>
+                            <td>Price per oz</td>
+                            <td>0.000</td>
+                        </tr>
+                        <tr>
+                            <td>Total weight (ozt)</td>
+                            <td>0.000</td>
+                        </tr>
+                        <tr>
+                            <td>Total pt (ozt)</td>
+                            <td>0.000</td>
+                        </tr>
+                        <tr>
+                            <td><strong>TOTAL</strong></td>
+                            <td><strong>0.000</strong></td>
+                        </tr>
+                    </table>
+                    <span id="edit">Edit</span>
+                    <span id="delete">Delete</span>
+                </section>
+            </div>
+        </section>
+    </section>
+    <div id="coin_edit">
+        <svg version="1.1" id="icon-close" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="100px" height="100px" viewBox="0 0 100 100" enable-background="new 0 0 100 100" xml:space="preserve">
+            <line fill="#FFFFFF" stroke="#ababab" stroke-width="18" stroke-linecap="round" stroke-miterlimit="10" x1="19.5" y1="20" x2="80.167" y2="80.667" />
+            <line fill="#FFFFFF" stroke="#ababab" stroke-width="18" stroke-linecap="round" stroke-miterlimit="10" x1="80.167" y1="20" x2="19.5" y2="80.667" />
+        </svg>
+        <div id="coin_edit_wrapper">
+            <section class="coin_wrapper">
+                <div class="coin_main">
+                    <section id="image_upload" class="coin_image">
+                        <input type="file" id="uploader" />
+                        <div class="img_box" id="img_holder">
+                            <div class="img_circle">Click to Add Image</div>
+                        </div>
+                    </section>
+                    <section class="coin_detail">
+                        <div id="edit-title">Edit Details</div>
+                        <table id="editTable">
+                          <tr>
                             <td>Metal</td>
                             <td>
                                 <select>
                                     <option value="Gold">Gold</option>
-                                    <option selected value="Silver">Silver</option>
-                                    <option value="Platinum">Platinum</option>
+                                    <option value="Silver">Silver</option>
+                                    <option selected value="Platinum">Platinum</option>
                                 </select>
                             </td>
                         </tr>
@@ -141,17 +204,17 @@
                         <tr>
                             <td>Qty.</td>
                             <td>
-                                <input type="text" name="quantity" value="1" />
+                                <input name="quantity" value="1" />
                             </td>
                         </tr>
                         <tr>
                             <td>Weight per unit (ozt)</td>
                             <td>
-                                <input type="text" name="weight_otz" value="1.0" />
+                                <input name="weight_otz" value="1.0" />
                             </td>
                         </tr>
                         <tr>
-                            <td id="metal-perc">Silver %</td>
+                            <td id="metal-perc">Platinum %</td>
                             <td>0.999</td>
                         </tr>
                         <tr>
@@ -163,25 +226,20 @@
                             <td>calculating...</td>
                         </tr>
                         <tr>
-                            <td id="total-metal">Total au (ozt)</td>
+                            <td id="total-metal">Total pt (ozt)</td>
                             <td>calculating...</td>
                         </tr>
                         <tr>
                             <td><strong>TOTAL</strong></td>
                             <td><strong id="total-cost">calculating...</strong></td>
-                        </tr>
                     </table>
-                    <span id="save">Save to My Stack</span>
-                    <a href="silver.html"><span id="cancel">Cancel</span></a>
+                    <span id="edited">Save edits</span>
                 </section>
             </div>
         </section>
-    </section>
-    <!-- @concactus import: footer.html -->
-    <footer>
-        &copy; 2015 BullionTracker
-    </footer> 
-    <!-- @concactus end -->
-</body>
-
-</html>
+    </div>
+</div>
+<!-- @concactus import: footer.html -->
+<footer>
+    &copy; 2015 BullionTracker
+</footer> 
